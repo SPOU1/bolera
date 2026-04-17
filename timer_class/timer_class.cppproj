@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
-    <ProjectGuid>{379c1423-8dfb-4003-8fd3-4559ebdcb274}</ProjectGuid>
+    <ProjectGuid>{f1262960-d32a-46bc-95b7-548380734ca1}</ProjectGuid>
     <avrdevice>ATmega640</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>display_class</AssemblyName>
-    <Name>display_class</Name>
-    <RootNamespace>display_class</RootNamespace>
+    <AssemblyName>timer_class</AssemblyName>
+    <Name>timer_class</Name>
+    <RootNamespace>timer_class</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -172,7 +172,13 @@
     <Compile Include="Display.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Led.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

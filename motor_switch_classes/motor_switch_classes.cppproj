@@ -169,9 +169,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Display.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main_2.cpp">
       <SubType>compile</SubType>
     </Compile>

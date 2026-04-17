@@ -9,6 +9,8 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "led_class", "led_class\led_
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "display_class", "display_class\display_class.cppproj", "{379C1423-8DFB-4003-8FD3-4559EBDCB274}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "timer_class", "timer_class\timer_class.cppproj", "{F1262960-D32A-46BC-95B7-548380734CA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -27,6 +29,10 @@ Global
 		{379C1423-8DFB-4003-8FD3-4559EBDCB274}.Debug|AVR.Build.0 = Debug|AVR
 		{379C1423-8DFB-4003-8FD3-4559EBDCB274}.Release|AVR.ActiveCfg = Release|AVR
 		{379C1423-8DFB-4003-8FD3-4559EBDCB274}.Release|AVR.Build.0 = Release|AVR
+		{F1262960-D32A-46BC-95B7-548380734CA1}.Debug|AVR.ActiveCfg = Debug|AVR
+		{F1262960-D32A-46BC-95B7-548380734CA1}.Debug|AVR.Build.0 = Debug|AVR
+		{F1262960-D32A-46BC-95B7-548380734CA1}.Release|AVR.ActiveCfg = Release|AVR
+		{F1262960-D32A-46BC-95B7-548380734CA1}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
