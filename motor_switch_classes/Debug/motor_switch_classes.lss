@@ -1,0 +1,1884 @@
+
+motor_switch_classes.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800200  00800200  000009b6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000942  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000003c  00800200  00800200  000009b6  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000009b6  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000009e8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000080  00000000  00000000  00000a24  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001f7c  00000000  00000000  00000aa4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000e4f  00000000  00000000  00002a20  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000b1c  00000000  00000000  0000386f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000140  00000000  00000000  0000438c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000abf  00000000  00000000  000044cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000b58  00000000  00000000  00004f8b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a0  00000000  00000000  00005ae3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__ctors_end>
+   4:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+   8:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+   c:	0c 94 5d 02 	jmp	0x4ba	; 0x4ba <__vector_3>
+  10:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  14:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  18:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  1c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  20:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  24:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  28:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  2c:	0c 94 7d 02 	jmp	0x4fa	; 0x4fa <__vector_11>
+  30:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  34:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  38:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  3c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  40:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  44:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  48:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  4c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  50:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  54:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  58:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  5c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  60:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  64:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  68:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  6c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  70:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  74:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  78:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  7c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  80:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  84:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  88:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  8c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  90:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  94:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  98:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  9c:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  a0:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  a4:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  a8:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  ac:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  b0:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  b4:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  b8:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  bc:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  c0:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  c4:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  c8:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  cc:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  d0:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  d4:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  d8:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  dc:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+  e0:	0c 94 90 00 	jmp	0x120	; 0x120 <__bad_interrupt>
+
+000000e4 <__ctors_start>:
+  e4:	92 04       	cpc	r9, r2
+
+000000e6 <__ctors_end>:
+  e6:	11 24       	eor	r1, r1
+  e8:	1f be       	out	0x3f, r1	; 63
+  ea:	cf ef       	ldi	r28, 0xFF	; 255
+  ec:	d1 e2       	ldi	r29, 0x21	; 33
+  ee:	de bf       	out	0x3e, r29	; 62
+  f0:	cd bf       	out	0x3d, r28	; 61
+
+000000f2 <__do_clear_bss>:
+  f2:	22 e0       	ldi	r18, 0x02	; 2
+  f4:	a0 e0       	ldi	r26, 0x00	; 0
+  f6:	b2 e0       	ldi	r27, 0x02	; 2
+  f8:	01 c0       	rjmp	.+2      	; 0xfc <.do_clear_bss_start>
+
+000000fa <.do_clear_bss_loop>:
+  fa:	1d 92       	st	X+, r1
+
+000000fc <.do_clear_bss_start>:
+  fc:	ac 33       	cpi	r26, 0x3C	; 60
+  fe:	b2 07       	cpc	r27, r18
+ 100:	e1 f7       	brne	.-8      	; 0xfa <.do_clear_bss_loop>
+
+00000102 <__do_global_ctors>:
+ 102:	10 e0       	ldi	r17, 0x00	; 0
+ 104:	c3 e7       	ldi	r28, 0x73	; 115
+ 106:	d0 e0       	ldi	r29, 0x00	; 0
+ 108:	04 c0       	rjmp	.+8      	; 0x112 <__do_global_ctors+0x10>
+ 10a:	21 97       	sbiw	r28, 0x01	; 1
+ 10c:	fe 01       	movw	r30, r28
+ 10e:	0e 94 99 04 	call	0x932	; 0x932 <__tablejump2__>
+ 112:	c2 37       	cpi	r28, 0x72	; 114
+ 114:	d1 07       	cpc	r29, r17
+ 116:	c9 f7       	brne	.-14     	; 0x10a <__do_global_ctors+0x8>
+ 118:	0e 94 c9 02 	call	0x592	; 0x592 <main>
+ 11c:	0c 94 9f 04 	jmp	0x93e	; 0x93e <_exit>
+
+00000120 <__bad_interrupt>:
+ 120:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000124 <_Z41__static_initialization_and_destruction_0ii>:
+		_delay_ms(150);
+		PORTD &= ~(1 << PD7);
+		_delay_ms(150);
+	}
+	return 0;
+ 124:	cf 93       	push	r28
+ 126:	df 93       	push	r29
+ 128:	01 97       	sbiw	r24, 0x01	; 1
+ 12a:	09 f0       	breq	.+2      	; 0x12e <_Z41__static_initialization_and_destruction_0ii+0xa>
+ 12c:	6e c0       	rjmp	.+220    	; 0x20a <_Z41__static_initialization_and_destruction_0ii+0xe6>
+ 12e:	6f 3f       	cpi	r22, 0xFF	; 255
+ 130:	7f 4f       	sbci	r23, 0xFF	; 255
+ 132:	09 f0       	breq	.+2      	; 0x136 <_Z41__static_initialization_and_destruction_0ii+0x12>
+ 134:	6a c0       	rjmp	.+212    	; 0x20a <_Z41__static_initialization_and_destruction_0ii+0xe6>
+	bool expectedDirection;
+	
+	
+	public:
+	SwitchMotor(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
+		pinReg  = pinR;
+ 136:	c2 e3       	ldi	r28, 0x32	; 50
+ 138:	d2 e0       	ldi	r29, 0x02	; 2
+ 13a:	89 e2       	ldi	r24, 0x29	; 41
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	99 83       	std	Y+1, r25	; 0x01
+ 140:	88 83       	st	Y, r24
+		portReg = portR;
+ 142:	2b e2       	ldi	r18, 0x2B	; 43
+ 144:	30 e0       	ldi	r19, 0x00	; 0
+ 146:	3b 83       	std	Y+3, r19	; 0x03
+ 148:	2a 83       	std	Y+2, r18	; 0x02
+		ddrReg  = ddrR;
+ 14a:	8a e2       	ldi	r24, 0x2A	; 42
+ 14c:	90 e0       	ldi	r25, 0x00	; 0
+ 14e:	9d 83       	std	Y+5, r25	; 0x05
+ 150:	8c 83       	std	Y+4, r24	; 0x04
+		mask    = m;
+ 152:	44 e0       	ldi	r20, 0x04	; 4
+ 154:	4e 83       	std	Y+6, r20	; 0x06
+		currentState = MOVING;
+ 156:	1f 82       	std	Y+7, r1	; 0x07
+		flagPressed = false;
+ 158:	18 86       	std	Y+8, r1	; 0x08
+		expectedDirection = false;
+ 15a:	19 86       	std	Y+9, r1	; 0x09
+	bool expectedDirection;
+	
+	
+	public:
+	SwitchMotor(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
+		pinReg  = pinR;
+ 15c:	a8 e2       	ldi	r26, 0x28	; 40
+ 15e:	b2 e0       	ldi	r27, 0x02	; 2
+ 160:	46 e0       	ldi	r20, 0x06	; 6
+ 162:	51 e0       	ldi	r21, 0x01	; 1
+ 164:	11 96       	adiw	r26, 0x01	; 1
+ 166:	5c 93       	st	X, r21
+ 168:	4e 93       	st	-X, r20
+		portReg = portR;
+ 16a:	48 e0       	ldi	r20, 0x08	; 8
+ 16c:	51 e0       	ldi	r21, 0x01	; 1
+ 16e:	13 96       	adiw	r26, 0x03	; 3
+ 170:	5c 93       	st	X, r21
+ 172:	4e 93       	st	-X, r20
+ 174:	12 97       	sbiw	r26, 0x02	; 2
+		ddrReg  = ddrR;
+ 176:	47 e0       	ldi	r20, 0x07	; 7
+ 178:	51 e0       	ldi	r21, 0x01	; 1
+ 17a:	15 96       	adiw	r26, 0x05	; 5
+ 17c:	5c 93       	st	X, r21
+ 17e:	4e 93       	st	-X, r20
+ 180:	14 97       	sbiw	r26, 0x04	; 4
+		mask    = m;
+ 182:	40 e4       	ldi	r20, 0x40	; 64
+ 184:	16 96       	adiw	r26, 0x06	; 6
+ 186:	4c 93       	st	X, r20
+ 188:	16 97       	sbiw	r26, 0x06	; 6
+		currentState = MOVING;
+ 18a:	17 96       	adiw	r26, 0x07	; 7
+ 18c:	1c 92       	st	X, r1
+ 18e:	17 97       	sbiw	r26, 0x07	; 7
+		flagPressed = false;
+ 190:	18 96       	adiw	r26, 0x08	; 8
+ 192:	1c 92       	st	X, r1
+ 194:	18 97       	sbiw	r26, 0x08	; 8
+		expectedDirection = false;
+ 196:	19 96       	adiw	r26, 0x09	; 9
+ 198:	1c 92       	st	X, r1
+ 19a:	19 97       	sbiw	r26, 0x09	; 9
+		volatile uint8_t* pDIR, volatile uint8_t* dDIR, uint8_t mDIR,
+		volatile uint8_t* pEN,  volatile uint8_t* dEN,  uint8_t mEN,
+		volatile uint8_t* rPWM,
+		SwitchMotor* sw = 0
+	) {
+		portDIR = pDIR; ddrDIR = dDIR; maskDIR = mDIR;
+ 19c:	e6 e1       	ldi	r30, 0x16	; 22
+ 19e:	f2 e0       	ldi	r31, 0x02	; 2
+ 1a0:	31 83       	std	Z+1, r19	; 0x01
+ 1a2:	20 83       	st	Z, r18
+ 1a4:	93 83       	std	Z+3, r25	; 0x03
+ 1a6:	82 83       	std	Z+2, r24	; 0x02
+ 1a8:	80 e1       	ldi	r24, 0x10	; 16
+ 1aa:	84 83       	std	Z+4, r24	; 0x04
+		portEN  = pEN;  ddrEN  = dEN;  maskEN  = mEN;
+ 1ac:	2b e0       	ldi	r18, 0x0B	; 11
+ 1ae:	31 e0       	ldi	r19, 0x01	; 1
+ 1b0:	36 83       	std	Z+6, r19	; 0x06
+ 1b2:	25 83       	std	Z+5, r18	; 0x05
+ 1b4:	2a e0       	ldi	r18, 0x0A	; 10
+ 1b6:	31 e0       	ldi	r19, 0x01	; 1
+ 1b8:	30 87       	std	Z+8, r19	; 0x08
+ 1ba:	27 83       	std	Z+7, r18	; 0x07
+ 1bc:	98 e0       	ldi	r25, 0x08	; 8
+ 1be:	91 87       	std	Z+9, r25	; 0x09
+		ocrPWM  = rPWM;
+ 1c0:	28 e2       	ldi	r18, 0x28	; 40
+ 1c2:	31 e0       	ldi	r19, 0x01	; 1
+ 1c4:	33 87       	std	Z+11, r19	; 0x0b
+ 1c6:	22 87       	std	Z+10, r18	; 0x0a
+		eorSwitch = sw;
+ 1c8:	d5 87       	std	Z+13, r29	; 0x0d
+ 1ca:	c4 87       	std	Z+12, r28	; 0x0c
+		
+		isMoving = false;
+ 1cc:	16 86       	std	Z+14, r1	; 0x0e
+		isEscaping = false;
+ 1ce:	17 86       	std	Z+15, r1	; 0x0f
+		escapeCounter = 0;
+ 1d0:	11 8a       	std	Z+17, r1	; 0x11
+ 1d2:	10 8a       	std	Z+16, r1	; 0x10
+		volatile uint8_t* pDIR, volatile uint8_t* dDIR, uint8_t mDIR,
+		volatile uint8_t* pEN,  volatile uint8_t* dEN,  uint8_t mEN,
+		volatile uint8_t* rPWM,
+		SwitchMotor* sw = 0
+	) {
+		portDIR = pDIR; ddrDIR = dDIR; maskDIR = mDIR;
+ 1d4:	e4 e0       	ldi	r30, 0x04	; 4
+ 1d6:	f2 e0       	ldi	r31, 0x02	; 2
+ 1d8:	45 e2       	ldi	r20, 0x25	; 37
+ 1da:	50 e0       	ldi	r21, 0x00	; 0
+ 1dc:	51 83       	std	Z+1, r21	; 0x01
+ 1de:	40 83       	st	Z, r20
+ 1e0:	24 e2       	ldi	r18, 0x24	; 36
+ 1e2:	30 e0       	ldi	r19, 0x00	; 0
+ 1e4:	33 83       	std	Z+3, r19	; 0x03
+ 1e6:	22 83       	std	Z+2, r18	; 0x02
+ 1e8:	91 e0       	ldi	r25, 0x01	; 1
+ 1ea:	94 83       	std	Z+4, r25	; 0x04
+		portEN  = pEN;  ddrEN  = dEN;  maskEN  = mEN;
+ 1ec:	56 83       	std	Z+6, r21	; 0x06
+ 1ee:	45 83       	std	Z+5, r20	; 0x05
+ 1f0:	30 87       	std	Z+8, r19	; 0x08
+ 1f2:	27 83       	std	Z+7, r18	; 0x07
+ 1f4:	81 87       	std	Z+9, r24	; 0x09
+		ocrPWM  = rPWM;
+ 1f6:	83 eb       	ldi	r24, 0xB3	; 179
+ 1f8:	90 e0       	ldi	r25, 0x00	; 0
+ 1fa:	93 87       	std	Z+11, r25	; 0x0b
+ 1fc:	82 87       	std	Z+10, r24	; 0x0a
+		eorSwitch = sw;
+ 1fe:	b5 87       	std	Z+13, r27	; 0x0d
+ 200:	a4 87       	std	Z+12, r26	; 0x0c
+		
+		isMoving = false;
+ 202:	16 86       	std	Z+14, r1	; 0x0e
+		isEscaping = false;
+ 204:	17 86       	std	Z+15, r1	; 0x0f
+		escapeCounter = 0;
+ 206:	11 8a       	std	Z+17, r1	; 0x11
+ 208:	10 8a       	std	Z+16, r1	; 0x10
+ 20a:	df 91       	pop	r29
+ 20c:	cf 91       	pop	r28
+ 20e:	08 95       	ret
+
+00000210 <_ZN5Motor4initEv>:
+	}
+	
+	void init() {
+ 210:	fc 01       	movw	r30, r24
+		// Timer tiene que ser inicializado antes
+	
+		*ddrDIR |= maskDIR;	// Output
+ 212:	a2 81       	ldd	r26, Z+2	; 0x02
+ 214:	b3 81       	ldd	r27, Z+3	; 0x03
+ 216:	9c 91       	ld	r25, X
+ 218:	84 81       	ldd	r24, Z+4	; 0x04
+ 21a:	89 2b       	or	r24, r25
+ 21c:	8c 93       	st	X, r24
+		*ddrEN |= maskEN;	// Output
+ 21e:	a7 81       	ldd	r26, Z+7	; 0x07
+ 220:	b0 85       	ldd	r27, Z+8	; 0x08
+ 222:	9c 91       	ld	r25, X
+ 224:	81 85       	ldd	r24, Z+9	; 0x09
+ 226:	89 2b       	or	r24, r25
+ 228:	8c 93       	st	X, r24
+		*portDIR &= ~maskDIR;
+ 22a:	a0 81       	ld	r26, Z
+ 22c:	b1 81       	ldd	r27, Z+1	; 0x01
+ 22e:	9c 91       	ld	r25, X
+ 230:	84 81       	ldd	r24, Z+4	; 0x04
+ 232:	80 95       	com	r24
+ 234:	89 23       	and	r24, r25
+ 236:	8c 93       	st	X, r24
+		*portEN &= ~maskEN;
+ 238:	a5 81       	ldd	r26, Z+5	; 0x05
+ 23a:	b6 81       	ldd	r27, Z+6	; 0x06
+ 23c:	9c 91       	ld	r25, X
+ 23e:	81 85       	ldd	r24, Z+9	; 0x09
+ 240:	80 95       	com	r24
+ 242:	89 23       	and	r24, r25
+ 244:	8c 93       	st	X, r24
+		
+		*ocrPWM = 0;
+ 246:	02 84       	ldd	r0, Z+10	; 0x0a
+ 248:	f3 85       	ldd	r31, Z+11	; 0x0b
+ 24a:	e0 2d       	mov	r30, r0
+ 24c:	10 82       	st	Z, r1
+ 24e:	08 95       	ret
+
+00000250 <_ZN5Motor9calibrateEb>:
+	
+	bool getIsMoving() {
+		return isMoving;
+	}
+	
+	void calibrate(bool direction) {
+ 250:	cf 93       	push	r28
+ 252:	df 93       	push	r29
+ 254:	fc 01       	movw	r30, r24
+ 256:	26 2f       	mov	r18, r22
+	}
+	
+	void goTo(bool direction) {
+		bool startFromSide = false;
+	
+		if (eorSwitch != 0) {
+ 258:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 25a:	b5 85       	ldd	r27, Z+13	; 0x0d
+ 25c:	10 97       	sbiw	r26, 0x00	; 0
+ 25e:	e1 f0       	breq	.+56     	; 0x298 <_ZN5Motor9calibrateEb+0x48>
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+	}
+
+	SwState getState() {
+		return currentState;
+ 260:	17 96       	adiw	r26, 0x07	; 7
+ 262:	8c 91       	ld	r24, X
+ 264:	17 97       	sbiw	r26, 0x07	; 7
+			SwitchMotor::SwState state = eorSwitch->getState();
+			if ((direction && state == SwitchMotor::SIDE_1) ||
+ 266:	66 23       	and	r22, r22
+ 268:	19 f0       	breq	.+6      	; 0x270 <_ZN5Motor9calibrateEb+0x20>
+ 26a:	81 30       	cpi	r24, 0x01	; 1
+ 26c:	09 f4       	brne	.+2      	; 0x270 <_ZN5Motor9calibrateEb+0x20>
+ 26e:	48 c0       	rjmp	.+144    	; 0x300 <_ZN5Motor9calibrateEb+0xb0>
+ 270:	21 11       	cpse	r18, r1
+ 272:	03 c0       	rjmp	.+6      	; 0x27a <_ZN5Motor9calibrateEb+0x2a>
+				(!direction && state == SwitchMotor::SIDE_2)) {
+ 274:	82 30       	cpi	r24, 0x02	; 2
+ 276:	09 f4       	brne	.+2      	; 0x27a <_ZN5Motor9calibrateEb+0x2a>
+ 278:	43 c0       	rjmp	.+134    	; 0x300 <_ZN5Motor9calibrateEb+0xb0>
+				return;
+			}
+			if (state != SwitchMotor::MOVING) {
+ 27a:	81 11       	cpse	r24, r1
+				startFromSide = true;
+ 27c:	81 e0       	ldi	r24, 0x01	; 1
+            }
+        }
+    }
+	
+	void forceState(SwState s) {
+		currentState = s;
+ 27e:	17 96       	adiw	r26, 0x07	; 7
+ 280:	1c 92       	st	X, r1
+ 282:	17 97       	sbiw	r26, 0x07	; 7
+		flagPressed = false;
+ 284:	18 96       	adiw	r26, 0x08	; 8
+ 286:	1c 92       	st	X, r1
+			}
+			
+			eorSwitch->forceState(SwitchMotor::MOVING);
+			eorSwitch->setExpectedDirection(direction);
+ 288:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 28a:	b5 85       	ldd	r27, Z+13	; 0x0d
+	}
+	
+	void setExpectedDirection(bool direction) {
+		expectedDirection = direction;
+ 28c:	19 96       	adiw	r26, 0x09	; 9
+ 28e:	2c 93       	st	X, r18
+ 290:	19 97       	sbiw	r26, 0x09	; 9
+		flagPressed = false;
+ 292:	18 96       	adiw	r26, 0x08	; 8
+ 294:	1c 92       	st	X, r1
+ 296:	01 c0       	rjmp	.+2      	; 0x29a <_ZN5Motor9calibrateEb+0x4a>
+		}
+		
+	}
+	
+	void goTo(bool direction) {
+		bool startFromSide = false;
+ 298:	80 e0       	ldi	r24, 0x00	; 0
+		
+		*ocrPWM = 0;
+	}
+	
+	void setDirection(bool forward) {
+		if (forward)	*portDIR |= maskDIR;
+ 29a:	22 23       	and	r18, r18
+ 29c:	39 f0       	breq	.+14     	; 0x2ac <_ZN5Motor9calibrateEb+0x5c>
+ 29e:	a0 81       	ld	r26, Z
+ 2a0:	b1 81       	ldd	r27, Z+1	; 0x01
+ 2a2:	3c 91       	ld	r19, X
+ 2a4:	94 81       	ldd	r25, Z+4	; 0x04
+ 2a6:	93 2b       	or	r25, r19
+ 2a8:	9c 93       	st	X, r25
+ 2aa:	07 c0       	rjmp	.+14     	; 0x2ba <_ZN5Motor9calibrateEb+0x6a>
+		else			*portDIR &= ~maskDIR;
+ 2ac:	a0 81       	ld	r26, Z
+ 2ae:	b1 81       	ldd	r27, Z+1	; 0x01
+ 2b0:	3c 91       	ld	r19, X
+ 2b2:	94 81       	ldd	r25, Z+4	; 0x04
+ 2b4:	90 95       	com	r25
+ 2b6:	93 23       	and	r25, r19
+ 2b8:	9c 93       	st	X, r25
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 2ba:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 2bc:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 2be:	9c ec       	ldi	r25, 0xCC	; 204
+ 2c0:	9c 93       	st	X, r25
+			eorSwitch->setExpectedDirection(direction);
+		}
+		
+		setDirection(direction);
+		setSpeed(204);
+		isMoving = true;
+ 2c2:	91 e0       	ldi	r25, 0x01	; 1
+ 2c4:	96 87       	std	Z+14, r25	; 0x0e
+		
+		if (startFromSide || (eorSwitch != 0 && eorSwitch->isPressed())) {	
+ 2c6:	81 11       	cpse	r24, r1
+ 2c8:	0e c0       	rjmp	.+28     	; 0x2e6 <_ZN5Motor9calibrateEb+0x96>
+ 2ca:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 2cc:	b5 85       	ldd	r27, Z+13	; 0x0d
+ 2ce:	10 97       	sbiw	r26, 0x00	; 0
+ 2d0:	61 f0       	breq	.+24     	; 0x2ea <_ZN5Motor9calibrateEb+0x9a>
+		*ddrReg &= ~mask;	// Input
+		*portReg |= mask;	// Pull-up
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 2d2:	cd 91       	ld	r28, X+
+ 2d4:	dc 91       	ld	r29, X
+ 2d6:	11 97       	sbiw	r26, 0x01	; 1
+ 2d8:	98 81       	ld	r25, Y
+ 2da:	16 96       	adiw	r26, 0x06	; 6
+ 2dc:	8c 91       	ld	r24, X
+ 2de:	89 23       	and	r24, r25
+ 2e0:	31 f0       	breq	.+12     	; 0x2ee <_ZN5Motor9calibrateEb+0x9e>
+ 2e2:	80 e0       	ldi	r24, 0x00	; 0
+ 2e4:	05 c0       	rjmp	.+10     	; 0x2f0 <_ZN5Motor9calibrateEb+0xa0>
+ 2e6:	81 e0       	ldi	r24, 0x01	; 1
+ 2e8:	03 c0       	rjmp	.+6      	; 0x2f0 <_ZN5Motor9calibrateEb+0xa0>
+ 2ea:	80 e0       	ldi	r24, 0x00	; 0
+ 2ec:	01 c0       	rjmp	.+2      	; 0x2f0 <_ZN5Motor9calibrateEb+0xa0>
+ 2ee:	81 e0       	ldi	r24, 0x01	; 1
+ 2f0:	88 23       	and	r24, r24
+ 2f2:	29 f0       	breq	.+10     	; 0x2fe <_ZN5Motor9calibrateEb+0xae>
+			isEscaping = true;
+ 2f4:	81 e0       	ldi	r24, 0x01	; 1
+ 2f6:	87 87       	std	Z+15, r24	; 0x0f
+			escapeCounter = 0;
+ 2f8:	11 8a       	std	Z+17, r1	; 0x11
+ 2fa:	10 8a       	std	Z+16, r1	; 0x10
+ 2fc:	01 c0       	rjmp	.+2      	; 0x300 <_ZN5Motor9calibrateEb+0xb0>
+		} else {
+			isEscaping = false;
+ 2fe:	17 86       	std	Z+15, r1	; 0x0f
+	}
+	
+	void calibrate(bool direction) {
+		goTo(direction);
+		
+		if(isMoving) {
+ 300:	86 85       	ldd	r24, Z+14	; 0x0e
+ 302:	88 23       	and	r24, r24
+ 304:	21 f0       	breq	.+8      	; 0x30e <_ZN5Motor9calibrateEb+0xbe>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 306:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 308:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 30a:	89 e9       	ldi	r24, 0x99	; 153
+ 30c:	8c 93       	st	X, r24
+		
+		setDirection(direction);
+		setSpeed(204);
+		isMoving = true;
+		
+		if (startFromSide || (eorSwitch != 0 && eorSwitch->isPressed())) {	
+ 30e:	40 e0       	ldi	r20, 0x00	; 0
+ 310:	59 e0       	ldi	r21, 0x09	; 9
+ 312:	6d e3       	ldi	r22, 0x3D	; 61
+ 314:	70 e0       	ldi	r23, 0x00	; 0
+		*portEN &= ~maskEN;
+		isMoving = false;
+	}
+	
+	bool getIsMoving() {
+		return isMoving;
+ 316:	86 85       	ldd	r24, Z+14	; 0x0e
+		if(isMoving) {
+			setSpeed(153);
+		}
+		
+		uint32_t timeout = 4000000;
+		while (getIsMoving() && timeout > 0) {
+ 318:	88 23       	and	r24, r24
+ 31a:	39 f0       	breq	.+14     	; 0x32a <_ZN5Motor9calibrateEb+0xda>
+ 31c:	41 15       	cp	r20, r1
+ 31e:	51 05       	cpc	r21, r1
+ 320:	61 05       	cpc	r22, r1
+ 322:	71 05       	cpc	r23, r1
+ 324:	19 f4       	brne	.+6      	; 0x32c <_ZN5Motor9calibrateEb+0xdc>
+ 326:	80 e0       	ldi	r24, 0x00	; 0
+ 328:	01 c0       	rjmp	.+2      	; 0x32c <_ZN5Motor9calibrateEb+0xdc>
+ 32a:	80 e0       	ldi	r24, 0x00	; 0
+ 32c:	88 23       	and	r24, r24
+ 32e:	09 f4       	brne	.+2      	; 0x332 <_ZN5Motor9calibrateEb+0xe2>
+ 330:	42 c0       	rjmp	.+132    	; 0x3b6 <_ZN5Motor9calibrateEb+0x166>
+		}
+	}
+	
+	// Se debe llamar cada iteración
+	void update() {
+		if (eorSwitch != 0 && isMoving) {
+ 332:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 334:	b5 85       	ldd	r27, Z+13	; 0x0d
+ 336:	10 97       	sbiw	r26, 0x00	; 0
+ 338:	c9 f1       	breq	.+114    	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+ 33a:	86 85       	ldd	r24, Z+14	; 0x0e
+ 33c:	88 23       	and	r24, r24
+ 33e:	b1 f1       	breq	.+108    	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+			if (isEscaping) {
+ 340:	87 85       	ldd	r24, Z+15	; 0x0f
+ 342:	88 23       	and	r24, r24
+ 344:	f9 f0       	breq	.+62     	; 0x384 <_ZN5Motor9calibrateEb+0x134>
+ 346:	cd 91       	ld	r28, X+
+ 348:	dc 91       	ld	r29, X
+ 34a:	11 97       	sbiw	r26, 0x01	; 1
+ 34c:	98 81       	ld	r25, Y
+ 34e:	16 96       	adiw	r26, 0x06	; 6
+ 350:	8c 91       	ld	r24, X
+ 352:	16 97       	sbiw	r26, 0x06	; 6
+ 354:	89 23       	and	r24, r25
+				if (!eorSwitch->isPressed()) {
+ 356:	99 f0       	breq	.+38     	; 0x37e <_ZN5Motor9calibrateEb+0x12e>
+					escapeCounter++;
+ 358:	80 89       	ldd	r24, Z+16	; 0x10
+ 35a:	91 89       	ldd	r25, Z+17	; 0x11
+ 35c:	01 96       	adiw	r24, 0x01	; 1
+ 35e:	91 8b       	std	Z+17, r25	; 0x11
+ 360:	80 8b       	std	Z+16, r24	; 0x10
+					if (escapeCounter > 20000) {
+ 362:	81 32       	cpi	r24, 0x21	; 33
+ 364:	9e 44       	sbci	r25, 0x4E	; 78
+ 366:	10 f1       	brcs	.+68     	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+						isEscaping = false;
+ 368:	17 86       	std	Z+15, r1	; 0x0f
+						escapeCounter = 0;
+ 36a:	11 8a       	std	Z+17, r1	; 0x11
+ 36c:	10 8a       	std	Z+16, r1	; 0x10
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 36e:	18 96       	adiw	r26, 0x08	; 8
+ 370:	8c 91       	ld	r24, X
+ 372:	18 97       	sbiw	r26, 0x08	; 8
+ 374:	88 23       	and	r24, r24
+ 376:	d1 f0       	breq	.+52     	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+			flagPressed = false;
+ 378:	18 96       	adiw	r26, 0x08	; 8
+ 37a:	1c 92       	st	X, r1
+ 37c:	17 c0       	rjmp	.+46     	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+						
+						eorSwitch->consumePressedFlag();
+					}
+				} else {
+					escapeCounter = 0;
+ 37e:	11 8a       	std	Z+17, r1	; 0x11
+ 380:	10 8a       	std	Z+16, r1	; 0x10
+ 382:	14 c0       	rjmp	.+40     	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 384:	18 96       	adiw	r26, 0x08	; 8
+ 386:	8c 91       	ld	r24, X
+ 388:	18 97       	sbiw	r26, 0x08	; 8
+ 38a:	88 23       	and	r24, r24
+ 38c:	11 f0       	breq	.+4      	; 0x392 <_ZN5Motor9calibrateEb+0x142>
+			flagPressed = false;
+ 38e:	18 96       	adiw	r26, 0x08	; 8
+ 390:	1c 92       	st	X, r1
+				}
+				
+			} else {
+				if (eorSwitch->consumePressedFlag()) {
+ 392:	88 23       	and	r24, r24
+ 394:	59 f0       	breq	.+22     	; 0x3ac <_ZN5Motor9calibrateEb+0x15c>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 396:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 398:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 39a:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 39c:	a5 81       	ldd	r26, Z+5	; 0x05
+ 39e:	b6 81       	ldd	r27, Z+6	; 0x06
+ 3a0:	9c 91       	ld	r25, X
+ 3a2:	81 85       	ldd	r24, Z+9	; 0x09
+ 3a4:	80 95       	com	r24
+ 3a6:	89 23       	and	r24, r25
+ 3a8:	8c 93       	st	X, r24
+		isMoving = false;
+ 3aa:	16 86       	std	Z+14, r1	; 0x0e
+		}
+		
+		uint32_t timeout = 4000000;
+		while (getIsMoving() && timeout > 0) {
+			update();
+			timeout--;
+ 3ac:	41 50       	subi	r20, 0x01	; 1
+ 3ae:	51 09       	sbc	r21, r1
+ 3b0:	61 09       	sbc	r22, r1
+ 3b2:	71 09       	sbc	r23, r1
+		if(isMoving) {
+			setSpeed(153);
+		}
+		
+		uint32_t timeout = 4000000;
+		while (getIsMoving() && timeout > 0) {
+ 3b4:	b0 cf       	rjmp	.-160    	; 0x316 <_ZN5Motor9calibrateEb+0xc6>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 3b6:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 3b8:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 3ba:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 3bc:	a5 81       	ldd	r26, Z+5	; 0x05
+ 3be:	b6 81       	ldd	r27, Z+6	; 0x06
+ 3c0:	9c 91       	ld	r25, X
+ 3c2:	81 85       	ldd	r24, Z+9	; 0x09
+ 3c4:	80 95       	com	r24
+ 3c6:	89 23       	and	r24, r25
+ 3c8:	8c 93       	st	X, r24
+		isMoving = false;
+ 3ca:	16 86       	std	Z+14, r1	; 0x0e
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 3cc:	8f ef       	ldi	r24, 0xFF	; 255
+ 3ce:	91 ee       	ldi	r25, 0xE1	; 225
+ 3d0:	34 e0       	ldi	r19, 0x04	; 4
+ 3d2:	81 50       	subi	r24, 0x01	; 1
+ 3d4:	90 40       	sbci	r25, 0x00	; 0
+ 3d6:	30 40       	sbci	r19, 0x00	; 0
+ 3d8:	e1 f7       	brne	.-8      	; 0x3d2 <_ZN5Motor9calibrateEb+0x182>
+ 3da:	00 c0       	rjmp	.+0      	; 0x3dc <_ZN5Motor9calibrateEb+0x18c>
+ 3dc:	00 00       	nop
+		}
+		
+		stop();
+		_delay_ms(200);
+		
+		if (eorSwitch != 0) {
+ 3de:	04 84       	ldd	r0, Z+12	; 0x0c
+ 3e0:	f5 85       	ldd	r31, Z+13	; 0x0d
+ 3e2:	e0 2d       	mov	r30, r0
+ 3e4:	30 97       	sbiw	r30, 0x00	; 0
+ 3e6:	49 f0       	breq	.+18     	; 0x3fa <_ZN5Motor9calibrateEb+0x1aa>
+			if(direction)	eorSwitch->forceState(SwitchMotor::SIDE_1);
+ 3e8:	22 23       	and	r18, r18
+ 3ea:	21 f0       	breq	.+8      	; 0x3f4 <_ZN5Motor9calibrateEb+0x1a4>
+            }
+        }
+    }
+	
+	void forceState(SwState s) {
+		currentState = s;
+ 3ec:	81 e0       	ldi	r24, 0x01	; 1
+ 3ee:	87 83       	std	Z+7, r24	; 0x07
+		flagPressed = false;
+ 3f0:	10 86       	std	Z+8, r1	; 0x08
+ 3f2:	03 c0       	rjmp	.+6      	; 0x3fa <_ZN5Motor9calibrateEb+0x1aa>
+            }
+        }
+    }
+	
+	void forceState(SwState s) {
+		currentState = s;
+ 3f4:	82 e0       	ldi	r24, 0x02	; 2
+ 3f6:	87 83       	std	Z+7, r24	; 0x07
+		flagPressed = false;
+ 3f8:	10 86       	std	Z+8, r1	; 0x08
+			else			eorSwitch->forceState(SwitchMotor::SIDE_2);
+		}
+		
+	}
+ 3fa:	df 91       	pop	r29
+ 3fc:	cf 91       	pop	r28
+ 3fe:	08 95       	ret
+
+00000400 <_ZN5Motor4goToEb>:
+	
+	void goTo(bool direction) {
+ 400:	cf 93       	push	r28
+ 402:	df 93       	push	r29
+ 404:	fc 01       	movw	r30, r24
+		bool startFromSide = false;
+	
+		if (eorSwitch != 0) {
+ 406:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 408:	b5 85       	ldd	r27, Z+13	; 0x0d
+ 40a:	10 97       	sbiw	r26, 0x00	; 0
+ 40c:	f9 f0       	breq	.+62     	; 0x44c <_ZN5Motor4goToEb+0x4c>
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+	}
+
+	SwState getState() {
+		return currentState;
+ 40e:	17 96       	adiw	r26, 0x07	; 7
+ 410:	8c 91       	ld	r24, X
+ 412:	17 97       	sbiw	r26, 0x07	; 7
+			SwitchMotor::SwState state = eorSwitch->getState();
+			if ((direction && state == SwitchMotor::SIDE_1) ||
+ 414:	66 23       	and	r22, r22
+ 416:	19 f0       	breq	.+6      	; 0x41e <_ZN5Motor4goToEb+0x1e>
+ 418:	81 30       	cpi	r24, 0x01	; 1
+ 41a:	09 f4       	brne	.+2      	; 0x41e <_ZN5Motor4goToEb+0x1e>
+ 41c:	4b c0       	rjmp	.+150    	; 0x4b4 <_ZN5Motor4goToEb+0xb4>
+ 41e:	61 11       	cpse	r22, r1
+ 420:	03 c0       	rjmp	.+6      	; 0x428 <_ZN5Motor4goToEb+0x28>
+				(!direction && state == SwitchMotor::SIDE_2)) {
+ 422:	82 30       	cpi	r24, 0x02	; 2
+ 424:	09 f4       	brne	.+2      	; 0x428 <_ZN5Motor4goToEb+0x28>
+ 426:	46 c0       	rjmp	.+140    	; 0x4b4 <_ZN5Motor4goToEb+0xb4>
+				return;
+			}
+			if (state != SwitchMotor::MOVING) {
+ 428:	81 11       	cpse	r24, r1
+ 42a:	02 c0       	rjmp	.+4      	; 0x430 <_ZN5Motor4goToEb+0x30>
+		}
+		
+	}
+	
+	void goTo(bool direction) {
+		bool startFromSide = false;
+ 42c:	90 e0       	ldi	r25, 0x00	; 0
+ 42e:	01 c0       	rjmp	.+2      	; 0x432 <_ZN5Motor4goToEb+0x32>
+			if ((direction && state == SwitchMotor::SIDE_1) ||
+				(!direction && state == SwitchMotor::SIDE_2)) {
+				return;
+			}
+			if (state != SwitchMotor::MOVING) {
+				startFromSide = true;
+ 430:	91 e0       	ldi	r25, 0x01	; 1
+            }
+        }
+    }
+	
+	void forceState(SwState s) {
+		currentState = s;
+ 432:	17 96       	adiw	r26, 0x07	; 7
+ 434:	1c 92       	st	X, r1
+ 436:	17 97       	sbiw	r26, 0x07	; 7
+		flagPressed = false;
+ 438:	18 96       	adiw	r26, 0x08	; 8
+ 43a:	1c 92       	st	X, r1
+			}
+			
+			eorSwitch->forceState(SwitchMotor::MOVING);
+			eorSwitch->setExpectedDirection(direction);
+ 43c:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 43e:	b5 85       	ldd	r27, Z+13	; 0x0d
+	}
+	
+	void setExpectedDirection(bool direction) {
+		expectedDirection = direction;
+ 440:	19 96       	adiw	r26, 0x09	; 9
+ 442:	6c 93       	st	X, r22
+ 444:	19 97       	sbiw	r26, 0x09	; 9
+		flagPressed = false;
+ 446:	18 96       	adiw	r26, 0x08	; 8
+ 448:	1c 92       	st	X, r1
+ 44a:	01 c0       	rjmp	.+2      	; 0x44e <_ZN5Motor4goToEb+0x4e>
+		}
+		
+	}
+	
+	void goTo(bool direction) {
+		bool startFromSide = false;
+ 44c:	90 e0       	ldi	r25, 0x00	; 0
+		
+		*ocrPWM = 0;
+	}
+	
+	void setDirection(bool forward) {
+		if (forward)	*portDIR |= maskDIR;
+ 44e:	66 23       	and	r22, r22
+ 450:	39 f0       	breq	.+14     	; 0x460 <_ZN5Motor4goToEb+0x60>
+ 452:	a0 81       	ld	r26, Z
+ 454:	b1 81       	ldd	r27, Z+1	; 0x01
+ 456:	8c 91       	ld	r24, X
+ 458:	24 81       	ldd	r18, Z+4	; 0x04
+ 45a:	82 2b       	or	r24, r18
+ 45c:	8c 93       	st	X, r24
+ 45e:	07 c0       	rjmp	.+14     	; 0x46e <_ZN5Motor4goToEb+0x6e>
+		else			*portDIR &= ~maskDIR;
+ 460:	a0 81       	ld	r26, Z
+ 462:	b1 81       	ldd	r27, Z+1	; 0x01
+ 464:	2c 91       	ld	r18, X
+ 466:	84 81       	ldd	r24, Z+4	; 0x04
+ 468:	80 95       	com	r24
+ 46a:	82 23       	and	r24, r18
+ 46c:	8c 93       	st	X, r24
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 46e:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 470:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 472:	8c ec       	ldi	r24, 0xCC	; 204
+ 474:	8c 93       	st	X, r24
+			eorSwitch->setExpectedDirection(direction);
+		}
+		
+		setDirection(direction);
+		setSpeed(204);
+		isMoving = true;
+ 476:	81 e0       	ldi	r24, 0x01	; 1
+ 478:	86 87       	std	Z+14, r24	; 0x0e
+		
+		if (startFromSide || (eorSwitch != 0 && eorSwitch->isPressed())) {	
+ 47a:	91 11       	cpse	r25, r1
+ 47c:	0e c0       	rjmp	.+28     	; 0x49a <_ZN5Motor4goToEb+0x9a>
+ 47e:	a4 85       	ldd	r26, Z+12	; 0x0c
+ 480:	b5 85       	ldd	r27, Z+13	; 0x0d
+ 482:	10 97       	sbiw	r26, 0x00	; 0
+ 484:	61 f0       	breq	.+24     	; 0x49e <_ZN5Motor4goToEb+0x9e>
+		*ddrReg &= ~mask;	// Input
+		*portReg |= mask;	// Pull-up
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 486:	cd 91       	ld	r28, X+
+ 488:	dc 91       	ld	r29, X
+ 48a:	11 97       	sbiw	r26, 0x01	; 1
+ 48c:	98 81       	ld	r25, Y
+ 48e:	16 96       	adiw	r26, 0x06	; 6
+ 490:	8c 91       	ld	r24, X
+ 492:	89 23       	and	r24, r25
+ 494:	31 f0       	breq	.+12     	; 0x4a2 <_ZN5Motor4goToEb+0xa2>
+ 496:	80 e0       	ldi	r24, 0x00	; 0
+ 498:	05 c0       	rjmp	.+10     	; 0x4a4 <_ZN5Motor4goToEb+0xa4>
+ 49a:	81 e0       	ldi	r24, 0x01	; 1
+ 49c:	03 c0       	rjmp	.+6      	; 0x4a4 <_ZN5Motor4goToEb+0xa4>
+ 49e:	80 e0       	ldi	r24, 0x00	; 0
+ 4a0:	01 c0       	rjmp	.+2      	; 0x4a4 <_ZN5Motor4goToEb+0xa4>
+ 4a2:	81 e0       	ldi	r24, 0x01	; 1
+ 4a4:	88 23       	and	r24, r24
+ 4a6:	29 f0       	breq	.+10     	; 0x4b2 <_ZN5Motor4goToEb+0xb2>
+			isEscaping = true;
+ 4a8:	81 e0       	ldi	r24, 0x01	; 1
+ 4aa:	87 87       	std	Z+15, r24	; 0x0f
+			escapeCounter = 0;
+ 4ac:	11 8a       	std	Z+17, r1	; 0x11
+ 4ae:	10 8a       	std	Z+16, r1	; 0x10
+ 4b0:	01 c0       	rjmp	.+2      	; 0x4b4 <_ZN5Motor4goToEb+0xb4>
+		} else {
+			isEscaping = false;
+ 4b2:	17 86       	std	Z+15, r1	; 0x0f
+		}
+	}
+ 4b4:	df 91       	pop	r29
+ 4b6:	cf 91       	pop	r28
+ 4b8:	08 95       	ret
+
+000004ba <__vector_3>:
+SwitchMotor* sw5ptr = 0;
+SwitchMotor* sw1ptr = 0;
+
+// --- INTERRUPCIONES ---
+// IMPORTANTE: Usamos INT2_vect porque el switch está en PD2 (INT2)
+extern "C" ISR(INT2_vect) {
+ 4ba:	1f 92       	push	r1
+ 4bc:	0f 92       	push	r0
+ 4be:	0f b6       	in	r0, 0x3f	; 63
+ 4c0:	0f 92       	push	r0
+ 4c2:	11 24       	eor	r1, r1
+ 4c4:	8f 93       	push	r24
+ 4c6:	ef 93       	push	r30
+ 4c8:	ff 93       	push	r31
+	if (sw5ptr) sw5ptr->onInterrupt();
+ 4ca:	e0 91 02 02 	lds	r30, 0x0202	; 0x800202 <sw5ptr>
+ 4ce:	f0 91 03 02 	lds	r31, 0x0203	; 0x800203 <sw5ptr+0x1>
+ 4d2:	30 97       	sbiw	r30, 0x00	; 0
+ 4d4:	51 f0       	breq	.+20     	; 0x4ea <__vector_3+0x30>
+		expectedDirection = direction;
+		flagPressed = false;
+	}
+	
+	void onInterrupt() {
+		if(expectedDirection) {
+ 4d6:	81 85       	ldd	r24, Z+9	; 0x09
+ 4d8:	88 23       	and	r24, r24
+ 4da:	19 f0       	breq	.+6      	; 0x4e2 <__vector_3+0x28>
+			currentState = SIDE_1;
+ 4dc:	81 e0       	ldi	r24, 0x01	; 1
+ 4de:	87 83       	std	Z+7, r24	; 0x07
+ 4e0:	02 c0       	rjmp	.+4      	; 0x4e6 <__vector_3+0x2c>
+		} else {
+			currentState = SIDE_2;
+ 4e2:	82 e0       	ldi	r24, 0x02	; 2
+ 4e4:	87 83       	std	Z+7, r24	; 0x07
+		}
+		flagPressed = true;
+ 4e6:	81 e0       	ldi	r24, 0x01	; 1
+ 4e8:	80 87       	std	Z+8, r24	; 0x08
+}
+ 4ea:	ff 91       	pop	r31
+ 4ec:	ef 91       	pop	r30
+ 4ee:	8f 91       	pop	r24
+ 4f0:	0f 90       	pop	r0
+ 4f2:	0f be       	out	0x3f, r0	; 63
+ 4f4:	0f 90       	pop	r0
+ 4f6:	1f 90       	pop	r1
+ 4f8:	18 95       	reti
+
+000004fa <__vector_11>:
+
+ISR(PCINT2_vect) {
+ 4fa:	1f 92       	push	r1
+ 4fc:	0f 92       	push	r0
+ 4fe:	0f b6       	in	r0, 0x3f	; 63
+ 500:	0f 92       	push	r0
+ 502:	11 24       	eor	r1, r1
+ 504:	8f 93       	push	r24
+ 506:	ef 93       	push	r30
+ 508:	ff 93       	push	r31
+	if (sw1ptr) sw1ptr->onInterrupt();
+ 50a:	e0 91 00 02 	lds	r30, 0x0200	; 0x800200 <__DATA_REGION_ORIGIN__>
+ 50e:	f0 91 01 02 	lds	r31, 0x0201	; 0x800201 <__DATA_REGION_ORIGIN__+0x1>
+ 512:	30 97       	sbiw	r30, 0x00	; 0
+ 514:	51 f0       	breq	.+20     	; 0x52a <__vector_11+0x30>
+		expectedDirection = direction;
+		flagPressed = false;
+	}
+	
+	void onInterrupt() {
+		if(expectedDirection) {
+ 516:	81 85       	ldd	r24, Z+9	; 0x09
+ 518:	88 23       	and	r24, r24
+ 51a:	19 f0       	breq	.+6      	; 0x522 <__vector_11+0x28>
+			currentState = SIDE_1;
+ 51c:	81 e0       	ldi	r24, 0x01	; 1
+ 51e:	87 83       	std	Z+7, r24	; 0x07
+ 520:	02 c0       	rjmp	.+4      	; 0x526 <__vector_11+0x2c>
+		} else {
+			currentState = SIDE_2;
+ 522:	82 e0       	ldi	r24, 0x02	; 2
+ 524:	87 83       	std	Z+7, r24	; 0x07
+		}
+		flagPressed = true;
+ 526:	81 e0       	ldi	r24, 0x01	; 1
+ 528:	80 87       	std	Z+8, r24	; 0x08
+}
+ 52a:	ff 91       	pop	r31
+ 52c:	ef 91       	pop	r30
+ 52e:	8f 91       	pop	r24
+ 530:	0f 90       	pop	r0
+ 532:	0f be       	out	0x3f, r0	; 63
+ 534:	0f 90       	pop	r0
+ 536:	1f 90       	pop	r1
+ 538:	18 95       	reti
+
+0000053a <_Z12initDebugLedv>:
+
+void initDebugLed() {
+	DDRD |= (1 << PD7);
+ 53a:	8a b1       	in	r24, 0x0a	; 10
+ 53c:	80 68       	ori	r24, 0x80	; 128
+ 53e:	8a b9       	out	0x0a, r24	; 10
+	PORTD &= ~(1 << PD7);
+ 540:	8b b1       	in	r24, 0x0b	; 11
+ 542:	8f 77       	andi	r24, 0x7F	; 127
+ 544:	8b b9       	out	0x0b, r24	; 11
+ 546:	08 95       	ret
+
+00000548 <_Z10initISRsM5v>:
+}
+
+void initISRsM5() {
+	// Configuración para INT2 (PD2) flanco de bajada
+	EICRA |= (1 << ISC21);
+ 548:	e9 e6       	ldi	r30, 0x69	; 105
+ 54a:	f0 e0       	ldi	r31, 0x00	; 0
+ 54c:	80 81       	ld	r24, Z
+ 54e:	80 62       	ori	r24, 0x20	; 32
+ 550:	80 83       	st	Z, r24
+	EICRA &= ~(1 << ISC20);
+ 552:	80 81       	ld	r24, Z
+ 554:	8f 7e       	andi	r24, 0xEF	; 239
+ 556:	80 83       	st	Z, r24
+	EIMSK |= (1 << INT2);
+ 558:	8d b3       	in	r24, 0x1d	; 29
+ 55a:	84 60       	ori	r24, 0x04	; 4
+ 55c:	8d bb       	out	0x1d, r24	; 29
+ 55e:	08 95       	ret
+
+00000560 <_Z10initISRsM1v>:
+}
+
+void initISRsM1() {
+	// Habilitar interrupciones por cambio de pin en Puerto K
+    PCICR |= (1 << PCIE2);    // Habilitar grupo PCINT2 (Puerto K)
+ 560:	e8 e6       	ldi	r30, 0x68	; 104
+ 562:	f0 e0       	ldi	r31, 0x00	; 0
+ 564:	80 81       	ld	r24, Z
+ 566:	84 60       	ori	r24, 0x04	; 4
+ 568:	80 83       	st	Z, r24
+    PCMSK2 |= (1 << PCINT22); // Habilitar pin específico PK6
+ 56a:	ed e6       	ldi	r30, 0x6D	; 109
+ 56c:	f0 e0       	ldi	r31, 0x00	; 0
+ 56e:	80 81       	ld	r24, Z
+ 570:	80 64       	ori	r24, 0x40	; 64
+ 572:	80 83       	st	Z, r24
+ 574:	08 95       	ret
+
+00000576 <_Z15initPWMTimersM5v>:
+}
+
+void initPWMTimersM5() {
+	// Timer 5 (16 bits) configurado en modo Fast PWM de 8 bits
+	TCCR5A = (1 << COM5A1) | (1 << WGM51);
+ 576:	82 e8       	ldi	r24, 0x82	; 130
+ 578:	80 93 20 01 	sts	0x0120, r24	; 0x800120 <__TEXT_REGION_LENGTH__+0x7f0120>
+	TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50); // Prescaler 64
+ 57c:	8b e0       	ldi	r24, 0x0B	; 11
+ 57e:	80 93 21 01 	sts	0x0121, r24	; 0x800121 <__TEXT_REGION_LENGTH__+0x7f0121>
+ 582:	08 95       	ret
+
+00000584 <_Z15initPWMTimersM1v>:
+}
+
+void initPWMTimersM1() {
+    // Configurar Timer 2 para PWM rápido (Fast PWM)
+    TCCR2A = (1 << COM2A1) | (1 << WGM21) | (1 << WGM20);
+ 584:	83 e8       	ldi	r24, 0x83	; 131
+ 586:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7f00b0>
+    TCCR2B = (1 << CS22); // Prescaler 64 (difiere ligeramente del Timer 0)
+ 58a:	84 e0       	ldi	r24, 0x04	; 4
+ 58c:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7f00b1>
+ 590:	08 95       	ret
+
+00000592 <main>:
+}
+
+// --- MAIN ---
+extern "C" int main() {
+	cli();
+ 592:	f8 94       	cli
+	sw5ptr = &sw5;
+ 594:	02 e3       	ldi	r16, 0x32	; 50
+ 596:	12 e0       	ldi	r17, 0x02	; 2
+ 598:	10 93 03 02 	sts	0x0203, r17	; 0x800203 <sw5ptr+0x1>
+ 59c:	00 93 02 02 	sts	0x0202, r16	; 0x800202 <sw5ptr>
+	sw1ptr = &sw1;
+ 5a0:	c8 e2       	ldi	r28, 0x28	; 40
+ 5a2:	d2 e0       	ldi	r29, 0x02	; 2
+ 5a4:	d0 93 01 02 	sts	0x0201, r29	; 0x800201 <__DATA_REGION_ORIGIN__+0x1>
+ 5a8:	c0 93 00 02 	sts	0x0200, r28	; 0x800200 <__DATA_REGION_ORIGIN__>
+	
+	initDebugLed();
+ 5ac:	0e 94 9d 02 	call	0x53a	; 0x53a <_Z12initDebugLedv>
+	initISRsM1();
+ 5b0:	0e 94 b0 02 	call	0x560	; 0x560 <_Z10initISRsM1v>
+	initISRsM5();
+ 5b4:	0e 94 a4 02 	call	0x548	; 0x548 <_Z10initISRsM5v>
+	initPWMTimersM1();
+ 5b8:	0e 94 c2 02 	call	0x584	; 0x584 <_Z15initPWMTimersM1v>
+	initPWMTimersM5();
+ 5bc:	0e 94 bb 02 	call	0x576	; 0x576 <_Z15initPWMTimersM5v>
+		flagPressed = false;
+		expectedDirection = false;
+	}
+	
+	void init() {
+		*ddrReg &= ~mask;	// Input
+ 5c0:	d8 01       	movw	r26, r16
+ 5c2:	14 96       	adiw	r26, 0x04	; 4
+ 5c4:	ed 91       	ld	r30, X+
+ 5c6:	fc 91       	ld	r31, X
+ 5c8:	15 97       	sbiw	r26, 0x05	; 5
+ 5ca:	80 81       	ld	r24, Z
+ 5cc:	16 96       	adiw	r26, 0x06	; 6
+ 5ce:	9c 91       	ld	r25, X
+ 5d0:	16 97       	sbiw	r26, 0x06	; 6
+ 5d2:	90 95       	com	r25
+ 5d4:	89 23       	and	r24, r25
+ 5d6:	80 83       	st	Z, r24
+		*portReg |= mask;	// Pull-up
+ 5d8:	12 96       	adiw	r26, 0x02	; 2
+ 5da:	ed 91       	ld	r30, X+
+ 5dc:	fc 91       	ld	r31, X
+ 5de:	13 97       	sbiw	r26, 0x03	; 3
+ 5e0:	90 81       	ld	r25, Z
+ 5e2:	16 96       	adiw	r26, 0x06	; 6
+ 5e4:	8c 91       	ld	r24, X
+ 5e6:	89 2b       	or	r24, r25
+ 5e8:	80 83       	st	Z, r24
+	
+	sw5.init();
+	motor5.init();
+ 5ea:	86 e1       	ldi	r24, 0x16	; 22
+ 5ec:	92 e0       	ldi	r25, 0x02	; 2
+ 5ee:	0e 94 08 01 	call	0x210	; 0x210 <_ZN5Motor4initEv>
+		flagPressed = false;
+		expectedDirection = false;
+	}
+	
+	void init() {
+		*ddrReg &= ~mask;	// Input
+ 5f2:	ec 81       	ldd	r30, Y+4	; 0x04
+ 5f4:	fd 81       	ldd	r31, Y+5	; 0x05
+ 5f6:	80 81       	ld	r24, Z
+ 5f8:	9e 81       	ldd	r25, Y+6	; 0x06
+ 5fa:	90 95       	com	r25
+ 5fc:	89 23       	and	r24, r25
+ 5fe:	80 83       	st	Z, r24
+		*portReg |= mask;	// Pull-up
+ 600:	ea 81       	ldd	r30, Y+2	; 0x02
+ 602:	fb 81       	ldd	r31, Y+3	; 0x03
+ 604:	90 81       	ld	r25, Z
+ 606:	8e 81       	ldd	r24, Y+6	; 0x06
+ 608:	89 2b       	or	r24, r25
+ 60a:	80 83       	st	Z, r24
+	sw1.init();
+	motor1.init();
+ 60c:	84 e0       	ldi	r24, 0x04	; 4
+ 60e:	92 e0       	ldi	r25, 0x02	; 2
+ 610:	0e 94 08 01 	call	0x210	; 0x210 <_ZN5Motor4initEv>
+	sei();
+ 614:	78 94       	sei
+
+	// Arranque visual
+	for(int i = 0; i < 3; i++) {
+ 616:	80 e0       	ldi	r24, 0x00	; 0
+ 618:	90 e0       	ldi	r25, 0x00	; 0
+ 61a:	83 30       	cpi	r24, 0x03	; 3
+ 61c:	91 05       	cpc	r25, r1
+ 61e:	d4 f4       	brge	.+52     	; 0x654 <main+0xc2>
+		PORTD |= (1 << PD7);
+ 620:	2b b1       	in	r18, 0x0b	; 11
+ 622:	20 68       	ori	r18, 0x80	; 128
+ 624:	2b b9       	out	0x0b, r18	; 11
+ 626:	bf e7       	ldi	r27, 0x7F	; 127
+ 628:	29 ea       	ldi	r18, 0xA9	; 169
+ 62a:	33 e0       	ldi	r19, 0x03	; 3
+ 62c:	b1 50       	subi	r27, 0x01	; 1
+ 62e:	20 40       	sbci	r18, 0x00	; 0
+ 630:	30 40       	sbci	r19, 0x00	; 0
+ 632:	e1 f7       	brne	.-8      	; 0x62c <main+0x9a>
+ 634:	00 c0       	rjmp	.+0      	; 0x636 <main+0xa4>
+ 636:	00 00       	nop
+		_delay_ms(150);
+		PORTD &= ~(1 << PD7);
+ 638:	2b b1       	in	r18, 0x0b	; 11
+ 63a:	2f 77       	andi	r18, 0x7F	; 127
+ 63c:	2b b9       	out	0x0b, r18	; 11
+ 63e:	4f e7       	ldi	r20, 0x7F	; 127
+ 640:	a9 ea       	ldi	r26, 0xA9	; 169
+ 642:	b3 e0       	ldi	r27, 0x03	; 3
+ 644:	41 50       	subi	r20, 0x01	; 1
+ 646:	a0 40       	sbci	r26, 0x00	; 0
+ 648:	b0 40       	sbci	r27, 0x00	; 0
+ 64a:	e1 f7       	brne	.-8      	; 0x644 <main+0xb2>
+ 64c:	00 c0       	rjmp	.+0      	; 0x64e <main+0xbc>
+ 64e:	00 00       	nop
+	sw1.init();
+	motor1.init();
+	sei();
+
+	// Arranque visual
+	for(int i = 0; i < 3; i++) {
+ 650:	01 96       	adiw	r24, 0x01	; 1
+ 652:	e3 cf       	rjmp	.-58     	; 0x61a <main+0x88>
+	#define M5_ARRIBA 1
+	#define M5_ABAJO 0
+	#define M1_ARRIBA 1
+	#define M1_ABAJO 0
+
+	motor5.calibrate(M5_ABAJO);
+ 654:	60 e0       	ldi	r22, 0x00	; 0
+ 656:	86 e1       	ldi	r24, 0x16	; 22
+ 658:	92 e0       	ldi	r25, 0x02	; 2
+ 65a:	0e 94 28 01 	call	0x250	; 0x250 <_ZN5Motor9calibrateEb>
+	motor1.calibrate(M1_ABAJO);
+ 65e:	60 e0       	ldi	r22, 0x00	; 0
+ 660:	84 e0       	ldi	r24, 0x04	; 4
+ 662:	92 e0       	ldi	r25, 0x02	; 2
+ 664:	0e 94 28 01 	call	0x250	; 0x250 <_ZN5Motor9calibrateEb>
+ 668:	2f ef       	ldi	r18, 0xFF	; 255
+ 66a:	30 e7       	ldi	r19, 0x70	; 112
+ 66c:	42 e0       	ldi	r20, 0x02	; 2
+ 66e:	21 50       	subi	r18, 0x01	; 1
+ 670:	30 40       	sbci	r19, 0x00	; 0
+ 672:	40 40       	sbci	r20, 0x00	; 0
+ 674:	e1 f7       	brne	.-8      	; 0x66e <main+0xdc>
+ 676:	00 c0       	rjmp	.+0      	; 0x678 <main+0xe6>
+ 678:	00 00       	nop
+	
+	_delay_ms(100);
+
+	motor5.goTo(M5_ARRIBA);
+ 67a:	61 e0       	ldi	r22, 0x01	; 1
+ 67c:	86 e1       	ldi	r24, 0x16	; 22
+ 67e:	92 e0       	ldi	r25, 0x02	; 2
+ 680:	0e 94 00 02 	call	0x400	; 0x400 <_ZN5Motor4goToEb>
+		*portEN &= ~maskEN;
+		isMoving = false;
+	}
+	
+	bool getIsMoving() {
+		return isMoving;
+ 684:	80 91 24 02 	lds	r24, 0x0224	; 0x800224 <motor5+0xe>
+	while(motor5.getIsMoving()) {
+ 688:	88 23       	and	r24, r24
+ 68a:	09 f4       	brne	.+2      	; 0x68e <main+0xfc>
+ 68c:	46 c0       	rjmp	.+140    	; 0x71a <main+0x188>
+		}
+	}
+	
+	// Se debe llamar cada iteración
+	void update() {
+		if (eorSwitch != 0 && isMoving) {
+ 68e:	e0 91 22 02 	lds	r30, 0x0222	; 0x800222 <motor5+0xc>
+ 692:	f0 91 23 02 	lds	r31, 0x0223	; 0x800223 <motor5+0xd>
+ 696:	30 97       	sbiw	r30, 0x00	; 0
+ 698:	a9 f3       	breq	.-22     	; 0x684 <main+0xf2>
+ 69a:	88 23       	and	r24, r24
+ 69c:	99 f3       	breq	.-26     	; 0x684 <main+0xf2>
+			if (isEscaping) {
+ 69e:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <motor5+0xf>
+ 6a2:	88 23       	and	r24, r24
+ 6a4:	39 f1       	breq	.+78     	; 0x6f4 <main+0x162>
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 6a6:	a0 81       	ld	r26, Z
+ 6a8:	b1 81       	ldd	r27, Z+1	; 0x01
+ 6aa:	9c 91       	ld	r25, X
+ 6ac:	86 81       	ldd	r24, Z+6	; 0x06
+ 6ae:	89 23       	and	r24, r25
+				if (!eorSwitch->isPressed()) {
+ 6b0:	e1 f0       	breq	.+56     	; 0x6ea <main+0x158>
+					escapeCounter++;
+ 6b2:	a6 e1       	ldi	r26, 0x16	; 22
+ 6b4:	b2 e0       	ldi	r27, 0x02	; 2
+ 6b6:	50 96       	adiw	r26, 0x10	; 16
+ 6b8:	8d 91       	ld	r24, X+
+ 6ba:	9c 91       	ld	r25, X
+ 6bc:	51 97       	sbiw	r26, 0x11	; 17
+ 6be:	01 96       	adiw	r24, 0x01	; 1
+ 6c0:	51 96       	adiw	r26, 0x11	; 17
+ 6c2:	9c 93       	st	X, r25
+ 6c4:	8e 93       	st	-X, r24
+ 6c6:	50 97       	sbiw	r26, 0x10	; 16
+					if (escapeCounter > 20000) {
+ 6c8:	81 32       	cpi	r24, 0x21	; 33
+ 6ca:	9e 44       	sbci	r25, 0x4E	; 78
+ 6cc:	d8 f2       	brcs	.-74     	; 0x684 <main+0xf2>
+						isEscaping = false;
+ 6ce:	a6 e1       	ldi	r26, 0x16	; 22
+ 6d0:	b2 e0       	ldi	r27, 0x02	; 2
+ 6d2:	1f 96       	adiw	r26, 0x0f	; 15
+ 6d4:	1c 92       	st	X, r1
+ 6d6:	1f 97       	sbiw	r26, 0x0f	; 15
+						escapeCounter = 0;
+ 6d8:	51 96       	adiw	r26, 0x11	; 17
+ 6da:	1c 92       	st	X, r1
+ 6dc:	1e 92       	st	-X, r1
+ 6de:	50 97       	sbiw	r26, 0x10	; 16
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 6e0:	80 85       	ldd	r24, Z+8	; 0x08
+ 6e2:	88 23       	and	r24, r24
+ 6e4:	79 f2       	breq	.-98     	; 0x684 <main+0xf2>
+			flagPressed = false;
+ 6e6:	10 86       	std	Z+8, r1	; 0x08
+ 6e8:	cd cf       	rjmp	.-102    	; 0x684 <main+0xf2>
+						
+						eorSwitch->consumePressedFlag();
+					}
+				} else {
+					escapeCounter = 0;
+ 6ea:	10 92 27 02 	sts	0x0227, r1	; 0x800227 <motor5+0x11>
+ 6ee:	10 92 26 02 	sts	0x0226, r1	; 0x800226 <motor5+0x10>
+ 6f2:	c8 cf       	rjmp	.-112    	; 0x684 <main+0xf2>
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 6f4:	80 85       	ldd	r24, Z+8	; 0x08
+ 6f6:	81 11       	cpse	r24, r1
+			flagPressed = false;
+ 6f8:	10 86       	std	Z+8, r1	; 0x08
+				}
+				
+			} else {
+				if (eorSwitch->consumePressedFlag()) {
+ 6fa:	88 23       	and	r24, r24
+ 6fc:	19 f2       	breq	.-122    	; 0x684 <main+0xf2>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 6fe:	e6 e1       	ldi	r30, 0x16	; 22
+ 700:	f2 e0       	ldi	r31, 0x02	; 2
+ 702:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 704:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 706:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 708:	a5 81       	ldd	r26, Z+5	; 0x05
+ 70a:	b6 81       	ldd	r27, Z+6	; 0x06
+ 70c:	8c 91       	ld	r24, X
+ 70e:	91 85       	ldd	r25, Z+9	; 0x09
+ 710:	90 95       	com	r25
+ 712:	89 23       	and	r24, r25
+ 714:	8c 93       	st	X, r24
+		isMoving = false;
+ 716:	16 86       	std	Z+14, r1	; 0x0e
+ 718:	b5 cf       	rjmp	.-150    	; 0x684 <main+0xf2>
+		motor5.update();
+	}
+	
+	motor5.goTo(M5_ABAJO);
+ 71a:	60 e0       	ldi	r22, 0x00	; 0
+ 71c:	86 e1       	ldi	r24, 0x16	; 22
+ 71e:	92 e0       	ldi	r25, 0x02	; 2
+ 720:	0e 94 00 02 	call	0x400	; 0x400 <_ZN5Motor4goToEb>
+	}
+	
+	bool getIsMoving() {
+		return isMoving;
+ 724:	80 91 24 02 	lds	r24, 0x0224	; 0x800224 <motor5+0xe>
+	while(motor5.getIsMoving()) {
+ 728:	88 23       	and	r24, r24
+ 72a:	09 f4       	brne	.+2      	; 0x72e <main+0x19c>
+ 72c:	46 c0       	rjmp	.+140    	; 0x7ba <main+0x228>
+		}
+	}
+	
+	// Se debe llamar cada iteración
+	void update() {
+		if (eorSwitch != 0 && isMoving) {
+ 72e:	e0 91 22 02 	lds	r30, 0x0222	; 0x800222 <motor5+0xc>
+ 732:	f0 91 23 02 	lds	r31, 0x0223	; 0x800223 <motor5+0xd>
+ 736:	30 97       	sbiw	r30, 0x00	; 0
+ 738:	a9 f3       	breq	.-22     	; 0x724 <main+0x192>
+ 73a:	88 23       	and	r24, r24
+ 73c:	99 f3       	breq	.-26     	; 0x724 <main+0x192>
+			if (isEscaping) {
+ 73e:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <motor5+0xf>
+ 742:	88 23       	and	r24, r24
+ 744:	39 f1       	breq	.+78     	; 0x794 <main+0x202>
+		*ddrReg &= ~mask;	// Input
+		*portReg |= mask;	// Pull-up
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 746:	a0 81       	ld	r26, Z
+ 748:	b1 81       	ldd	r27, Z+1	; 0x01
+ 74a:	9c 91       	ld	r25, X
+ 74c:	86 81       	ldd	r24, Z+6	; 0x06
+ 74e:	89 23       	and	r24, r25
+				if (!eorSwitch->isPressed()) {
+ 750:	e1 f0       	breq	.+56     	; 0x78a <main+0x1f8>
+					escapeCounter++;
+ 752:	a6 e1       	ldi	r26, 0x16	; 22
+ 754:	b2 e0       	ldi	r27, 0x02	; 2
+ 756:	50 96       	adiw	r26, 0x10	; 16
+ 758:	8d 91       	ld	r24, X+
+ 75a:	9c 91       	ld	r25, X
+ 75c:	51 97       	sbiw	r26, 0x11	; 17
+ 75e:	01 96       	adiw	r24, 0x01	; 1
+ 760:	51 96       	adiw	r26, 0x11	; 17
+ 762:	9c 93       	st	X, r25
+ 764:	8e 93       	st	-X, r24
+ 766:	50 97       	sbiw	r26, 0x10	; 16
+					if (escapeCounter > 20000) {
+ 768:	81 32       	cpi	r24, 0x21	; 33
+ 76a:	9e 44       	sbci	r25, 0x4E	; 78
+ 76c:	d8 f2       	brcs	.-74     	; 0x724 <main+0x192>
+						isEscaping = false;
+ 76e:	a6 e1       	ldi	r26, 0x16	; 22
+ 770:	b2 e0       	ldi	r27, 0x02	; 2
+ 772:	1f 96       	adiw	r26, 0x0f	; 15
+ 774:	1c 92       	st	X, r1
+ 776:	1f 97       	sbiw	r26, 0x0f	; 15
+						escapeCounter = 0;
+ 778:	51 96       	adiw	r26, 0x11	; 17
+ 77a:	1c 92       	st	X, r1
+ 77c:	1e 92       	st	-X, r1
+ 77e:	50 97       	sbiw	r26, 0x10	; 16
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 780:	80 85       	ldd	r24, Z+8	; 0x08
+ 782:	88 23       	and	r24, r24
+ 784:	79 f2       	breq	.-98     	; 0x724 <main+0x192>
+			flagPressed = false;
+ 786:	10 86       	std	Z+8, r1	; 0x08
+ 788:	cd cf       	rjmp	.-102    	; 0x724 <main+0x192>
+						
+						eorSwitch->consumePressedFlag();
+					}
+				} else {
+					escapeCounter = 0;
+ 78a:	10 92 27 02 	sts	0x0227, r1	; 0x800227 <motor5+0x11>
+ 78e:	10 92 26 02 	sts	0x0226, r1	; 0x800226 <motor5+0x10>
+ 792:	c8 cf       	rjmp	.-112    	; 0x724 <main+0x192>
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 794:	80 85       	ldd	r24, Z+8	; 0x08
+ 796:	81 11       	cpse	r24, r1
+			flagPressed = false;
+ 798:	10 86       	std	Z+8, r1	; 0x08
+				}
+				
+			} else {
+				if (eorSwitch->consumePressedFlag()) {
+ 79a:	88 23       	and	r24, r24
+ 79c:	19 f2       	breq	.-122    	; 0x724 <main+0x192>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 79e:	e6 e1       	ldi	r30, 0x16	; 22
+ 7a0:	f2 e0       	ldi	r31, 0x02	; 2
+ 7a2:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 7a4:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 7a6:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 7a8:	a5 81       	ldd	r26, Z+5	; 0x05
+ 7aa:	b6 81       	ldd	r27, Z+6	; 0x06
+ 7ac:	8c 91       	ld	r24, X
+ 7ae:	91 85       	ldd	r25, Z+9	; 0x09
+ 7b0:	90 95       	com	r25
+ 7b2:	89 23       	and	r24, r25
+ 7b4:	8c 93       	st	X, r24
+		isMoving = false;
+ 7b6:	16 86       	std	Z+14, r1	; 0x0e
+ 7b8:	b5 cf       	rjmp	.-150    	; 0x724 <main+0x192>
+		motor5.update();
+	}
+	
+	motor1.goTo(M1_ARRIBA);
+ 7ba:	61 e0       	ldi	r22, 0x01	; 1
+ 7bc:	84 e0       	ldi	r24, 0x04	; 4
+ 7be:	92 e0       	ldi	r25, 0x02	; 2
+ 7c0:	0e 94 00 02 	call	0x400	; 0x400 <_ZN5Motor4goToEb>
+	}
+	
+	bool getIsMoving() {
+		return isMoving;
+ 7c4:	80 91 12 02 	lds	r24, 0x0212	; 0x800212 <motor1+0xe>
+	while(motor1.getIsMoving()){ //Mientras no esté arriba
+ 7c8:	88 23       	and	r24, r24
+ 7ca:	09 f4       	brne	.+2      	; 0x7ce <main+0x23c>
+ 7cc:	44 c0       	rjmp	.+136    	; 0x856 <main+0x2c4>
+		}
+	}
+	
+	// Se debe llamar cada iteración
+	void update() {
+		if (eorSwitch != 0 && isMoving) {
+ 7ce:	e0 91 10 02 	lds	r30, 0x0210	; 0x800210 <motor1+0xc>
+ 7d2:	f0 91 11 02 	lds	r31, 0x0211	; 0x800211 <motor1+0xd>
+ 7d6:	30 97       	sbiw	r30, 0x00	; 0
+ 7d8:	a9 f3       	breq	.-22     	; 0x7c4 <main+0x232>
+ 7da:	88 23       	and	r24, r24
+ 7dc:	99 f3       	breq	.-26     	; 0x7c4 <main+0x232>
+			if (isEscaping) {
+ 7de:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <motor1+0xf>
+ 7e2:	88 23       	and	r24, r24
+ 7e4:	29 f1       	breq	.+74     	; 0x830 <main+0x29e>
+		*ddrReg &= ~mask;	// Input
+		*portReg |= mask;	// Pull-up
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 7e6:	a0 81       	ld	r26, Z
+ 7e8:	b1 81       	ldd	r27, Z+1	; 0x01
+ 7ea:	9c 91       	ld	r25, X
+ 7ec:	86 81       	ldd	r24, Z+6	; 0x06
+ 7ee:	89 23       	and	r24, r25
+				if (!eorSwitch->isPressed()) {
+ 7f0:	d1 f0       	breq	.+52     	; 0x826 <main+0x294>
+					escapeCounter++;
+ 7f2:	a4 e0       	ldi	r26, 0x04	; 4
+ 7f4:	b2 e0       	ldi	r27, 0x02	; 2
+ 7f6:	50 96       	adiw	r26, 0x10	; 16
+ 7f8:	8d 91       	ld	r24, X+
+ 7fa:	9c 91       	ld	r25, X
+ 7fc:	51 97       	sbiw	r26, 0x11	; 17
+ 7fe:	01 96       	adiw	r24, 0x01	; 1
+ 800:	51 96       	adiw	r26, 0x11	; 17
+ 802:	9c 93       	st	X, r25
+ 804:	8e 93       	st	-X, r24
+ 806:	50 97       	sbiw	r26, 0x10	; 16
+					if (escapeCounter > 20000) {
+ 808:	81 32       	cpi	r24, 0x21	; 33
+ 80a:	9e 44       	sbci	r25, 0x4E	; 78
+ 80c:	d8 f2       	brcs	.-74     	; 0x7c4 <main+0x232>
+						isEscaping = false;
+ 80e:	1f 96       	adiw	r26, 0x0f	; 15
+ 810:	1c 92       	st	X, r1
+ 812:	1f 97       	sbiw	r26, 0x0f	; 15
+						escapeCounter = 0;
+ 814:	51 96       	adiw	r26, 0x11	; 17
+ 816:	1c 92       	st	X, r1
+ 818:	1e 92       	st	-X, r1
+ 81a:	50 97       	sbiw	r26, 0x10	; 16
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 81c:	80 85       	ldd	r24, Z+8	; 0x08
+ 81e:	88 23       	and	r24, r24
+ 820:	89 f2       	breq	.-94     	; 0x7c4 <main+0x232>
+			flagPressed = false;
+ 822:	10 86       	std	Z+8, r1	; 0x08
+ 824:	cf cf       	rjmp	.-98     	; 0x7c4 <main+0x232>
+						
+						eorSwitch->consumePressedFlag();
+					}
+				} else {
+					escapeCounter = 0;
+ 826:	10 92 15 02 	sts	0x0215, r1	; 0x800215 <motor1+0x11>
+ 82a:	10 92 14 02 	sts	0x0214, r1	; 0x800214 <motor1+0x10>
+ 82e:	ca cf       	rjmp	.-108    	; 0x7c4 <main+0x232>
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 830:	80 85       	ldd	r24, Z+8	; 0x08
+ 832:	81 11       	cpse	r24, r1
+			flagPressed = false;
+ 834:	10 86       	std	Z+8, r1	; 0x08
+				}
+				
+			} else {
+				if (eorSwitch->consumePressedFlag()) {
+ 836:	88 23       	and	r24, r24
+ 838:	29 f2       	breq	.-118    	; 0x7c4 <main+0x232>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 83a:	e4 e0       	ldi	r30, 0x04	; 4
+ 83c:	f2 e0       	ldi	r31, 0x02	; 2
+ 83e:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 840:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 842:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 844:	a5 81       	ldd	r26, Z+5	; 0x05
+ 846:	b6 81       	ldd	r27, Z+6	; 0x06
+ 848:	8c 91       	ld	r24, X
+ 84a:	91 85       	ldd	r25, Z+9	; 0x09
+ 84c:	90 95       	com	r25
+ 84e:	89 23       	and	r24, r25
+ 850:	8c 93       	st	X, r24
+		isMoving = false;
+ 852:	16 86       	std	Z+14, r1	; 0x0e
+ 854:	b7 cf       	rjmp	.-146    	; 0x7c4 <main+0x232>
+		motor1.update();
+	}
+
+	motor1.goTo(M1_ABAJO);
+ 856:	60 e0       	ldi	r22, 0x00	; 0
+ 858:	84 e0       	ldi	r24, 0x04	; 4
+ 85a:	92 e0       	ldi	r25, 0x02	; 2
+ 85c:	0e 94 00 02 	call	0x400	; 0x400 <_ZN5Motor4goToEb>
+	}
+	
+	bool getIsMoving() {
+		return isMoving;
+ 860:	80 91 12 02 	lds	r24, 0x0212	; 0x800212 <motor1+0xe>
+	while(motor1.getIsMoving()){ //Mientras no esté abajo
+ 864:	88 23       	and	r24, r24
+ 866:	09 f4       	brne	.+2      	; 0x86a <main+0x2d8>
+ 868:	44 c0       	rjmp	.+136    	; 0x8f2 <main+0x360>
+		}
+	}
+	
+	// Se debe llamar cada iteración
+	void update() {
+		if (eorSwitch != 0 && isMoving) {
+ 86a:	e0 91 10 02 	lds	r30, 0x0210	; 0x800210 <motor1+0xc>
+ 86e:	f0 91 11 02 	lds	r31, 0x0211	; 0x800211 <motor1+0xd>
+ 872:	30 97       	sbiw	r30, 0x00	; 0
+ 874:	a9 f3       	breq	.-22     	; 0x860 <main+0x2ce>
+ 876:	88 23       	and	r24, r24
+ 878:	99 f3       	breq	.-26     	; 0x860 <main+0x2ce>
+			if (isEscaping) {
+ 87a:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <motor1+0xf>
+ 87e:	88 23       	and	r24, r24
+ 880:	29 f1       	breq	.+74     	; 0x8cc <main+0x33a>
+		*ddrReg &= ~mask;	// Input
+		*portReg |= mask;	// Pull-up
+	}
+	
+	bool isPressed() {
+		return !(*pinReg & mask);	// Pressed cuando 0
+ 882:	a0 81       	ld	r26, Z
+ 884:	b1 81       	ldd	r27, Z+1	; 0x01
+ 886:	9c 91       	ld	r25, X
+ 888:	86 81       	ldd	r24, Z+6	; 0x06
+ 88a:	89 23       	and	r24, r25
+				if (!eorSwitch->isPressed()) {
+ 88c:	d1 f0       	breq	.+52     	; 0x8c2 <main+0x330>
+					escapeCounter++;
+ 88e:	a4 e0       	ldi	r26, 0x04	; 4
+ 890:	b2 e0       	ldi	r27, 0x02	; 2
+ 892:	50 96       	adiw	r26, 0x10	; 16
+ 894:	8d 91       	ld	r24, X+
+ 896:	9c 91       	ld	r25, X
+ 898:	51 97       	sbiw	r26, 0x11	; 17
+ 89a:	01 96       	adiw	r24, 0x01	; 1
+ 89c:	51 96       	adiw	r26, 0x11	; 17
+ 89e:	9c 93       	st	X, r25
+ 8a0:	8e 93       	st	-X, r24
+ 8a2:	50 97       	sbiw	r26, 0x10	; 16
+					if (escapeCounter > 20000) {
+ 8a4:	81 32       	cpi	r24, 0x21	; 33
+ 8a6:	9e 44       	sbci	r25, 0x4E	; 78
+ 8a8:	d8 f2       	brcs	.-74     	; 0x860 <main+0x2ce>
+						isEscaping = false;
+ 8aa:	1f 96       	adiw	r26, 0x0f	; 15
+ 8ac:	1c 92       	st	X, r1
+ 8ae:	1f 97       	sbiw	r26, 0x0f	; 15
+						escapeCounter = 0;
+ 8b0:	51 96       	adiw	r26, 0x11	; 17
+ 8b2:	1c 92       	st	X, r1
+ 8b4:	1e 92       	st	-X, r1
+ 8b6:	50 97       	sbiw	r26, 0x10	; 16
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 8b8:	80 85       	ldd	r24, Z+8	; 0x08
+ 8ba:	88 23       	and	r24, r24
+ 8bc:	89 f2       	breq	.-94     	; 0x860 <main+0x2ce>
+			flagPressed = false;
+ 8be:	10 86       	std	Z+8, r1	; 0x08
+ 8c0:	cf cf       	rjmp	.-98     	; 0x860 <main+0x2ce>
+						
+						eorSwitch->consumePressedFlag();
+					}
+				} else {
+					escapeCounter = 0;
+ 8c2:	10 92 15 02 	sts	0x0215, r1	; 0x800215 <motor1+0x11>
+ 8c6:	10 92 14 02 	sts	0x0214, r1	; 0x800214 <motor1+0x10>
+ 8ca:	ca cf       	rjmp	.-108    	; 0x860 <main+0x2ce>
+		}
+		flagPressed = true;
+	}
+	
+	bool consumePressedFlag() {
+		if (flagPressed) {
+ 8cc:	80 85       	ldd	r24, Z+8	; 0x08
+ 8ce:	81 11       	cpse	r24, r1
+			flagPressed = false;
+ 8d0:	10 86       	std	Z+8, r1	; 0x08
+				}
+				
+			} else {
+				if (eorSwitch->consumePressedFlag()) {
+ 8d2:	88 23       	and	r24, r24
+ 8d4:	29 f2       	breq	.-118    	; 0x860 <main+0x2ce>
+		if (forward)	*portDIR |= maskDIR;
+		else			*portDIR &= ~maskDIR;
+	}
+	
+	void setSpeed(uint8_t speed) {
+		*ocrPWM = speed;
+ 8d6:	e4 e0       	ldi	r30, 0x04	; 4
+ 8d8:	f2 e0       	ldi	r31, 0x02	; 2
+ 8da:	a2 85       	ldd	r26, Z+10	; 0x0a
+ 8dc:	b3 85       	ldd	r27, Z+11	; 0x0b
+ 8de:	1c 92       	st	X, r1
+	}
+	
+	void stop() {
+		setSpeed(0);
+		*portEN &= ~maskEN;
+ 8e0:	a5 81       	ldd	r26, Z+5	; 0x05
+ 8e2:	b6 81       	ldd	r27, Z+6	; 0x06
+ 8e4:	8c 91       	ld	r24, X
+ 8e6:	91 85       	ldd	r25, Z+9	; 0x09
+ 8e8:	90 95       	com	r25
+ 8ea:	89 23       	and	r24, r25
+ 8ec:	8c 93       	st	X, r24
+		isMoving = false;
+ 8ee:	16 86       	std	Z+14, r1	; 0x0e
+ 8f0:	b7 cf       	rjmp	.-146    	; 0x860 <main+0x2ce>
+		motor1.update();
+	}
+	
+	while(1) {
+		PORTD |= (1 << PD7);
+ 8f2:	8b b1       	in	r24, 0x0b	; 11
+ 8f4:	80 68       	ori	r24, 0x80	; 128
+ 8f6:	8b b9       	out	0x0b, r24	; 11
+ 8f8:	4f e7       	ldi	r20, 0x7F	; 127
+ 8fa:	89 ea       	ldi	r24, 0xA9	; 169
+ 8fc:	93 e0       	ldi	r25, 0x03	; 3
+ 8fe:	41 50       	subi	r20, 0x01	; 1
+ 900:	80 40       	sbci	r24, 0x00	; 0
+ 902:	90 40       	sbci	r25, 0x00	; 0
+ 904:	e1 f7       	brne	.-8      	; 0x8fe <main+0x36c>
+ 906:	00 c0       	rjmp	.+0      	; 0x908 <main+0x376>
+ 908:	00 00       	nop
+		_delay_ms(150);
+		PORTD &= ~(1 << PD7);
+ 90a:	8b b1       	in	r24, 0x0b	; 11
+ 90c:	8f 77       	andi	r24, 0x7F	; 127
+ 90e:	8b b9       	out	0x0b, r24	; 11
+ 910:	af e7       	ldi	r26, 0x7F	; 127
+ 912:	b9 ea       	ldi	r27, 0xA9	; 169
+ 914:	23 e0       	ldi	r18, 0x03	; 3
+ 916:	a1 50       	subi	r26, 0x01	; 1
+ 918:	b0 40       	sbci	r27, 0x00	; 0
+ 91a:	20 40       	sbci	r18, 0x00	; 0
+ 91c:	e1 f7       	brne	.-8      	; 0x916 <main+0x384>
+ 91e:	00 c0       	rjmp	.+0      	; 0x920 <main+0x38e>
+ 920:	00 00       	nop
+ 922:	e7 cf       	rjmp	.-50     	; 0x8f2 <main+0x360>
+
+00000924 <_GLOBAL__sub_I_sw5>:
+		_delay_ms(150);
+	}
+	return 0;
+ 924:	6f ef       	ldi	r22, 0xFF	; 255
+ 926:	7f ef       	ldi	r23, 0xFF	; 255
+ 928:	81 e0       	ldi	r24, 0x01	; 1
+ 92a:	90 e0       	ldi	r25, 0x00	; 0
+ 92c:	0e 94 92 00 	call	0x124	; 0x124 <_Z41__static_initialization_and_destruction_0ii>
+ 930:	08 95       	ret
+
+00000932 <__tablejump2__>:
+ 932:	ee 0f       	add	r30, r30
+ 934:	ff 1f       	adc	r31, r31
+ 936:	05 90       	lpm	r0, Z+
+ 938:	f4 91       	lpm	r31, Z
+ 93a:	e0 2d       	mov	r30, r0
+ 93c:	09 94       	ijmp
+
+0000093e <_exit>:
+ 93e:	f8 94       	cli
+
+00000940 <__stop_program>:
+ 940:	ff cf       	rjmp	.-2      	; 0x940 <__stop_program>
