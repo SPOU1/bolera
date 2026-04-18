@@ -11,6 +11,12 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "display_class", "display_cl
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "timer_class", "timer_class\timer_class.cppproj", "{F1262960-D32A-46BC-95B7-548380734CA1}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pins_manager_class", "pin_class\pins_manager_class.cppproj", "{26F94DBD-61A8-4C52-94C7-C018DA147D5A}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "user_swich_class", "user_swich_class\user_swich_class.cppproj", "{CC928814-9A55-4A93-818C-50AAD3579C71}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "classes_combined", "classes_combined\classes_combined.cppproj", "{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -33,6 +39,18 @@ Global
 		{F1262960-D32A-46BC-95B7-548380734CA1}.Debug|AVR.Build.0 = Debug|AVR
 		{F1262960-D32A-46BC-95B7-548380734CA1}.Release|AVR.ActiveCfg = Release|AVR
 		{F1262960-D32A-46BC-95B7-548380734CA1}.Release|AVR.Build.0 = Release|AVR
+		{26F94DBD-61A8-4C52-94C7-C018DA147D5A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{26F94DBD-61A8-4C52-94C7-C018DA147D5A}.Debug|AVR.Build.0 = Debug|AVR
+		{26F94DBD-61A8-4C52-94C7-C018DA147D5A}.Release|AVR.ActiveCfg = Release|AVR
+		{26F94DBD-61A8-4C52-94C7-C018DA147D5A}.Release|AVR.Build.0 = Release|AVR
+		{CC928814-9A55-4A93-818C-50AAD3579C71}.Debug|AVR.ActiveCfg = Debug|AVR
+		{CC928814-9A55-4A93-818C-50AAD3579C71}.Debug|AVR.Build.0 = Debug|AVR
+		{CC928814-9A55-4A93-818C-50AAD3579C71}.Release|AVR.ActiveCfg = Release|AVR
+		{CC928814-9A55-4A93-818C-50AAD3579C71}.Release|AVR.Build.0 = Release|AVR
+		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Debug|AVR.ActiveCfg = Debug|AVR
+		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Debug|AVR.Build.0 = Debug|AVR
+		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Release|AVR.ActiveCfg = Release|AVR
+		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

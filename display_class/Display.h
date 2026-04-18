@@ -26,6 +26,9 @@ class Display {
 		0b01101111  // 9
 	};
 	
+	uint32_t lastTime;
+	const uint32_t refreshInterval = 5;
+	
 	public:
 	Display(
 		volatile uint8_t* pData[7],
@@ -106,6 +109,17 @@ class Display {
 		}
 		
 		showTens = !showTens;
+	}
+	
+	void update(uint32_t currentTime, bool endGame) {
+		if (endGame && ((currentTime%100) >= 900)) {
+			clear(); 
+		} else {
+			if (currentTime - lastTime >= refreshInterval) {
+				refresh();
+				lastTime = currentTime;
+			}
+		}
 	}
 	
 	};

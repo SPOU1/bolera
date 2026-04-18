@@ -169,16 +169,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="main_2.cpp">
+    <Compile Include="m5_m1.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Motor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="main.cpp">
+    <Compile Include="motor_example.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SwitchMotor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SwitchUser.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

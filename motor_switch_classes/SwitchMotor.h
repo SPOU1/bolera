@@ -18,6 +18,10 @@ class SwitchMotor {
 	volatile bool flagPressed;
 	bool expectedDirection;
 	
+	uint32_t lastDebounceTimestamp;
+	bool lastReading;
+	bool stableState;
+	const uint32_t debounceDelay = 20;
 	
 	public:
 	SwitchMotor(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
@@ -28,6 +32,10 @@ class SwitchMotor {
 		currentState = MOVING;
 		flagPressed = false;
 		expectedDirection = false;
+		
+		lastDebounceTimestamp = 0;
+		lastReading = false;
+		stableState = false;
 	}
 	
 	void init() {
@@ -36,21 +44,35 @@ class SwitchMotor {
 	}
 	
 	bool isPressed() {
-		return !(*pinReg & mask);	// Pressed cuando 0
+		return !(*pinReg & mask);	// Pressed is 0
 	}
 
 	SwState getState() {
 		return currentState;
 	}
 	
-	void updateState(bool curDirection) {
-        if (isPressed()) {
-            if (curDirection) {
-                currentState = SIDE_1;
-            } else {
-                currentState = SIDE_2;
-            }
-        }
+	void update(uint32_t currentTime) {
+		bool reading = isPressed();
+		
+        if (reading != lastReading) {
+			lastDebounceTimestamp = currentTime;
+		}
+		
+		if ((currentTime - lastDebounceTimestamp) > debounceDelay) {
+			if (reading != stableState) {
+				stableState = reading;
+				
+				if (stableState) {
+					flagPressed = true;
+					if (expectedDirection) {
+						currentState = SIDE_1;
+					} else {
+						currentState = SIDE_2;
+					}
+				}
+			}
+		}
+		lastReading = reading;
     }
 	
 	void forceState(SwState s) {
@@ -61,15 +83,6 @@ class SwitchMotor {
 	void setExpectedDirection(bool direction) {
 		expectedDirection = direction;
 		flagPressed = false;
-	}
-	
-	void onInterrupt() {
-		if(expectedDirection) {
-			currentState = SIDE_1;
-		} else {
-			currentState = SIDE_2;
-		}
-		flagPressed = true;
 	}
 	
 	bool consumePressedFlag() {

@@ -21,8 +21,15 @@ class Motor {
 	
 	// Variables de estado
 	bool isMoving;
+	
 	bool isEscaping;
-	uint16_t escapeCounter;
+	uint32_t escapeStartTimestamp;
+	const uint32_t escapeDelay = 100;
+	
+	bool isCalibrating;
+	bool isWaitingAfterCalib;
+	uint32_t stateTimer;
+	bool calibDirection;
 	
 	public:
 	Motor(
@@ -38,12 +45,11 @@ class Motor {
 		
 		isMoving = false;
 		isEscaping = false;
-		escapeCounter = 0;
+		isCalibrating = false;
+		isWaitingAfterCalib = false;
 	}
 	
 	void init() {
-		// Timer tiene que ser inicializado antes
-	
 		*ddrDIR |= maskDIR;	// Output
 		*ddrEN |= maskEN;	// Output
 		*portDIR &= ~maskDIR;
@@ -71,30 +77,20 @@ class Motor {
 		return isMoving;
 	}
 	
-	void calibrate(bool direction) {
-		goTo(direction);
+	void calibrate(bool direction, uint32_t currentTime) {
+		goTo(direction, currentTime);
 		
 		if(isMoving) {
 			setSpeed(153);
 		}
 		
-		uint32_t timeout = 4000000;
-		while (getIsMoving() && timeout > 0) {
-			update();
-			timeout--;
-		}
-		
-		stop();
-		_delay_ms(200);
-		
-		if (eorSwitch != 0) {
-			if(direction)	eorSwitch->forceState(SwitchMotor::SIDE_1);
-			else			eorSwitch->forceState(SwitchMotor::SIDE_2);
-		}
-		
+		isCalibrating = true;
+		isWaitingAfterCalib = false;
+		calibDirection = direction;
+		stateTimer = currentTime;		
 	}
 	
-	void goTo(bool direction) {
+	void goTo(bool direction, uint32_t currentTime) {
 		bool startFromSide = false;
 	
 		if (eorSwitch != 0) {
@@ -117,31 +113,51 @@ class Motor {
 		
 		if (startFromSide || (eorSwitch != 0 && eorSwitch->isPressed())) {	
 			isEscaping = true;
-			escapeCounter = 0;
+			escapeStartTimestamp = currentTime;
 		} else {
 			isEscaping = false;
 		}
 	}
 	
-	// Se debe llamar cada iteración
-	void update() {
+	void update(uint32_t currentTime) {
+		// post Calibration pause (200ms)
+		if (isWaitingAfterCalib) {
+			if ((currentTime - stateTimer) >= 200) {
+				isWaitingAfterCalib = false;
+				if (eorSwitch != 0) {
+					if (calibDirection)	eorSwitch->forceState(SwitchMotor::SIDE_1);
+					else				eorSwitch->forceState(SwitchMotor::SIDE_2);
+				}	
+			}
+			return;
+		}
+		
+		// Normal control
 		if (eorSwitch != 0 && isMoving) {
+			
 			if (isEscaping) {
 				if (!eorSwitch->isPressed()) {
-					escapeCounter++;
-					if (escapeCounter > 20000) {
+					if((currentTime - escapeStartTimestamp) > escapeDelay) {
 						isEscaping = false;
-						escapeCounter = 0;
-						
 						eorSwitch->consumePressedFlag();
 					}
 				} else {
-					escapeCounter = 0;
+					escapeStartTimestamp = currentTime;
 				}
-				
 			} else {
-				if (eorSwitch->consumePressedFlag()) {
+				if(eorSwitch->consumePressedFlag()) {
 					stop();
+				
+					if (isCalibrating) {
+						isCalibrating = false;
+						isWaitingAfterCalib = true;
+						stateTimer = currentTime;
+					}
+				}
+				// Safety timeout (10s)
+				else if (isCalibrating && (currentTime - stateTimer) > 10000) {
+					stop();
+					isCalibrating = false;
 				}
 			}
 		}

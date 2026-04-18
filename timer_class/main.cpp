@@ -36,30 +36,15 @@ int main() {
 	
 	sei();
 
-	display.setScore(88);
-
-	uint32_t lastTimeDisplay = 0;
-	uint32_t lastTimeLed = 0;
+	display.setScore(67);
 	bool endGame = true;
 
 	while (1) {
 		uint32_t currentTime = systemTimer.millis();
 
-		uint32_t cyclePhase = currentTime % 1000;
-		if (endGame && (cyclePhase>900)) {
-			display.clear();
-		} else {
-			if (currentTime - lastTimeDisplay >= 5) {
-				display.refresh();
-				lastTimeDisplay = currentTime;
-			}
-		}
-
-		if (currentTime - lastTimeLed >= 100) {
-			led.toggle();
-			lastTimeLed = currentTime;
-		}
+		display.update(currentTime, endGame);
+		led.update(currentTime, endGame);
+	
 	}
 	
-	return 0;
 }
