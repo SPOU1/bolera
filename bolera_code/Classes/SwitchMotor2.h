@@ -1,17 +1,17 @@
 #pragma once
 #include <avr/io.h>
 
-class SwitchMotor {
+class SwitchMotor2 {
 	/*
-	 * ==== SwitchMotor ====
-	 * Gestiona switch fin de carrera con filtro antirebote por software y tracking de 2 posiciones.
+	 * ==== SwitchMotor2 ====
+	 * Gestiona switch fin de carrera con filtro antirebote por software y tracking de 3 posiciones.
 	 */
 	public:
 	enum SwState {
-		// Estados físicos relativos en los que puede estar el actuador.
-		MOVING = 0,	// Entre los dos límites
-		SIDE_1 = 1,
-		SIDE_2 = 2
+		MOVING = 0,		// Entre posiciones
+		SIDE_1 = 1,		// Extremo 1
+		SIDE_2 = 2,		// Extremo 2
+		SIDE_MIDDLE = 3	// Posición intermedia
 		};
 	
 	private:
@@ -21,6 +21,7 @@ class SwitchMotor {
 	uint8_t mask;
 	
 	volatile SwState currentState;
+	volatile SwState nextExpectedState;	// Guarda a qué estado pasará en el próximo click.
 	volatile bool flagPressed;
 	bool expectedDirection;	// Indica hacia que lado se está moviendo el motor.
 	
@@ -30,12 +31,13 @@ class SwitchMotor {
 	const uint32_t debounceDelay = 20;	//ms de espera para ignorar ruido mecánico.
 	
 	public:
-	SwitchMotor(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
+	SwitchMotor2(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
 		pinReg  = pinR;
 		portReg = portR;
 		ddrReg  = ddrR;
 		mask    = m;
 		currentState = MOVING;
+		nextExpectedState = SIDE_1;
 		flagPressed = false;
 		expectedDirection = false;
 		
@@ -90,11 +92,7 @@ class SwitchMotor {
 				
 				if (stableState) {
 					flagPressed = true;
-					if (expectedDirection) {
-						currentState = SIDE_1;
-					} else {
-						currentState = SIDE_2;
-					}
+					currentState = nextExpectedState;
 				}
 			}
 		}
@@ -114,11 +112,24 @@ class SwitchMotor {
 	void setExpectedDirection(bool direction) {
 		/* 
 		 * ==== setExpectedDirection(bool direction) ====
-		 * Establece la dirección a la que se mueve el motor.
+		 * Establece la dirección y prepara el próximo estado lógico a alcanzar.
 		 *  - direction: [bool] true si la dirección es hacia SIDE_1, false en caso contrario.
 		 */
 		expectedDirection = direction;
 		flagPressed = false;
+		
+		// Lógica de 3 posiciones
+		if (direction) { // hacia SIDE_1
+			if (currentState == SIDE_2) nextExpectedState = SIDE_MIDDLE;
+			else if (currentState == SIDE_MIDDLE) nextExpectedState = SIDE_1;
+			else nextExpectedState = SIDE_1;
+		} else {
+			if (currentState == SIDE_1) nextExpectedState = SIDE_MIDDLE;
+			else if (currentState == SIDE_MIDDLE) nextExpectedState = SIDE_2;
+			else nextExpectedState = SIDE_2;
+		}
+		
+		currentState = MOVING;
 	}
 	
 	bool consumePressedFlag() {

@@ -17,6 +17,8 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "user_swich_class", "user_sw
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "classes_combined", "classes_combined\classes_combined.cppproj", "{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "bolera_code", "bolera_code\bolera_code.cppproj", "{8A3CC957-0514-4C86-B8F5-369E3985489E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -51,6 +53,10 @@ Global
 		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Debug|AVR.Build.0 = Debug|AVR
 		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Release|AVR.ActiveCfg = Release|AVR
 		{FAB427EE-C6DB-4A94-BC0F-5E1F39F83486}.Release|AVR.Build.0 = Release|AVR
+		{8A3CC957-0514-4C86-B8F5-369E3985489E}.Debug|AVR.ActiveCfg = Debug|AVR
+		{8A3CC957-0514-4C86-B8F5-369E3985489E}.Debug|AVR.Build.0 = Debug|AVR
+		{8A3CC957-0514-4C86-B8F5-369E3985489E}.Release|AVR.ActiveCfg = Release|AVR
+		{8A3CC957-0514-4C86-B8F5-369E3985489E}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
-    <ProjectGuid>{fab427ee-c6db-4a94-bc0f-5e1f39f83486}</ProjectGuid>
+    <ProjectGuid>{8a3cc957-0514-4c86-b8f5-369e3985489e}</ProjectGuid>
     <avrdevice>ATmega640</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>classes_combined</AssemblyName>
-    <Name>classes_combined</Name>
-    <RootNamespace>classes_combined</RootNamespace>
+    <AssemblyName>bolera_code</AssemblyName>
+    <Name>bolera_code</Name>
+    <RootNamespace>bolera_code</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -138,6 +138,7 @@
   <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
   <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
   <avrgcccpp.compiler.warnings.AllWarnings>True</avrgcccpp.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.miscellaneous.OtherFlags>-std=gnu++11</avrgcccpp.compiler.miscellaneous.OtherFlags>
   <avrgcccpp.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
@@ -153,36 +154,52 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Display.h">
+    <Compile Include="Classes\Display.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="full_example.cpp">
+    <Compile Include="Classes\Led.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Led.h">
+    <Compile Include="Classes\Motor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Motor.h">
+    <Compile Include="Classes\Motor2.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Motor2.h">
+    <Compile Include="Classes\PinsManager.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PinsManager.h">
+    <Compile Include="Classes\SwitchMotor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SwitchMotor.h">
+    <Compile Include="Classes\SwitchMotor2.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SwitchMotor2.h">
+    <Compile Include="Classes\SwitchUser.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SwitchUser.h">
+    <Compile Include="Classes\Timer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Timer.h">
+    <Compile Include="main.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="motor_dirs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="StateMachine\state_actions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="StateMachine\state_machine.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="StateMachine\status.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes" />
+    <Folder Include="StateMachine" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
