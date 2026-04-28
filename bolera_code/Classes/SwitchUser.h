@@ -2,22 +2,16 @@
 #include <avr/io.h>
 
 class SwitchUser {
-	/*
-	 * ==== SwitchUser ====
-	 * Gestiona el Switch 6 con filtro antirebote por software.
-	 * Opera mediante consulta periódica no bloqueante.
-	 */
-	
 	private:
 	volatile uint8_t* pinReg;
 	volatile uint8_t* portReg;
 	volatile uint8_t* ddrReg;
 	uint8_t mask;
 	
-	uint32_t lastChangeTimestamp;
-	const uint32_t debounceDelay = 50; //ms de espera para ignorar ruido mecánico.
-	
-	bool lastState;
+	// Filtro Integrador
+	static const uint8_t DEBOUNCE_SAMPLES = 20;
+	uint8_t counter;
+	uint32_t lastSampleTime;
 	bool stableState;
 	bool flagPressed;
 	
@@ -28,51 +22,39 @@ class SwitchUser {
 		ddrReg = ddrR;
 		mask = m;
 		
-		lastChangeTimestamp = 0;
-		lastState = false;
-		stableState = false;
+		lastSampleTime = 0;
 		flagPressed = false;
+		
+		// Lectura inicial del pin para el estado base
+		bool initialReading = !(*pinReg & mask);
+		stableState = initialReading;
+		counter = stableState ? DEBOUNCE_SAMPLES : 0;
 	}
 	
 	void init() {
-		/* 
-		 * ==== init() ====
-		 * Configura el pin como entrada y activa resistencia pull-up interna.
-		 */
 		*ddrReg &= ~mask;	// Input
 		*portReg |= mask;	// Pull-up
 	}
 	
 	void update(uint32_t currentTime) {
-		/* 
-		 * ==== update(uint32_t currentTime) ====
-		 * Actualiza el estado del switch. Debe llamarse en el loop principal.
-		 *  - currentTime: [uint32_t] Tiempo actual en ms.
-		 */
-		bool reading = !(*pinReg & mask); // Lógica invertida por pull-up.
+		if (currentTime == lastSampleTime) return;
+		lastSampleTime = currentTime;
 		
-		if (reading != lastState) {
-			lastChangeTimestamp = currentTime; // Reinicia temporizador de estabilización.
-		}
+		bool reading = !(*pinReg & mask);
 		
-		// Si la señal ha estado estable más tiempo que el delay
-		if ((currentTime - lastChangeTimestamp) > debounceDelay) {
-			if (reading != stableState) {
-				stableState = reading;
-				if (stableState) {
-					flagPressed = true; // Registra la pulsación
-				}
-			}
+		if (reading && counter < DEBOUNCE_SAMPLES) counter++;
+		else if (!reading && counter > 0)          counter--;
+		
+		if (!stableState && counter == DEBOUNCE_SAMPLES) {
+			stableState = true;
+			flagPressed = true;
 		}
-		lastState = reading;
+		else if (stableState && counter == 0) {
+			stableState = false;
+		}
 	}
 	
 	bool consumeClick() {
-		/* 
-		 * ==== consumeClick() ====
-		 * Comprueba si se pulsó el switch y limpia la bandera.
-		 *  - return: [bool] true si hubo un click no procesado, false en caso contrario.
-		 */
 		if (flagPressed) {
 			flagPressed = false;
 			return true;

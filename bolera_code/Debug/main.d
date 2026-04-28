@@ -12,8 +12,8 @@ main.d main.o: .././main.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  .././Classes/Display.h .././Classes/Led.h .././Classes/Motor.h \
- .././Classes/SwitchMotor.h .././Classes/Motor2.h \
- .././Classes/SwitchMotor2.h .././Classes/PinsManager.h \
+ .././Classes/LimitSwitch.h .././Classes/Motor2.h \
+ .././Classes/LimitSwitch3.h .././Classes/PinsManager.h \
  .././Classes/SwitchUser.h .././Classes/Timer.h \
  .././StateMachine/state_machine.h .././StateMachine/status.h \
  .././StateMachine/state_actions.h .././StateMachine/../motor_dirs.h
@@ -48,11 +48,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 .././Classes/Motor.h:
 
-.././Classes/SwitchMotor.h:
+.././Classes/LimitSwitch.h:
 
 .././Classes/Motor2.h:
 
-.././Classes/SwitchMotor2.h:
+.././Classes/LimitSwitch3.h:
 
 .././Classes/PinsManager.h:
 

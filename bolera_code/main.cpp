@@ -5,8 +5,8 @@
 #include "Classes/Motor.h"
 #include "Classes/Motor2.h"
 #include "Classes/PinsManager.h"
-#include "Classes/SwitchMotor.h"
-#include "Classes/SwitchMotor2.h"
+#include "Classes/LimitSwitch.h"
+#include "Classes/LimitSwitch3.h"
 #include "Classes/SwitchUser.h"
 #include "Classes/Timer.h"
 
@@ -21,29 +21,24 @@ Timer* timerPtr = 0;
 ISR(TIMER4_COMPA_vect) { if(timerPtr) timerPtr->addTick(); }
 
 int main(void) {
-	// Instanciación de Hardware
-	SwitchMotor sw1(&PINK, &PORTK, &DDRK, (1 << PK6));
-	SwitchMotor2 sw2(&PINK, &PORTK, &DDRK, (1 << PK7));
-	SwitchMotor sw3(&PIND, &PORTD, &DDRD, (1 << PD0));
-	SwitchMotor sw4(&PIND, &PORTD, &DDRD, (1 << PD1));
-	SwitchMotor sw5(&PIND, &PORTD, &DDRD, (1 << PD2));
-	SwitchUser sw6(&PIND, &PORTD, &DDRD, (1 << PD3));
+	// Instanciaciï¿½n de Hardware
+	LimitSwitch	 sw1(&PINK, &PORTK, &DDRK, (1 << PK6));
+	LimitSwitch3 sw2(&PINK, &PORTK, &DDRK, (1 << PK7));
+	LimitSwitch	 sw3(&PIND, &PORTD, &DDRD, (1 << PD0));
+	LimitSwitch	 sw4(&PIND, &PORTD, &DDRD, (1 << PD1));
+	LimitSwitch	 sw5(&PIND, &PORTD, &DDRD, (1 << PD2));
+	SwitchUser	 sw6(&PIND, &PORTD, &DDRD, (1 << PD3));
 	
-	Motor m1(&PORTB, &DDRB, (1 << PB0), &PORTB, &DDRB, (1 << PB4), &OCR2A, &sw1);
+	Motor  m1(&PORTB, &DDRB, (1 << PB0), &PORTB, &DDRB, (1 << PB4), &OCR2A,  &sw1);
 	Motor2 m2(&PORTB, &DDRB, (1 << PB1), &PORTB, &DDRB, (1 << PB5), &OCR1AL, &sw2);
-	Motor m3(&PORTB, &DDRB, (1 << PB2), &PORTB, &DDRB, (1 << PB6), &OCR1BL, &sw3);
-	Motor m4(&PORTB, &DDRB, (1 << PB3), &PORTB, &DDRB, (1 << PB7), &OCR0A, &sw4);
-	Motor m5(&PORTD, &DDRD, (1 << PD4), &PORTL, &DDRL, (1 << PL3), &OCR5AL, &sw5);
+	Motor  m3(&PORTB, &DDRB, (1 << PB2), &PORTB, &DDRB, (1 << PB6), &OCR1BL, &sw3);
+	Motor  m4(&PORTB, &DDRB, (1 << PB3), &PORTB, &DDRB, (1 << PB7), &OCR0A,  &sw4);
+	Motor  m5(&PORTD, &DDRD, (1 << PD4), &PORTL, &DDRL, (1 << PL3), &OCR5AL, &sw5);
 	
 	volatile uint8_t* segPorts[7] = {&PORTL, &PORTL, &PORTL, &PORTD, &PORTL, &PORTL, &PORTL};
 	volatile uint8_t* segDdrs[7]  = {&DDRL,  &DDRL,  &DDRL,  &DDRD,  &DDRL,  &DDRL,  &DDRL};
 	uint8_t segMasks[7]           = {(1<<PL0), (1<<PL1), (1<<PL2), (1<<PD6), (1<<PL4), (1<<PL5), (1<<PL6)};
-	Display display(
-	segPorts,
-	segDdrs,
-	segMasks,
-	&PORTL, &DDRL, (1<<PL7)
-	);
+	Display display(segPorts, segDdrs, segMasks, &PORTL, &DDRL, (1<<PL7));
 	
 	Led led(&PORTD, &DDRD, (1<<PD7));
 	PinsManager pinsManager;
@@ -64,6 +59,8 @@ int main(void) {
 	st.pinsManager = &pinsManager;
 	st.timer = &timer;
 	
+	sei(); // Habilitar interrupciones globales
+
 	sm.start();
 	
 	return 0;

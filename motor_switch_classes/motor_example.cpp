@@ -7,50 +7,51 @@
 
 Timer systemTimer;
 Timer* timerPtr = 0;
-
 ISR(TIMER4_COMPA_vect) {
-	if (timerPtr) timerPtr->addTick();
+    if (timerPtr) timerPtr->addTick();
 }
 
-// User Switch in PD3
 SwitchUser sw6(&PIND, &PORTD, &DDRD, (1<<PD3));
+SwitchMotor sw3(&PIND, &PORTD, &DDRD, (1<<PD0));
 
-// Switch 1 in PK6
-SwitchMotor sw1(&PINK, &PORTK, &DDRK, (1<<PK6));
-
-// Motor 1 (M1_di=PB0, M1_en=PB4/OC2A)
-Motor m1(&PORTB, &DDRB, (1<<PB0),
-&PORTB, &DDRB, (1<<PB4),
-&OCR2A, &sw1);
+Motor m3(&PORTB, &DDRB, (1<<PB2),
+         &PORTB, &DDRB, (1<<PB6),
+         &OCR1BL, &sw3);
 
 int main(void) {
-	timerPtr = &systemTimer;
-	
-	cli();
-	systemTimer.init();
-	sw6.init();
-	sw1.init();
-	m1.init();
-	sei();
+    timerPtr = &systemTimer;
 
-	bool M1_UP = true;
-	bool M1_DOWN = false;
+    cli();
+    
+    // Timer 1 (M3 - OCR1B)
+    TCCR1A |= (1 << COM1B1) | (1 << WGM10);
+    TCCR1B |= (1 << WGM12) | (1 << CS11) | (1 << CS10);
+    OCR1BH = 0;
+    OCR1BL = 0;
+    
+    systemTimer.init();
+    sw6.init();
+    sw3.init();
+    m3.init();
+    
+    sei();
 
-	while (1) {
-		uint32_t currentMillis = systemTimer.millis();
-		
-		// Update
-		sw6.update(currentMillis);
-		sw1.update(currentMillis);
-		m1.update(currentMillis);
-		
-		if (sw6.consumeClick()) {
-			if (!m1.getIsMoving()) {
-				m1.goTo(M1_DOWN, currentMillis);
-				} else {
-				m1.stop();
-			}
-		}
-	}
-	return 0;
+    // Arranca calibración automáticamente hacia SIDE_1
+    uint32_t currentMillis = systemTimer.millis();
+    m3.calibrate(true, currentMillis);
+
+    while (1) {
+        currentMillis = systemTimer.millis();
+
+        sw6.update(currentMillis);
+        sw3.update(currentMillis);
+        m3.update(currentMillis);
+
+        // SW6 relanza la calibración manualmente si se quiere repetir
+        if (sw6.consumeClick()) {
+            m3.calibrate(true, currentMillis);
+        }
+    }
+
+    return 0;
 }

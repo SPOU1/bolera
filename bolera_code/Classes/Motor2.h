@@ -1,13 +1,13 @@
 #pragma once
 #include <avr/io.h>
-#include "SwitchMotor2.h"
+#include "LimitSwitch3.h"
 
 class Motor2 {
-	/*
-	 * ==== Motor2 ====
-	 * Gestiona un motor usando PWM, adaptado para 3 posiciones.
-	 * Soprta rutinas de escape y calibración sin bloquear el programa principal.
-	 */
+	public:
+	static const uint32_t ESCAPE_MS = 300; // Escape largo (incondicional)
+	static const uint32_t HOMING_HOLD_MS = 250; 
+	static const uint8_t DEFAULT_SPEED = 204; // VOLVEMOS A 80% PARA EVITAR BLOQUEO DE DRIVERS
+	
 	private:
 	volatile uint8_t* portDIR;
 	volatile uint8_t* ddrDIR;
@@ -17,201 +17,180 @@ class Motor2 {
 	volatile uint8_t* ddrEN;
 	uint8_t maskEN;
 	
-	volatile uint8_t* ocrPWM; // Registro Output Compare para controlar la velocidad (Duty Cycle).
+	volatile uint8_t* ocrPWM;
+
+	LimitSwitch3* sw; 
 	
-	SwitchMotor2* eorSwitch; // Puntero a clase SwitchMotor2. Switch fin de carrera (3 posiciones) asociado al motor.
+	bool moving;
+	bool direction; // true = hacia LEFT
+	bool escaping;
+	uint32_t escapeStart;
+
+	LimitSwitch3::Position targetPosition; 
 	
-	bool isMoving;
-	
-	// Escape
-	bool isEscaping;
-	uint32_t escapeStartTimestamp;
-	const uint32_t escapeDelay = 100;
-	
-	// Calibración
-	bool isCalibrating;
-	bool isWaitingAfterCalib;
-	uint32_t stateTimer;
-	bool calibDirection;
+	bool isHoming;
+	uint32_t homingPressStart;
+	LimitSwitch3::Position homingTarget;
 	
 	public:
-	Motor2(
-		volatile uint8_t* pDIR, volatile uint8_t* dDIR, uint8_t mDIR,
-		volatile uint8_t* pEN,  volatile uint8_t* dEN,  uint8_t mEN,
-		volatile uint8_t* rPWM,
-		SwitchMotor2* sw = 0
-	) {
+	Motor2(volatile uint8_t* pDIR, volatile uint8_t* dDIR, uint8_t mDIR,
+           volatile uint8_t* pEN,  volatile uint8_t* dEN,  uint8_t mEN,
+           volatile uint8_t* rPWM, LimitSwitch3* swPtr = nullptr) {
 		portDIR = pDIR; ddrDIR = dDIR; maskDIR = mDIR;
 		portEN  = pEN;  ddrEN  = dEN;  maskEN  = mEN;
-		ocrPWM  = rPWM;
-		eorSwitch = sw;
-		
-		isMoving = false;
-		isEscaping = false;
-		isCalibrating = false;
-		isWaitingAfterCalib = false;
+		ocrPWM = rPWM;
+		sw = swPtr;
+		moving = false;
+		direction = true;
+		escaping = false;
+		escapeStart = 0;
+		targetPosition = LimitSwitch3::Position::UNKNOWN;
+		isHoming = false; homingPressStart = 0; homingTarget = LimitSwitch3::Position::UNKNOWN;
 	}
-	
+		
 	void init() {
-		/* 
-		 * ==== init() ====
-		 * Configura ambos pines como salida e inicializa velocidad 0.
-		 */
-		*ddrDIR |= maskDIR;	// Output
-		*ddrEN |= maskEN;	// Output
+		*ddrDIR |= maskDIR;
+		*ddrEN |= maskEN;
 		*portDIR &= ~maskDIR;
 		*portEN &= ~maskEN;
-		
 		*ocrPWM = 0;
 	}
 	
-	void setDirection(bool forward) {
-		/* 
-		 * ==== setDirection(bool forward) ====
-		 * Establece la dirección de giro del motor.
-		 *  - forward: [bool] Dirección de giro.
-		 */
-		if (forward)	*portDIR |= maskDIR;
-		else			*portDIR &= ~maskDIR;
-	}
-	
-	void setSpeed(uint8_t speed) {
-		/* 
-		 * ==== setSpeed(bool speed) ====
-		 * Establece la velociad de rotación del motor.
-		 *  - speed: [uint8_t] Velocidad (PWM) de rotación.
-		 */
+	void startHoming(bool dir, LimitSwitch3::Position target, uint32_t currentTime, uint8_t speed = DEFAULT_SPEED) {
+		if (sw == 0) return;
+
+		isHoming = true;
+		homingTarget = target;
+		homingPressStart = 0;
+
+		// ESCAPE INCONDICIONAL SIEMPRE AL ARRANCAR
+		escaping = true;
+		escapeStart = currentTime;
+		sw->forceReleased();
+
+		if (dir) 	*portDIR |= maskDIR;
+		else 		*portDIR &= ~maskDIR;
+
 		*ocrPWM = speed;
+        // Eliminado la manipulaciÃ³n manual de portEN. El Timer toma el control.
+
+		direction = dir;
+		moving = true;
 	}
 	
+	void move(bool dir, LimitSwitch3::Position target, uint32_t currentTime, uint8_t speed = DEFAULT_SPEED) {
+		if (sw == 0) return;
+
+		targetPosition = target;
+		LimitSwitch3::Position nextPos = computeNextExpected(dir);
+		sw->setNextExpected(nextPos);
+
+		// ESCAPE INCONDICIONAL SIEMPRE AL ARRANCAR
+		escaping = true;
+		escapeStart = currentTime;
+		sw->forceReleased(); 
+
+		if (dir) 	*portDIR |= maskDIR; 
+		else 		*portDIR &= ~maskDIR; 
+
+		*ocrPWM = speed;
+
+		direction = dir;
+		moving = true;
+	}
+
 	void stop() {
-		/* 
-		 * ==== stop() ====
-		 * Para el motor, y resetea las variables de estado.
-		 */
-		setSpeed(0);
-		*portEN &= ~maskEN;
-		isMoving = false;
+		*ocrPWM = 0;
+		moving = false;
+		escaping = false;
 	}
-	
-	bool getIsMoving() {
-		/*
-		 * ==== getIsMoving() ====
-		 * Devuelve si el motor se está moviendo.
-		 */
-		return isMoving;
-	}
-	
-	void calibrate(bool direction, uint32_t currentTime) {
-		/*
-		 * ==== calibrate(bool direction, uint32_t currentTime) ====
-		 * Inicia la secuencia de calibración (buscar referencia).
-		 * Disminuye la velocidad y activa el temporizador.
-		 *  - direction: [bool] Dirección de giro durante la calibración.
-		 *  - currentTime: [uint32_t] Tiempo actual en ms.
-		 */
+
+	void update(uint32_t currentTime) {
+		if (!moving || sw == 0) return;
 		
-		startMoving(direction, currentTime);
-		
-		if(isMoving) {
-			setSpeed(153); // 60% PWM
-		}
-		
-		isCalibrating = true;
-		isWaitingAfterCalib = false;
-		calibDirection = direction;
-		stateTimer = currentTime;		
-	}
-	
-	void startMoving(bool direction, uint32_t currentTime) {
-		/*
-		 * ==== startMoving(bool direction, uint32_t currentTime) ====
-		 * Ordena el arranque del motor en una dirección determinada. Parará en la siguiente posición encontrada.
-		 *  - direction: [bool] Dirección de giro.
-		 *  - currentTime: [uint32_t] Tiempo actual en ms.
-		 */
-		bool startFromSide = false;
-	
-		if (eorSwitch != 0) {
-			SwitchMotor2::SwState state = eorSwitch->getState();
-			
-			// No moverse si ya está en posición de destino (extremos).
-			if ((direction && state == SwitchMotor2::SIDE_1) ||
-				(!direction && state == SwitchMotor2::SIDE_2)) {
+		if (isHoming) {
+			if(escaping) {
+				if ((currentTime - escapeStart) >= ESCAPE_MS) {
+					escaping = false;
+					
+					// NUEVO: Si sigue pulsado tras el escape en homing
+					if (sw->isPressed()) {
+						stop();
+						sw->forcePressed(homingTarget);
+						targetPosition = homingTarget;
+						isHoming = false;
+					}
+					sw->consumePress();
+				}
 				return;
 			}
-			if (state != SwitchMotor2::MOVING) {
-				startFromSide = true;
-			}
-			
-			// Prepara el switch para escuchar la colisión.
-			// eorSwitch->forceState(SwitchMotor::MOVING); (incluido en setExpectedDirection en SwitchMotor2)
-			eorSwitch->setExpectedDirection(direction);
-		}
-		
-		setDirection(direction);
-		setSpeed(204); // 80% PWM
-		isMoving = true;
-		
-		// Si arranca en CUALQUIER sensor, activar escape temporal.
-		if (startFromSide || (eorSwitch != 0 && eorSwitch->isPressed())) {	
-			isEscaping = true;
-			escapeStartTimestamp = currentTime;
-		} else {
-			isEscaping = false;
-		}
-	}
-	
-	void update(uint32_t currentTime) {
-		/*
-		 * ==== update(uint32_t currentTime) ====
-		 * Actualiza el estado del motor en cada iteración.
-		 * Revisa colisiones y timeouts.
-		 *  - currentTime: [uint32_t] Tiempo actual en ms.
-		 */
-		
-		// 1. Pausa post-calibración
-		if (isWaitingAfterCalib) {
-			if ((currentTime - stateTimer) >= 200) {
-				isWaitingAfterCalib = false;
-				if (eorSwitch != 0) {
-					// Asumimos calibración a algún extremo (no en SIDE_MIDDLE)
-					if (calibDirection)	eorSwitch->forceState(SwitchMotor2::SIDE_1);
-					else				eorSwitch->forceState(SwitchMotor2::SIDE_2);
-				}	
+
+			if (sw->isPressed()) {
+				if (homingPressStart == 0) {
+					homingPressStart = currentTime;
+					} else if ((currentTime - homingPressStart) >= HOMING_HOLD_MS) {
+					stop();
+					sw->forcePressed(homingTarget);
+					targetPosition = homingTarget;
+					isHoming = false;
+				}
+				} else {
+				homingPressStart = 0;
+				sw->consumePress();
 			}
 			return;
 		}
-		
-		// 2. Control del movimiento general
-		if (eorSwitch != 0 && isMoving) {
-			if (isEscaping) {
-				// Ignora colisiones hasta salir de zona de switch
-				if (!eorSwitch->isPressed()) {
-					if((currentTime - escapeStartTimestamp) > escapeDelay) {
-						isEscaping = false;
-						eorSwitch->consumePressedFlag(); 
-					}
-				} else {
-					escapeStartTimestamp = currentTime;
-				}
-			} else {
-				// Si se pulsa el switch (a SIDE_MIDDLE o un extremo):
-				if(eorSwitch->consumePressedFlag()) {
-					stop();
+
+		if(escaping) {
+			if ((currentTime - escapeStart) >= ESCAPE_MS) {
+				escaping = false;
 				
-					if (isCalibrating) {
-						isCalibrating = false;
-						isWaitingAfterCalib = true;
-						stateTimer = currentTime;
-					}
-				}
-				// Timeout de seguridad para calibración.
-				else if (isCalibrating && (currentTime - stateTimer) > 10000) {
+				// NUEVO: VerificaciÃ³n post-escape para movimiento normal
+				if (sw->isPressed()) {
 					stop();
-					isCalibrating = false;
 				}
+				sw->consumePress();
+			}
+			return;
+		}
+
+		if (sw->consumePress()) {
+			LimitSwitch3::Position arrived = sw->getPosition();
+			if (arrived == targetPosition) {
+				stop();
+				} else {
+				LimitSwitch3::Position nextPos = computeNextExpected(direction);
+				sw->setNextExpected(nextPos);
+				escaping = true;
+				escapeStart = currentTime;
 			}
 		}
 	}
+
+	bool isAt(LimitSwitch3::Position pos) {
+		if (sw == 0) return false;
+		// MEJORA: Un motor estÃ¡ en la posiciÃ³n si no se mueve Y
+		// o bien el sensor lo confirma, o bien es nuestra posiciÃ³n objetivo actual.
+		return !moving && (sw->getPosition() == pos);
+	}
+
+	bool isMoving() {
+		return moving;
+	}
+
+	private:
+	LimitSwitch3::Position computeNextExpected(bool dir) {
+        if (sw == nullptr) return LimitSwitch3::Position::UNKNOWN;
+        LimitSwitch3::Position current = sw->getPosition();
+ 
+        if (dir) {  
+            if (current == LimitSwitch3::Position::RIGHT)  return LimitSwitch3::Position::MIDDLE;
+            if (current == LimitSwitch3::Position::MIDDLE) return LimitSwitch3::Position::LEFT;
+            return LimitSwitch3::Position::LEFT; 
+        } else {    
+            if (current == LimitSwitch3::Position::LEFT)   return LimitSwitch3::Position::MIDDLE;
+            if (current == LimitSwitch3::Position::MIDDLE) return LimitSwitch3::Position::RIGHT;
+            return LimitSwitch3::Position::RIGHT; 
+        }
+    }
 };
