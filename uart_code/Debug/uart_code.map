@@ -138,6 +138,16 @@ Discarded input sections
  .group         0x00000000        0x8 main.o
  .group         0x00000000        0x8 main.o
  .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -354,7 +364,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x4872
+.text           0x00000000     0x4cc6
  *(.vectors)
  .vectors       0x00000000       0xe4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega640/avr5/crtatmega640.o
                 0x00000000                __vector_default
@@ -433,6 +443,7 @@ END GROUP
                 0x0000011e                __vector_30
                 0x0000011e                __vector_45
                 0x0000011e                __vector_25
+                0x0000011e                __vector_11
                 0x0000011e                __vector_54
                 0x0000011e                __vector_13
                 0x0000011e                __vector_17
@@ -459,7 +470,6 @@ END GROUP
                 0x0000011e                __vector_29
                 0x0000011e                __vector_40
                 0x0000011e                __vector_8
-                0x0000011e                __vector_26
                 0x0000011e                __vector_48
                 0x0000011e                __vector_14
                 0x0000011e                __vector_53
@@ -471,349 +481,368 @@ END GROUP
                 0x00000122                . = ALIGN (0x2)
  *(.text.*)
  .text._ZN7DisplayC2EPPVhS2_PhS1_S1_h
-                0x00000122      0x152 main.o
+                0x00000122      0x17c main.o
                 0x00000122                _ZN7DisplayC1EPPVhS2_PhS1_S1_h
                 0x00000122                _ZN7DisplayC2EPPVhS2_PhS1_S1_h
  .text._ZN7Display4initEv
-                0x00000274      0x12a main.o
-                0x00000274                _ZN7Display4initEv
+                0x0000029e      0x12a main.o
+                0x0000029e                _ZN7Display4initEv
  .text._ZN7Display5clearEv
-                0x0000039e       0x82 main.o
-                0x0000039e                _ZN7Display5clearEv
+                0x000003c8       0x82 main.o
+                0x000003c8                _ZN7Display5clearEv
+ .text._ZN7Display11printBinaryEh
+                0x0000044a       0xf8 main.o
+                0x0000044a                _ZN7Display11printBinaryEh
  .text._ZN7Display10printDigitEh
-                0x00000420      0x11a main.o
-                0x00000420                _ZN7Display10printDigitEh
- .text._ZN7Display8setScoreEh
-                0x0000053a       0x34 main.o
-                0x0000053a                _ZN7Display8setScoreEh
+                0x00000542       0x46 main.o
+                0x00000542                _ZN7Display10printDigitEh
+ .text._ZN7Display9setPlayerEh
+                0x00000588       0x3e main.o
+                0x00000588                _ZN7Display9setPlayerEh
  .text._ZN7Display7refreshEv
-                0x0000056e       0xf0 main.o
-                0x0000056e                _ZN7Display7refreshEv
+                0x000005c6      0x12a main.o
+                0x000005c6                _ZN7Display7refreshEv
  .text._ZN7Display6updateEmb
-                0x0000065e       0xc0 main.o
-                0x0000065e                _ZN7Display6updateEmb
+                0x000006f0       0xc0 main.o
+                0x000006f0                _ZN7Display6updateEmb
  .text._ZN3LedC2EPVhS1_h
-                0x0000071e       0x88 main.o
-                0x0000071e                _ZN3LedC1EPVhS1_h
-                0x0000071e                _ZN3LedC2EPVhS1_h
+                0x000007b0       0x88 main.o
+                0x000007b0                _ZN3LedC1EPVhS1_h
+                0x000007b0                _ZN3LedC2EPVhS1_h
  .text._ZN3Led4initEv
-                0x000007a6       0x6a main.o
-                0x000007a6                _ZN3Led4initEv
+                0x00000838       0x6a main.o
+                0x00000838                _ZN3Led4initEv
  .text._ZN3Led2onEv
-                0x00000810       0x4a main.o
-                0x00000810                _ZN3Led2onEv
+                0x000008a2       0x4a main.o
+                0x000008a2                _ZN3Led2onEv
  .text._ZN3Led3offEv
-                0x0000085a       0x4c main.o
-                0x0000085a                _ZN3Led3offEv
+                0x000008ec       0x4c main.o
+                0x000008ec                _ZN3Led3offEv
  .text._ZN3Led6toggleEv
-                0x000008a6       0x40 main.o
-                0x000008a6                _ZN3Led6toggleEv
+                0x00000938       0x40 main.o
+                0x00000938                _ZN3Led6toggleEv
  .text._ZN3Led6updateEmb
-                0x000008e6       0xf2 main.o
-                0x000008e6                _ZN3Led6updateEmb
+                0x00000978       0xf2 main.o
+                0x00000978                _ZN3Led6updateEmb
  .text._ZN11LimitSwitchC2EPVhS1_S1_h
-                0x000009d8       0x98 main.o
-                0x000009d8                _ZN11LimitSwitchC1EPVhS1_S1_h
-                0x000009d8                _ZN11LimitSwitchC2EPVhS1_S1_h
+                0x00000a6a       0x98 main.o
+                0x00000a6a                _ZN11LimitSwitchC1EPVhS1_S1_h
+                0x00000a6a                _ZN11LimitSwitchC2EPVhS1_S1_h
  .text._ZN11LimitSwitch4initEv
-                0x00000a70       0x6a main.o
-                0x00000a70                _ZN11LimitSwitch4initEv
+                0x00000b02       0x6a main.o
+                0x00000b02                _ZN11LimitSwitch4initEv
  .text._ZN11LimitSwitch6updateEm
-                0x00000ada      0x134 main.o
-                0x00000ada                _ZN11LimitSwitch6updateEm
+                0x00000b6c      0x134 main.o
+                0x00000b6c                _ZN11LimitSwitch6updateEm
  .text._ZN11LimitSwitch9isPressedEv
-                0x00000c0e       0x20 main.o
-                0x00000c0e                _ZN11LimitSwitch9isPressedEv
+                0x00000ca0       0x20 main.o
+                0x00000ca0                _ZN11LimitSwitch9isPressedEv
  .text._ZN11LimitSwitch12consumePressEv
-                0x00000c2e       0x32 main.o
-                0x00000c2e                _ZN11LimitSwitch12consumePressEv
+                0x00000cc0       0x32 main.o
+                0x00000cc0                _ZN11LimitSwitch12consumePressEv
  .text._ZN11LimitSwitch13forceReleasedEv
-                0x00000c60       0x32 main.o
-                0x00000c60                _ZN11LimitSwitch13forceReleasedEv
+                0x00000cf2       0x32 main.o
+                0x00000cf2                _ZN11LimitSwitch13forceReleasedEv
  .text._ZN5MotorC2EPVhS1_hS1_S1_hS1_P11LimitSwitch
-                0x00000c92      0x11a main.o
-                0x00000c92                _ZN5MotorC2EPVhS1_hS1_S1_hS1_P11LimitSwitch
-                0x00000c92                _ZN5MotorC1EPVhS1_hS1_S1_hS1_P11LimitSwitch
+                0x00000d24      0x11a main.o
+                0x00000d24                _ZN5MotorC2EPVhS1_hS1_S1_hS1_P11LimitSwitch
+                0x00000d24                _ZN5MotorC1EPVhS1_hS1_S1_hS1_P11LimitSwitch
  .text._ZN5Motor4initEv
-                0x00000dac       0xc8 main.o
-                0x00000dac                _ZN5Motor4initEv
+                0x00000e3e       0xc8 main.o
+                0x00000e3e                _ZN5Motor4initEv
  .text._ZN5Motor13setEscapeTimeEm
-                0x00000e74       0x44 main.o
-                0x00000e74                _ZN5Motor13setEscapeTimeEm
+                0x00000f06       0x44 main.o
+                0x00000f06                _ZN5Motor13setEscapeTimeEm
  .text._ZN5Motor4moveEbmh
-                0x00000eb8      0x11c main.o
-                0x00000eb8                _ZN5Motor4moveEbmh
+                0x00000f4a      0x11c main.o
+                0x00000f4a                _ZN5Motor4moveEbmh
  .text._ZN5Motor4stopEv
-                0x00000fd4       0x38 main.o
-                0x00000fd4                _ZN5Motor4stopEv
+                0x00001066       0x38 main.o
+                0x00001066                _ZN5Motor4stopEv
  .text._ZN5Motor6updateEm
-                0x0000100c      0x11c main.o
-                0x0000100c                _ZN5Motor6updateEm
+                0x0000109e      0x11c main.o
+                0x0000109e                _ZN5Motor6updateEm
  .text._ZN5Motor8isMovingEv
-                0x00001128       0x20 main.o
-                0x00001128                _ZN5Motor8isMovingEv
+                0x000011ba       0x20 main.o
+                0x000011ba                _ZN5Motor8isMovingEv
  .text._ZN5Motor4isAtENS_4SideE
-                0x00001148       0x42 main.o
-                0x00001148                _ZN5Motor4isAtENS_4SideE
+                0x000011da       0x42 main.o
+                0x000011da                _ZN5Motor4isAtENS_4SideE
  .text._ZN12LimitSwitch3C2EPVhS1_S1_h
-                0x0000118a       0xa8 main.o
-                0x0000118a                _ZN12LimitSwitch3C1EPVhS1_S1_h
-                0x0000118a                _ZN12LimitSwitch3C2EPVhS1_S1_h
+                0x0000121c       0xa8 main.o
+                0x0000121c                _ZN12LimitSwitch3C1EPVhS1_S1_h
+                0x0000121c                _ZN12LimitSwitch3C2EPVhS1_S1_h
  .text._ZN12LimitSwitch34initEv
-                0x00001232       0x6a main.o
-                0x00001232                _ZN12LimitSwitch34initEv
+                0x000012c4       0x6a main.o
+                0x000012c4                _ZN12LimitSwitch34initEv
  .text._ZN12LimitSwitch36updateEm
-                0x0000129c      0x144 main.o
-                0x0000129c                _ZN12LimitSwitch36updateEm
+                0x0000132e      0x144 main.o
+                0x0000132e                _ZN12LimitSwitch36updateEm
  .text._ZN12LimitSwitch39isPressedEv
-                0x000013e0       0x20 main.o
-                0x000013e0                _ZN12LimitSwitch39isPressedEv
+                0x00001472       0x20 main.o
+                0x00001472                _ZN12LimitSwitch39isPressedEv
  .text._ZN12LimitSwitch312consumePressEv
-                0x00001400       0x32 main.o
-                0x00001400                _ZN12LimitSwitch312consumePressEv
+                0x00001492       0x32 main.o
+                0x00001492                _ZN12LimitSwitch312consumePressEv
  .text._ZN12LimitSwitch311getPositionEv
-                0x00001432       0x20 main.o
-                0x00001432                _ZN12LimitSwitch311getPositionEv
+                0x000014c4       0x20 main.o
+                0x000014c4                _ZN12LimitSwitch311getPositionEv
  .text._ZN12LimitSwitch315setNextExpectedENS_8PositionE
-                0x00001452       0x2a main.o
-                0x00001452                _ZN12LimitSwitch315setNextExpectedENS_8PositionE
+                0x000014e4       0x2a main.o
+                0x000014e4                _ZN12LimitSwitch315setNextExpectedENS_8PositionE
  .text._ZN12LimitSwitch312forcePressedENS_8PositionE
-                0x0000147c       0x50 main.o
-                0x0000147c                _ZN12LimitSwitch312forcePressedENS_8PositionE
+                0x0000150e       0x50 main.o
+                0x0000150e                _ZN12LimitSwitch312forcePressedENS_8PositionE
  .text._ZN12LimitSwitch313forceReleasedEv
-                0x000014cc       0x32 main.o
-                0x000014cc                _ZN12LimitSwitch313forceReleasedEv
+                0x0000155e       0x32 main.o
+                0x0000155e                _ZN12LimitSwitch313forceReleasedEv
  .text._ZN6Motor2C2EPVhS1_hS1_S1_hS1_P12LimitSwitch3
-                0x000014fe      0x122 main.o
-                0x000014fe                _ZN6Motor2C2EPVhS1_hS1_S1_hS1_P12LimitSwitch3
-                0x000014fe                _ZN6Motor2C1EPVhS1_hS1_S1_hS1_P12LimitSwitch3
+                0x00001590      0x122 main.o
+                0x00001590                _ZN6Motor2C2EPVhS1_hS1_S1_hS1_P12LimitSwitch3
+                0x00001590                _ZN6Motor2C1EPVhS1_hS1_S1_hS1_P12LimitSwitch3
  .text._ZN6Motor24initEv
-                0x00001620       0xc8 main.o
-                0x00001620                _ZN6Motor24initEv
+                0x000016b2       0xc8 main.o
+                0x000016b2                _ZN6Motor24initEv
  .text._ZN6Motor211startHomingEbN12LimitSwitch38PositionEmh
-                0x000016e8      0x124 main.o
-                0x000016e8                _ZN6Motor211startHomingEbN12LimitSwitch38PositionEmh
+                0x0000177a      0x124 main.o
+                0x0000177a                _ZN6Motor211startHomingEbN12LimitSwitch38PositionEmh
  .text._ZN6Motor24moveEbN12LimitSwitch38PositionEmh
-                0x0000180c      0x128 main.o
-                0x0000180c                _ZN6Motor24moveEbN12LimitSwitch38PositionEmh
+                0x0000189e      0x128 main.o
+                0x0000189e                _ZN6Motor24moveEbN12LimitSwitch38PositionEmh
  .text._ZN6Motor24stopEv
-                0x00001934       0x38 main.o
-                0x00001934                _ZN6Motor24stopEv
+                0x000019c6       0x38 main.o
+                0x000019c6                _ZN6Motor24stopEv
  .text._ZN6Motor26updateEm
-                0x0000196c      0x294 main.o
-                0x0000196c                _ZN6Motor26updateEm
+                0x000019fe      0x294 main.o
+                0x000019fe                _ZN6Motor26updateEm
  .text._ZN6Motor24isAtEN12LimitSwitch38PositionE
-                0x00001c00       0x5e main.o
-                0x00001c00                _ZN6Motor24isAtEN12LimitSwitch38PositionE
+                0x00001c92       0x5e main.o
+                0x00001c92                _ZN6Motor24isAtEN12LimitSwitch38PositionE
  .text._ZN6Motor28isMovingEv
-                0x00001c5e       0x20 main.o
-                0x00001c5e                _ZN6Motor28isMovingEv
+                0x00001cf0       0x20 main.o
+                0x00001cf0                _ZN6Motor28isMovingEv
  .text._ZN6Motor219computeNextExpectedEb
-                0x00001c7e       0x76 main.o
-                0x00001c7e                _ZN6Motor219computeNextExpectedEb
+                0x00001d10       0x76 main.o
+                0x00001d10                _ZN6Motor219computeNextExpectedEb
  .text._ZN11PinsManagerC2Ev
-                0x00001cf4       0x8e main.o
-                0x00001cf4                _ZN11PinsManagerC1Ev
-                0x00001cf4                _ZN11PinsManagerC2Ev
+                0x00001d86       0x84 main.o
+                0x00001d86                _ZN11PinsManagerC1Ev
+                0x00001d86                _ZN11PinsManagerC2Ev
  .text._ZN11PinsManager4initEv
-                0x00001d82       0x62 main.o
-                0x00001d82                _ZN11PinsManager4initEv
- .text._ZN11PinsManager11onInterruptEv
-                0x00001de4       0x24 main.o
-                0x00001de4                _ZN11PinsManager11onInterruptEv
+                0x00001e0a       0x3e main.o
+                0x00001e0a                _ZN11PinsManager4initEv
  .text._ZN11PinsManager6updateEm
-                0x00001e08      0x222 main.o
-                0x00001e08                _ZN11PinsManager6updateEm
+                0x00001e48      0x204 main.o
+                0x00001e48                _ZN11PinsManager6updateEm
  .text._ZN11PinsManager8getScoreEv
-                0x0000202a       0x20 main.o
-                0x0000202a                _ZN11PinsManager8getScoreEv
+                0x0000204c       0x20 main.o
+                0x0000204c                _ZN11PinsManager8getScoreEv
+ .text._ZN11PinsManager7isPinUpEh
+                0x0000206c       0x32 main.o
+                0x0000206c                _ZN11PinsManager7isPinUpEh
  .text._ZN11PinsManager5resetEv
-                0x0000204a       0x8e main.o
-                0x0000204a                _ZN11PinsManager5resetEv
+                0x0000209e       0x84 main.o
+                0x0000209e                _ZN11PinsManager5resetEv
  .text._ZN10SwitchUserC2EPVhS1_S1_h
-                0x000020d8       0xd0 main.o
-                0x000020d8                _ZN10SwitchUserC2EPVhS1_S1_h
-                0x000020d8                _ZN10SwitchUserC1EPVhS1_S1_h
+                0x00002122       0xd0 main.o
+                0x00002122                _ZN10SwitchUserC2EPVhS1_S1_h
+                0x00002122                _ZN10SwitchUserC1EPVhS1_S1_h
  .text._ZN10SwitchUser4initEv
-                0x000021a8       0x6a main.o
-                0x000021a8                _ZN10SwitchUser4initEv
+                0x000021f2       0x6a main.o
+                0x000021f2                _ZN10SwitchUser4initEv
  .text._ZN10SwitchUser6updateEm
-                0x00002212      0x136 main.o
-                0x00002212                _ZN10SwitchUser6updateEm
+                0x0000225c      0x136 main.o
+                0x0000225c                _ZN10SwitchUser6updateEm
  .text._ZN10SwitchUser12consumeClickEv
-                0x00002348       0x32 main.o
-                0x00002348                _ZN10SwitchUser12consumeClickEv
+                0x00002392       0x32 main.o
+                0x00002392                _ZN10SwitchUser12consumeClickEv
  .text._ZN5TimerC2Ev
-                0x0000237a       0x28 main.o
-                0x0000237a                _ZN5TimerC2Ev
-                0x0000237a                _ZN5TimerC1Ev
+                0x000023c4       0x28 main.o
+                0x000023c4                _ZN5TimerC2Ev
+                0x000023c4                _ZN5TimerC1Ev
  .text._ZN5Timer4initEv
-                0x000023a2       0x94 main.o
-                0x000023a2                _ZN5Timer4initEv
+                0x000023ec       0x94 main.o
+                0x000023ec                _ZN5Timer4initEv
  .text._ZN5Timer7addTickEv
-                0x00002436       0x3c main.o
-                0x00002436                _ZN5Timer7addTickEv
+                0x00002480       0x3c main.o
+                0x00002480                _ZN5Timer7addTickEv
  .text._ZN5Timer6millisEv
-                0x00002472       0x62 main.o
-                0x00002472                _ZN5Timer6millisEv
+                0x000024bc       0x62 main.o
+                0x000024bc                _ZN5Timer6millisEv
+ .text._ZN4UARTC2Ev
+                0x0000251e       0x32 main.o
+                0x0000251e                _ZN4UARTC1Ev
+                0x0000251e                _ZN4UARTC2Ev
+ .text._ZN4UART4initEm
+                0x00002550       0xac main.o
+                0x00002550                _ZN4UART4initEm
+ .text._ZN4UART4sendEc
+                0x000025fc       0x98 main.o
+                0x000025fc                _ZN4UART4sendEc
+ .text._ZN4UART5printEPKc
+                0x00002694       0x4e main.o
+                0x00002694                _ZN4UART5printEPKc
+ .text._ZN4UART7isrUDREEv
+                0x000026e2       0x9e main.o
+                0x000026e2                _ZN4UART7isrUDREEv
  .text._ZN6StatusC2Ev
-                0x000024d4       0x5e main.o
-                0x000024d4                _ZN6StatusC1Ev
-                0x000024d4                _ZN6StatusC2Ev
+                0x00002780       0x66 main.o
+                0x00002780                _ZN6StatusC1Ev
+                0x00002780                _ZN6StatusC2Ev
  .text._ZN6Status8setStateE6States
-                0x00002532       0x2a main.o
-                0x00002532                _ZN6Status8setStateE6States
+                0x000027e6       0x2a main.o
+                0x000027e6                _ZN6Status8setStateE6States
  .text._ZN6Status8getStateEv
-                0x0000255c       0x20 main.o
-                0x0000255c                _ZN6Status8getStateEv
+                0x00002810       0x20 main.o
+                0x00002810                _ZN6Status8getStateEv
  .text._ZN6Status14update_sensorsEv
-                0x0000257c      0x2a2 main.o
-                0x0000257c                _ZN6Status14update_sensorsEv
+                0x00002830      0x246 main.o
+                0x00002830                _ZN6Status14update_sensorsEv
  .text._ZN15StateActionBaseC2EP6Status
-                0x0000281e       0x40 main.o
-                0x0000281e                _ZN15StateActionBaseC1EP6Status
-                0x0000281e                _ZN15StateActionBaseC2EP6Status
+                0x00002a76       0x40 main.o
+                0x00002a76                _ZN15StateActionBaseC1EP6Status
+                0x00002a76                _ZN15StateActionBaseC2EP6Status
  .text._ZN15StateActionBase17check_transitionsEv
-                0x0000285e       0x1a main.o
-                0x0000285e                _ZN15StateActionBase17check_transitionsEv
+                0x00002ab6       0x1a main.o
+                0x00002ab6                _ZN15StateActionBase17check_transitionsEv
  .text._ZN15StateActionBase5entryEv
-                0x00002878       0x1a main.o
-                0x00002878                _ZN15StateActionBase5entryEv
+                0x00002ad0       0x1a main.o
+                0x00002ad0                _ZN15StateActionBase5entryEv
  .text._ZN15StateActionBase3runEv
-                0x00002892       0x1a main.o
-                0x00002892                _ZN15StateActionBase3runEv
+                0x00002aea       0x1a main.o
+                0x00002aea                _ZN15StateActionBase3runEv
  .text._ZN15StateActionBase4exitEv
-                0x000028ac       0x1a main.o
-                0x000028ac                _ZN15StateActionBase4exitEv
+                0x00002b04       0x1a main.o
+                0x00002b04                _ZN15StateActionBase4exitEv
  .text._ZN9InitStateC2EP6Status
-                0x000028c6       0x40 main.o
-                0x000028c6                _ZN9InitStateC2EP6Status
-                0x000028c6                _ZN9InitStateC1EP6Status
+                0x00002b1e       0x40 main.o
+                0x00002b1e                _ZN9InitStateC2EP6Status
+                0x00002b1e                _ZN9InitStateC1EP6Status
  .text._ZN9InitState5entryEv
-                0x00002906      0x20e main.o
-                0x00002906                _ZN9InitState5entryEv
+                0x00002b5e      0x242 main.o
+                0x00002b5e                _ZN9InitState5entryEv
  .text._ZN9InitState17check_transitionsEv
-                0x00002b14       0x1a main.o
-                0x00002b14                _ZN9InitState17check_transitionsEv
+                0x00002da0       0x1a main.o
+                0x00002da0                _ZN9InitState17check_transitionsEv
  .text._ZN16CalibrationState8m1_at_upEv
-                0x00002b2e       0x56 main.o
-                0x00002b2e                _ZN16CalibrationState8m1_at_upEv
+                0x00002dba       0x56 main.o
+                0x00002dba                _ZN16CalibrationState8m1_at_upEv
  .text._ZN16CalibrationState10m4_at_openEv
-                0x00002b84       0x56 main.o
-                0x00002b84                _ZN16CalibrationState10m4_at_openEv
+                0x00002e10       0x56 main.o
+                0x00002e10                _ZN16CalibrationState10m4_at_openEv
  .text._ZN16CalibrationStateC2EP6Status
-                0x00002bda       0x50 main.o
-                0x00002bda                _ZN16CalibrationStateC2EP6Status
-                0x00002bda                _ZN16CalibrationStateC1EP6Status
+                0x00002e66       0x50 main.o
+                0x00002e66                _ZN16CalibrationStateC2EP6Status
+                0x00002e66                _ZN16CalibrationStateC1EP6Status
  .text._ZN16CalibrationState5entryEv
-                0x00002c2a      0x11e main.o
-                0x00002c2a                _ZN16CalibrationState5entryEv
+                0x00002eb6      0x11e main.o
+                0x00002eb6                _ZN16CalibrationState5entryEv
  .text._ZN16CalibrationState3runEv
-                0x00002d48      0x104 main.o
-                0x00002d48                _ZN16CalibrationState3runEv
+                0x00002fd4      0x104 main.o
+                0x00002fd4                _ZN16CalibrationState3runEv
  .text._ZN16CalibrationState17check_transitionsEv
-                0x00002e4c       0xaa main.o
-                0x00002e4c                _ZN16CalibrationState17check_transitionsEv
+                0x000030d8       0xaa main.o
+                0x000030d8                _ZN16CalibrationState17check_transitionsEv
  .text._ZN9IdleStateC2EP6Status
-                0x00002ef6       0x40 main.o
-                0x00002ef6                _ZN9IdleStateC1EP6Status
-                0x00002ef6                _ZN9IdleStateC2EP6Status
+                0x00003182       0x40 main.o
+                0x00003182                _ZN9IdleStateC1EP6Status
+                0x00003182                _ZN9IdleStateC2EP6Status
  .text._ZN9IdleState5entryEv
-                0x00002f36       0x3c main.o
-                0x00002f36                _ZN9IdleState5entryEv
+                0x000031c2       0x50 main.o
+                0x000031c2                _ZN9IdleState5entryEv
  .text._ZN9IdleState17check_transitionsEv
-                0x00002f72       0x36 main.o
-                0x00002f72                _ZN9IdleState17check_transitionsEv
+                0x00003212       0x36 main.o
+                0x00003212                _ZN9IdleState17check_transitionsEv
  .text._ZN9IdleState4exitEv
-                0x00002fa8       0xba main.o
-                0x00002fa8                _ZN9IdleState4exitEv
+                0x00003248       0xbc main.o
+                0x00003248                _ZN9IdleState4exitEv
  .text._ZN10CargaStateC2EP6Status
-                0x00003062       0x5e main.o
-                0x00003062                _ZN10CargaStateC2EP6Status
-                0x00003062                _ZN10CargaStateC1EP6Status
+                0x00003304       0x5e main.o
+                0x00003304                _ZN10CargaStateC2EP6Status
+                0x00003304                _ZN10CargaStateC1EP6Status
  .text._ZN10CargaState5entryEv
-                0x000030c0       0xd4 main.o
-                0x000030c0                _ZN10CargaState5entryEv
+                0x00003362      0x112 main.o
+                0x00003362                _ZN10CargaState5entryEv
  .text._ZN10CargaState3runEv
-                0x00003194      0x442 main.o
-                0x00003194                _ZN10CargaState3runEv
+                0x00003474      0x4b8 main.o
+                0x00003474                _ZN10CargaState3runEv
  .text._ZN10CargaState17check_transitionsEv
-                0x000035d6       0x36 main.o
-                0x000035d6                _ZN10CargaState17check_transitionsEv
+                0x0000392c       0x36 main.o
+                0x0000392c                _ZN10CargaState17check_transitionsEv
  .text._ZN11ArmadoStateC2EP6Status
-                0x0000360c       0x4a main.o
-                0x0000360c                _ZN11ArmadoStateC2EP6Status
-                0x0000360c                _ZN11ArmadoStateC1EP6Status
+                0x00003962       0x4a main.o
+                0x00003962                _ZN11ArmadoStateC2EP6Status
+                0x00003962                _ZN11ArmadoStateC1EP6Status
  .text._ZN11ArmadoState5entryEv
-                0x00003656       0x8c main.o
-                0x00003656                _ZN11ArmadoState5entryEv
+                0x000039ac       0x8c main.o
+                0x000039ac                _ZN11ArmadoState5entryEv
  .text._ZN11ArmadoState3runEv
-                0x000036e2      0x1ae main.o
-                0x000036e2                _ZN11ArmadoState3runEv
+                0x00003a38      0x1ae main.o
+                0x00003a38                _ZN11ArmadoState3runEv
  .text._ZN11ArmadoState17check_transitionsEv
-                0x00003890       0x36 main.o
-                0x00003890                _ZN11ArmadoState17check_transitionsEv
+                0x00003be6       0x36 main.o
+                0x00003be6                _ZN11ArmadoState17check_transitionsEv
  .text._ZN11ArmadoState4exitEv
-                0x000038c6       0x42 main.o
-                0x000038c6                _ZN11ArmadoState4exitEv
+                0x00003c1c       0x42 main.o
+                0x00003c1c                _ZN11ArmadoState4exitEv
  .text._ZN12DisparoStateC2EP6Status
-                0x00003908       0x56 main.o
-                0x00003908                _ZN12DisparoStateC1EP6Status
-                0x00003908                _ZN12DisparoStateC2EP6Status
+                0x00003c5e       0x56 main.o
+                0x00003c5e                _ZN12DisparoStateC1EP6Status
+                0x00003c5e                _ZN12DisparoStateC2EP6Status
  .text._ZN12DisparoState5entryEv
-                0x0000395e       0xaa main.o
-                0x0000395e                _ZN12DisparoState5entryEv
+                0x00003cb4       0xaa main.o
+                0x00003cb4                _ZN12DisparoState5entryEv
  .text._ZN12DisparoState3runEv
-                0x00003a08      0x106 main.o
-                0x00003a08                _ZN12DisparoState3runEv
+                0x00003d5e      0x106 main.o
+                0x00003d5e                _ZN12DisparoState3runEv
  .text._ZN12DisparoState17check_transitionsEv
-                0x00003b0e       0x9a main.o
-                0x00003b0e                _ZN12DisparoState17check_transitionsEv
+                0x00003e64       0x9a main.o
+                0x00003e64                _ZN12DisparoState17check_transitionsEv
  .text._ZN12DisparoState4exitEv
-                0x00003ba8       0x86 main.o
-                0x00003ba8                _ZN12DisparoState4exitEv
+                0x00003efe      0x172 main.o
+                0x00003efe                _ZN12DisparoState4exitEv
  .text._ZN12RetornoStateC2EP6Status
-                0x00003c2e       0x50 main.o
-                0x00003c2e                _ZN12RetornoStateC1EP6Status
-                0x00003c2e                _ZN12RetornoStateC2EP6Status
+                0x00004070       0x50 main.o
+                0x00004070                _ZN12RetornoStateC1EP6Status
+                0x00004070                _ZN12RetornoStateC2EP6Status
  .text._ZN12RetornoState5entryEv
-                0x00003c7e       0xbe main.o
-                0x00003c7e                _ZN12RetornoState5entryEv
+                0x000040c0       0xbe main.o
+                0x000040c0                _ZN12RetornoState5entryEv
  .text._ZN12RetornoState3runEv
-                0x00003d3c      0x2d4 main.o
-                0x00003d3c                _ZN12RetornoState3runEv
+                0x0000417e      0x2d4 main.o
+                0x0000417e                _ZN12RetornoState3runEv
  .text._ZN12RetornoState17check_transitionsEv
-                0x00004010       0xb2 main.o
-                0x00004010                _ZN12RetornoState17check_transitionsEv
+                0x00004452       0xb2 main.o
+                0x00004452                _ZN12RetornoState17check_transitionsEv
  .text._ZN12StateMachineC2Ev
-                0x000040c2      0x140 main.o
-                0x000040c2                _ZN12StateMachineC2Ev
-                0x000040c2                _ZN12StateMachineC1Ev
+                0x00004504      0x140 main.o
+                0x00004504                _ZN12StateMachineC2Ev
+                0x00004504                _ZN12StateMachineC1Ev
  .text._ZN12StateMachine4stepEv
-                0x00004202      0x11c main.o
-                0x00004202                _ZN12StateMachine4stepEv
+                0x00004644      0x116 main.o
+                0x00004644                _ZN12StateMachine4stepEv
  .text._ZN12StateMachine5startEv
-                0x0000431e       0x4e main.o
-                0x0000431e                _ZN12StateMachine5startEv
+                0x0000475a       0x4c main.o
+                0x0000475a                _ZN12StateMachine5startEv
  .text._ZN12StateMachine10get_statusEv
-                0x0000436c       0x1c main.o
-                0x0000436c                _ZN12StateMachine10get_statusEv
- .text.__vector_11
-                0x00004388       0x6e main.o
-                0x00004388                __vector_11
+                0x000047a6       0x1c main.o
+                0x000047a6                _ZN12StateMachine10get_statusEv
  .text.__vector_42
-                0x000043f6       0x6e main.o
-                0x000043f6                __vector_42
- .text.main     0x00004464      0x3c6 main.o
-                0x00004464                main
+                0x000047c2       0x6e main.o
+                0x000047c2                __vector_42
+ .text.__vector_26
+                0x00004830       0x6e main.o
+                0x00004830                __vector_26
+ .text.main     0x0000489e      0x3e0 main.o
+                0x0000489e                main
  .text.libgcc.div
-                0x0000482a       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x0000482a                __udivmodsi4
-                0x0000486e                . = ALIGN (0x2)
+                0x00004c7e       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                0x00004c7e                __udivmodsi4
+                0x00004cc2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000486e        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x0000486e                _exit
-                0x0000486e                exit
+ .fini9         0x00004cc2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00004cc2                _exit
+                0x00004cc2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -832,66 +861,66 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000486e        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00004cc2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00004872                _etext = .
+                0x00004cc6                _etext = .
 
-.data           0x00800200       0x8e load address 0x00004872
+.data           0x00800200       0xac load address 0x00004cc6
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00800200       0x2d main.o
+ .rodata        0x00800200       0x4b main.o
  *(.rodata*)
  .rodata._ZTV12RetornoState
-                0x0080022d        0xc main.o
-                0x0080022d                _ZTV12RetornoState
+                0x0080024b        0xc main.o
+                0x0080024b                _ZTV12RetornoState
  .rodata._ZTV12DisparoState
-                0x00800239        0xc main.o
-                0x00800239                _ZTV12DisparoState
+                0x00800257        0xc main.o
+                0x00800257                _ZTV12DisparoState
  .rodata._ZTV11ArmadoState
-                0x00800245        0xc main.o
-                0x00800245                _ZTV11ArmadoState
+                0x00800263        0xc main.o
+                0x00800263                _ZTV11ArmadoState
  .rodata._ZTV10CargaState
-                0x00800251        0xc main.o
-                0x00800251                _ZTV10CargaState
+                0x0080026f        0xc main.o
+                0x0080026f                _ZTV10CargaState
  .rodata._ZTV9IdleState
-                0x0080025d        0xc main.o
-                0x0080025d                _ZTV9IdleState
+                0x0080027b        0xc main.o
+                0x0080027b                _ZTV9IdleState
  .rodata._ZTV16CalibrationState
-                0x00800269        0xc main.o
-                0x00800269                _ZTV16CalibrationState
+                0x00800287        0xc main.o
+                0x00800287                _ZTV16CalibrationState
  .rodata._ZTV9InitState
-                0x00800275        0xc main.o
-                0x00800275                _ZTV9InitState
+                0x00800293        0xc main.o
+                0x00800293                _ZTV9InitState
  .rodata._ZTV15StateActionBase
-                0x00800281        0xc main.o
-                0x00800281                _ZTV15StateActionBase
+                0x0080029f        0xc main.o
+                0x0080029f                _ZTV15StateActionBase
  *(.gnu.linkonce.r*)
-                0x0080028e                . = ALIGN (0x2)
- *fill*         0x0080028d        0x1 
-                0x0080028e                _edata = .
-                0x0080028e                PROVIDE (__data_end, .)
+                0x008002ac                . = ALIGN (0x2)
+ *fill*         0x008002ab        0x1 
+                0x008002ac                _edata = .
+                0x008002ac                PROVIDE (__data_end, .)
 
-.bss            0x0080028e        0x4
-                0x0080028e                PROVIDE (__bss_start, .)
+.bss            0x008002ac        0x4
+                0x008002ac                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.pinsPtr   0x0080028e        0x2 main.o
-                0x0080028e                pinsPtr
- .bss.timerPtr  0x00800290        0x2 main.o
-                0x00800290                timerPtr
+ .bss.timerPtr  0x008002ac        0x2 main.o
+                0x008002ac                timerPtr
+ .bss.uartPtr   0x008002ae        0x2 main.o
+                0x008002ae                uartPtr
  *(COMMON)
-                0x00800292                PROVIDE (__bss_end, .)
-                0x00004872                __data_load_start = LOADADDR (.data)
-                0x00004900                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x008002b0                PROVIDE (__bss_end, .)
+                0x00004cc6                __data_load_start = LOADADDR (.data)
+                0x00004d72                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800292        0x0
+.noinit         0x008002b0        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800292                _end = .
+                0x008002b0                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -956,42 +985,42 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x368
+.debug_aranges  0x00000000      0x398
  *(.debug_aranges)
  .debug_aranges
-                0x00000000      0x368 main.o
+                0x00000000      0x398 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x4447
+.debug_info     0x00000000     0x46a8
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xba9 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega640/avr5/crtatmega640.o
- .debug_info    0x00000ba9     0x389e main.o
+ .debug_info    0x00000ba9     0x3aff main.o
 
-.debug_abbrev   0x00000000     0x101b
+.debug_abbrev   0x00000000     0x102e
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0xb08 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega640/avr5/crtatmega640.o
- .debug_abbrev  0x00000b08      0x513 main.o
+ .debug_abbrev  0x00000b08      0x526 main.o
 
-.debug_line     0x00000000     0x2433
+.debug_line     0x00000000     0x2633
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x1ee C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega640/avr5/crtatmega640.o
- .debug_line    0x000001ee     0x2245 main.o
+ .debug_line    0x000001ee     0x2445 main.o
 
-.debug_frame    0x00000000      0xf84
+.debug_frame    0x00000000     0x1030
  *(.debug_frame)
- .debug_frame   0x00000000      0xf84 main.o
+ .debug_frame   0x00000000     0x1030 main.o
 
-.debug_str      0x00000000     0xa85b
+.debug_str      0x00000000     0xaea3
  *(.debug_str)
  .debug_str     0x00000000      0x3e0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega640/avr5/crtatmega640.o
- .debug_str     0x000003e0     0xa47b main.o
-                               0xa643 (size before relaxing)
+ .debug_str     0x000003e0     0xaac3 main.o
+                               0xacdf (size before relaxing)
 
-.debug_loc      0x00000000     0x22eb
+.debug_loc      0x00000000     0x2466
  *(.debug_loc)
- .debug_loc     0x00000000     0x22eb main.o
+ .debug_loc     0x00000000     0x2466 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1011,26 +1040,30 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x358
+.debug_ranges   0x00000000      0x388
  *(.debug_ranges)
- .debug_ranges  0x00000000      0x358 main.o
+ .debug_ranges  0x00000000      0x388 main.o
 
-.debug_macro    0x00000000     0x3637
+.debug_macro    0x00000000     0x385e
  *(.debug_macro)
- .debug_macro   0x00000000       0xd4 main.o
- .debug_macro   0x000000d4      0xad2 main.o
- .debug_macro   0x00000ba6       0x10 main.o
- .debug_macro   0x00000bb6       0x1c main.o
- .debug_macro   0x00000bd2      0x1c9 main.o
- .debug_macro   0x00000d9b      0x2fc main.o
- .debug_macro   0x00001097       0x9e main.o
- .debug_macro   0x00001135     0x1fde main.o
- .debug_macro   0x00003113      0x2ea main.o
- .debug_macro   0x000033fd       0xd9 main.o
- .debug_macro   0x000034d6       0x34 main.o
- .debug_macro   0x0000350a       0x18 main.o
- .debug_macro   0x00003522       0x6c main.o
- .debug_macro   0x0000358e       0x69 main.o
- .debug_macro   0x000035f7       0x40 main.o
-OUTPUT(bolera_code.elf elf32-avr)
+ .debug_macro   0x00000000      0x10a main.o
+ .debug_macro   0x0000010a      0xad2 main.o
+ .debug_macro   0x00000bdc       0x10 main.o
+ .debug_macro   0x00000bec       0x1c main.o
+ .debug_macro   0x00000c08      0x1c9 main.o
+ .debug_macro   0x00000dd1      0x2fc main.o
+ .debug_macro   0x000010cd       0x9e main.o
+ .debug_macro   0x0000116b     0x1fde main.o
+ .debug_macro   0x00003149      0x2ea main.o
+ .debug_macro   0x00003433       0xd9 main.o
+ .debug_macro   0x0000350c       0x34 main.o
+ .debug_macro   0x00003540       0x18 main.o
+ .debug_macro   0x00003558       0x6c main.o
+ .debug_macro   0x000035c4       0x69 main.o
+ .debug_macro   0x0000362d       0x58 main.o
+ .debug_macro   0x00003685       0x10 main.o
+ .debug_macro   0x00003695       0x97 main.o
+ .debug_macro   0x0000372c       0xf2 main.o
+ .debug_macro   0x0000381e       0x40 main.o
+OUTPUT(uart_code.elf elf32-avr)
 LOAD linker stubs

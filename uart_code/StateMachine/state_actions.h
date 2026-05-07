@@ -10,6 +10,8 @@
 #include "../Classes/LimitSwitch3.h"
 #include "../Classes/SwitchUser.h"
 #include "../Classes/Timer.h"
+#include "../Classes/UART.h"
+
 
 #include "status.h"
 #include "../motor_dirs.h"
@@ -74,6 +76,9 @@ class InitState : public StateActionBase {
 		status->timer->init();
 		
 		status->m5->setEscapeTime(1500);
+
+		status->uart->init(9600);
+		status->uart->print("UART_LISTO\n");
 	}
 		
 	States check_transitions() override {
@@ -149,6 +154,7 @@ class IdleState : public StateActionBase {
 		explicit IdleState(Status* s) : StateActionBase(s) {}
 			
 		void entry() override {
+			status->sw6->consumeClick(); // Limpiar cualquier click residual
 			status->led->on();
 			status->game_running = false;
 		}
@@ -162,12 +168,13 @@ class IdleState : public StateActionBase {
 		
 		void exit() override {
 			status->score = 0;
-			status->display->setScore(status->score);
 			status->game_start_time = status->current_time;
 			status->is_last_turn = false;
 			status->game_running = true;
 			status->pinsManager->reset();
 			status->led->off();
+			status->total_throws = 0;
+			status->uart->print("START_GAME\n");
 		}
 };
 
@@ -186,7 +193,10 @@ class CargaState : public StateActionBase {
 		void entry() override {
 			step_m12 = 0;
 			timer_m1 = 0;
-			
+			status->sw6->consumeClick(); // Limpiar click de entrada
+
+			status->display->setPlayer(status->total_throws%4 + 1);
+
 			if (status->is_armed) {
 				step_m34 = 4;
 				status->m1->move(M1_DIR_UP, status->current_time);
@@ -198,7 +208,7 @@ class CargaState : public StateActionBase {
 				
 		void run() override {
 			// ==========================================
-			// FASE 1: Secuencia de M3 y M4 (Bolos)
+			// FASE 1: Secuencia de M3 y M4
 			// ==========================================
 			if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
 				status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
@@ -224,30 +234,32 @@ class CargaState : public StateActionBase {
 			// ==========================================
 			// FASE 2: Secuencia de M1 y M2 (Recarga)
 			// ==========================================
-			if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
-				// Asumiendo que usas LimitSwitch3::Position::RIGHT (o tu define M2_POS_RIGHT)
-				if (status->m2->isAt(LimitSwitch3::Position::RIGHT)) { 
-					status->m1->move(M1_DIR_DOWN, status->current_time);
-					step_m12 = 1;
+			if (step_m34 == 4) {
+				if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
+					// Asumiendo que usas LimitSwitch3::Position::RIGHT (o tu define M2_POS_RIGHT)
+					if (status->m2->isAt(LimitSwitch3::Position::RIGHT)) { 
+						status->m1->move(M1_DIR_DOWN, status->current_time);
+						step_m12 = 1;
+					}
+					else if (!status->m2->isMoving()) {
+						status->m2->move(M2_DIR_RIGHT, LimitSwitch3::Position::RIGHT, status->current_time);
+					}
 				}
-				else if (!status->m2->isMoving()) {
-					status->m2->move(M2_DIR_RIGHT, LimitSwitch3::Position::RIGHT, status->current_time);
+				else if (step_m12 == 1 && status->m1->isAt(M1_SIDE_DOWN)) {
+					timer_m1 = status->current_time;
+					step_m12 = 2;
 				}
-			}
-			else if (step_m12 == 1 && status->m1->isAt(M1_SIDE_DOWN)) {
-				timer_m1 = status->current_time;
-				step_m12 = 2;
-			}
-			else if (step_m12 == 2 && (status->current_time - timer_m1) >= 1000) {
-				status->m1->move(M1_DIR_UP, status->current_time);
-				step_m12 = 3;
-			}
-			else if (step_m12 == 3 && status->m1->isAt(M1_SIDE_UP)) {
-				timer_m1 = status->current_time;
-				step_m12 = 4;
-			}
-			else if (step_m12 == 4 && (status->current_time - timer_m1) >= 1000) {
-				step_m12 = 5;
+				else if (step_m12 == 2 && (status->current_time - timer_m1) >= 1000) {
+					status->m1->move(M1_DIR_UP, status->current_time);
+					step_m12 = 3;
+				}
+				else if (step_m12 == 3 && status->m1->isAt(M1_SIDE_UP)) {
+					timer_m1 = status->current_time;
+					step_m12 = 4;
+				}
+				else if (step_m12 == 4 && (status->current_time - timer_m1) >= 1000) {
+					step_m12 = 5;
+				}
 			}
 		}
 		
@@ -276,7 +288,7 @@ class ArmadoState : public StateActionBase {
 		// M2 viene del extremo DERECHO (al final de Carga). 
 		// Lo mandamos al IZQUIERDO para iniciar el barrido. 
 		// Al hacerlo, pasará por el centro ignorándolo gracias a tu clase Motor2.
-		status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
+		status->m2->move(M2_DIR_LEFT, LimitSwitch3::Position::LEFT, status->current_time, 153);
 	}
 	
 	void run() override {
@@ -284,22 +296,22 @@ class ArmadoState : public StateActionBase {
 			
 			if (going_left) {
 				// Si íbamos a la izquierda y llegamos a la izquierda
-				if(status->m2->isAt(M2_POS_LEFT)) {
+				if(status->m2->isAt(LimitSwitch3::Position::LEFT)) {
 					going_left = false; // Rebotar hacia la derecha (pero solo hasta el MEDIO)
-					status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
+					status->m2->move(M2_DIR_RIGHT, LimitSwitch3::Position::MIDDLE, status->current_time, 153);
 				} else {
 					// Rescate por si se detiene antes de tiempo
-					status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
+					status->m2->move(M2_DIR_LEFT, LimitSwitch3::Position::LEFT, status->current_time, 153);
 				}
 			} else {
 				// Si íbamos hacia la derecha (hacia el CENTRO) y llegamos al CENTRO
-				if (status->m2->isAt(M2_POS_MIDDLE)) {
+				if (status->m2->isAt(LimitSwitch3::Position::MIDDLE)) {
 					going_left = true; // Rebotar hacia la izquierda
-					status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
+					status->m2->move(M2_DIR_LEFT, LimitSwitch3::Position::LEFT, status->current_time, 153);
 				}
 				else {
 					// Nos aseguramos de que el destino es siempre MIDDLE, y nunca enviarlo a RIGHT
-					status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
+					status->m2->move(M2_DIR_RIGHT, LimitSwitch3::Position::MIDDLE, status->current_time, 153);
 				}
 			}
 		}
@@ -339,18 +351,18 @@ class DisparoState : public StateActionBase {
 		
 		// --- CRÍTICO: Abrimos M4 instantáneamente. 
 		// Como es el retenedor, esto es lo que dispara físicamente la bola.
-		status->m4->move(M4_DIR_OPEN, status->current_time);
+		status->m4->move(M4_DIR_OPEN, status->current_time, 255);
 	}
 
 	void run() override {
 		// Pasados 3 segundos del disparo, mandamos M2 a su zona de aparcamiento
 		if ((status->current_time - start_time) >= 3000) {
 			if (!m2_finished) {
-				if (status->m2->isAt(M2_POS_RIGHT)) {
+				if (status->m2->isAt(LimitSwitch3::Position::RIGHT)) {
 					m2_finished = true;
 				}
 				else if (!status->m2->isMoving()) {
-					status->m2->startHoming(M2_DIR_RIGHT, M2_POS_RIGHT, status->current_time);
+					status->m2->startHoming(M2_DIR_RIGHT, LimitSwitch3::Position::RIGHT, status->current_time);
 				}
 			}
 		}
@@ -368,8 +380,22 @@ class DisparoState : public StateActionBase {
 	
 	void exit() override {
 		status->score += status->pinsManager->getScore();
-		status->display->setScore(status->score);
-		
+		status->total_throws++;
+
+		uint8_t points = status->pinsManager->getScore();
+		status->uart->print("B:");
+		for (uint8_t i = 0; i < 6; i++) {
+			status->uart->send(status->pinsManager->isPinUp(i) ? '1' : '0');
+		}
+		status->uart->send('\n');
+		status->uart->print("P:");
+		status->uart->send(points + '0');
+		status->uart->send('\n');
+
+		if(status->total_throws >= 8) {
+			status->is_last_turn = true;
+		}
+
 		status->pinsManager->reset();
 	}
 };

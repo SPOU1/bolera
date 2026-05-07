@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
-    <ProjectGuid>{8a3cc957-0514-4c86-b8f5-369e3985489e}</ProjectGuid>
+    <ProjectGuid>{328bb6d9-136e-49ed-9e58-9b758f46aa44}</ProjectGuid>
     <avrdevice>ATmega640</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>bolera_code</AssemblyName>
-    <Name>bolera_code</Name>
+    <Name>uart_code</Name>
     <RootNamespace>bolera_code</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -194,6 +194,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Classes\Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Classes\UART.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.cpp">

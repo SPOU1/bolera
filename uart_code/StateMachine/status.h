@@ -10,6 +10,7 @@
 #include "../Classes/LimitSwitch3.h"
 #include "../Classes/SwitchUser.h"
 #include "../Classes/Timer.h"
+#include "../Classes/UART.h"
 
 enum class States : uint8_t {
 	Init = 0,
@@ -51,10 +52,6 @@ class Status {
 			led->update(current_time, is_last_turn);
 			display->update(current_time, !game_running);
 			pinsManager->update(current_time);
-			
-			if(game_running && ((current_time-game_start_time) >= 60000)) {
-				is_last_turn = true;
-			}
 		}
 				
 		// Hardware
@@ -65,6 +62,7 @@ class Status {
 		Display* display;
 		PinsManager* pinsManager;
 		Timer* timer;
+		UART* uart;
 		
 		// Variables de juego
 		uint8_t score = 0;
@@ -73,6 +71,7 @@ class Status {
 		bool is_armed = false;
 		uint32_t game_start_time = 0;
 		uint32_t current_time = 0;
+		uint8_t total_throws = 0;
 		
 	private:
 		States current_state;			
