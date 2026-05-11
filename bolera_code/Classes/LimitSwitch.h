@@ -1,3 +1,8 @@
+/*
+ * LimitSwitch.h
+ * Gestiona el los switches asociados a los motores con sistema de antirrebotes integrador.
+ */
+
 #pragma once
 #include <avr/io.h>
 
@@ -18,10 +23,10 @@ class LimitSwitch {
 
     public:
     LimitSwitch(volatile uint8_t* pinR, volatile uint8_t* portR, volatile uint8_t* ddrR, uint8_t m) {
-		pinReg = pinR;
+		pinReg  = pinR;
 		portReg = portR;
-		ddrReg = ddrR;
-		mask = m;
+		ddrReg  = ddrR;
+		mask    = m;
 		
 		counter = 0;
 		stableState = false;
@@ -30,15 +35,18 @@ class LimitSwitch {
 	}
     
     void init() {
-        *ddrReg &= ~mask; // Input
-        *portReg |= mask; // Pull-up
+        *ddrReg  &= ~mask; // Input
+        *portReg |=  mask; // Pull-up
     }
     
     void update(uint32_t currentTime) {
+        /*
+         * Actualiza el estado del switch.
+         * Implementa un sistema de antirrebotes integrador: requiere SAMPLES lecturas consecutivas iguales para cambiar el estado estable.
+         */
         if (currentTime == lastSampleTime) return; // Evitar muestrear más de una vez por ms
         lastSampleTime = currentTime;
 
-        // Leer estado actual (lógica invertida por pull-up)
         bool reading = !(*pinReg & mask);
 
         // Integrador saturante
@@ -58,10 +66,15 @@ class LimitSwitch {
     }
 
     bool isPressed() {
+        // Devuelve true si se ha detectado un nuevo pulso.
+        // No se resetea el flag
         return stableState;
     }
 
     bool consumePress() {
+        /*
+         * Devuelve true si se ha detectado un nuevo pulso y resetea el flag.
+         */
         if (flagPressed) {
             flagPressed = false; // Consumir el flanco detectado
             return true;
@@ -69,15 +82,15 @@ class LimitSwitch {
         return false;
     }
 
-    void forcePressed() {
-        counter = SAMPLES; // Forzar estado presionado
-        stableState = true;
-        flagPressed = false; // No genera evento, ya lo sabemos.
-    }
+    // void forcePressed() {
+    //     counter     = SAMPLES; // Forzar estado presionado
+    //     stableState = true;
+    //     flagPressed = false;   // No genera evento
+    // }
 
     void forceReleased() {
-        counter = 0; // Forzar estado suelto
+        counter     = 0;     // Forzar estado suelto
         stableState = false;
-        flagPressed = false; // No hay pulso pendiente
+        flagPressed = false;
     }
 };

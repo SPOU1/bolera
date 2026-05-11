@@ -15,445 +15,441 @@
 #include "../motor_dirs.h"
 
 class StateActionBase {
-	protected:
-		Status* status;
-	public:
-		explicit StateActionBase(Status* s): status(s) {}
-		~StateActionBase() = default;
-		
-		virtual States check_transitions() { return States::NO_CHANGE; };
-		
-		virtual void entry() {};
-		virtual void run()	 {};
-		virtual void exit()  {};
+    protected:
+        Status* status;
+    public:
+        explicit StateActionBase(Status* s): status(s) {}
+        ~StateActionBase() = default;
+        
+        virtual States check_transitions() { return States::NO_CHANGE; };
+        
+        virtual void entry() {};
+        virtual void run()	 {};
+        virtual void exit()  {};
 };
 
 /* ============================ */
-/*		       INIT			    */
+/*             INIT             */
 /* ============================ */
 
 class InitState : public StateActionBase {
-	public:
-	explicit InitState(Status* s) : StateActionBase(s) {}
-		
-	void entry() override {
-		UCSR0B = 0;
-		
-		// --- CONFIGURACIÓN DE PINES PWM COMO SALIDAS ---
-		DDRB |= (1 << PB4) | (1 << PB5) | (1 << PB6) | (1 << PB7);
-		DDRL |= (1 << PL3);
+    public:
+    explicit InitState(Status* s) : StateActionBase(s) {}
+        
+    void entry() override {
+        UCSR0B = 0;
+        
+        // CONFIGURACIÓN DE PINES PWM COMO SALIDAS
+        DDRB |= (1 << PB4) | (1 << PB5) | (1 << PB6) | (1 << PB7);
+        DDRL |= (1 << PL3);
 
-		// --- CONFIGURACIÓN DE TIMERS ---
-		// NOTA: Usamos '=' para limpiar la configuración previa del bootloader.
+        // --- CONFIGURACIÓN DE TIMERS ---
+        // Timer 0 (M4 - OCR0A)
+        TCCR0A = (1 << COM0A1) | (1 << WGM01) | (1 << WGM00);	// Fast PWM
+        TCCR0B = (1 << CS01) | (1 << CS00);                     // Prescaler 64
 
-		// Timer 0 (M4 - OCR0A)
-		TCCR0A = (1 << COM0A1) | (1 << WGM01) | (1 << WGM00);	// Fast PWM
-		TCCR0B = (1 << CS01) | (1 << CS00);
+        // Timer 1 (M2 - OCR1A, M3 - OCR1B)
+        TCCR1A = (1 << COM1A1) | (1 << COM1B1) | (1 << WGM10);  // Fast PWM (8 bit)
+        TCCR1B = (1 << WGM12) | (1 << CS11) | (1 << CS10);		// Prescaler 64
+        OCR1AH = 0;	OCR1AL = 0;
+        OCR1BH = 0;	OCR1BL = 0;
 
-		// Timer 1 (M2 - OCR1A, M3 - OCR1B)
-		TCCR1A = (1 << COM1A1) | (1 << COM1B1) | (1 << WGM10);  // Fast PWM (8 bit)
-		TCCR1B = (1 << WGM12) | (1 << CS11) | (1 << CS10);		// Prescaler 64
-		OCR1AH = 0;	OCR1AL = 0;
-		OCR1BH = 0;	OCR1BL = 0;
+        // Timer 2 (M1 - OCR2A)
+        TCCR2A = (1 << COM2A1) | (1 << WGM21) | (1 << WGM20);	// Fast PWM
+        TCCR2B = (1 << CS22);									// Prescaler 64
 
-		// Timer 2 (M1 - OCR2A)
-		TCCR2A = (1 << COM2A1) | (1 << WGM21) | (1 << WGM20);	// Fast PWM
-		TCCR2B = (1 << CS22);									// Prescaler 64
-
-		// Timer 5 (M5 - OCR5AL)
-		TCCR5A = (1 << COM5A1) | (1 << WGM50);					// Fast PWM (8 bit)
-		TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);		// Prescaler 64
-		OCR5AH = 0; OCR5AL = 0;
-		
-		// Inicializacion de Clases
-		status->sw1->init(); status->sw2->init(); status->sw3->init(); status->sw4->init(); status->sw5->init(); status->sw6->init();
-		status->m1->init();  status->m2->init();  status->m3->init();  status->m4->init();  status->m5->init();
-		status->led->init();
-		status->display->init();
-		status->pinsManager->init();
-		status->timer->init();
-		
-		status->m5->setEscapeTime(1500);
-	}
-		
-	States check_transitions() override {
-		// Init pasa inmediatamente a calibracin
-		return States::Calibration;
-	}
+        // Timer 5 (M5 - OCR5AL)
+        TCCR5A = (1 << COM5A1) | (1 << WGM50);					// Fast PWM (8 bit)
+        TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);		// Prescaler 64
+        OCR5AH = 0; OCR5AL = 0;
+        
+        // Inicializacion de Clases
+        status->sw1->init(); status->sw2->init(); status->sw3->init(); status->sw4->init(); status->sw5->init(); status->sw6->init();
+        status->m1->init();  status->m2->init();  status->m3->init();  status->m4->init();  status->m5->init();
+        status->led->init();
+        status->display->init();
+        status->pinsManager->init();
+        status->timer->init();
+        
+        status->m5->setEscapeTime(1500);    // M5 necesita un escape más largo.
+    }
+        
+    States check_transitions() override {
+        // Init pasa inmediatamente a calibracin
+        return States::Calibration;
+    }
 };
 
 /* ============================ */
-/*		   CALIBRATION			*/
+/*         CALIBRATION          */
 /* ============================ */
 
 class CalibrationState : public StateActionBase {
-	private:
-	    bool m2_started = false;
+    private:
+        bool m2_started = false;
         bool m3_started = false;
 
-    // Helpers de legibilidad
-		bool m1_at_up()   { return !status->m1->isMoving() && status->m1->isAt(M1_SIDE_UP); }
-		bool m4_at_open() { return !status->m4->isMoving() && status->m4->isAt(M4_SIDE_OPEN); }
+        bool m1_at_up()   {return !status->m1->isMoving() && status->m1->isAt(M1_SIDE_UP);  }
+        bool m4_at_open() {return !status->m4->isMoving() && status->m4->isAt(M4_SIDE_OPEN);}
 
-	public:
-		explicit CalibrationState(Status *s) : StateActionBase(s) {}
-			
+    public:
+        explicit CalibrationState(Status *s) : StateActionBase(s) {}
+            
         void entry() override {
-	        status->led->off();
-	        m2_started = false;
-	        m3_started = false;
-	        
-	        // Subimos la velocidad a 255 (100% de fuerza) para evitar bloqueos mecánicos
-	        status->m1->move(M1_DIR_UP,		status->current_time, 255);
-	        status->m4->move(M4_DIR_OPEN,	status->current_time, 255);
-	        status->m5->move(M5_DIR_DOWN,	status->current_time, 255);
-	        
-	        status->m2->stop();
-	        status->m3->stop();
+            status->led->off();
+            m2_started = false;
+            m3_started = false;
+            
+            status->m1->move(M1_DIR_UP,     status->current_time, 255);
+            status->m4->move(M4_DIR_OPEN,   status->current_time, 255);
+            status->m5->move(M5_DIR_DOWN,   status->current_time, 255);
+            
+            status->m2->stop();
+            status->m3->stop();
         }
         
         void run() override {
-	        if (!m2_started && m1_at_up()) {
-		        // Subimos la velocidad a 255 para el barrido
-		        status->m2->startHoming(M2_DIR_RIGHT, LimitSwitch3::Position::RIGHT, status->current_time, 255);
-		        m2_started = true;
-	        }
-	        
-	        if (!m3_started && m4_at_open()) {
-		        // Subimos la velocidad a 255
-		        status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
-		        m3_started = true;
-	        }
+            // Solo iniciar M2 cuando M1 esté en posición UP.
+            if (!m2_started && m1_at_up()) {
+                status->m2->startHoming(M2_DIR_RIGHT, M2_POS_RIGHT, status->current_time, 255);
+                m2_started = true;
+            }
+            
+            // Solo iniciar M3 cuando M4 esté en posición OPEN.
+            if (!m3_started && m4_at_open()) {
+                status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
+                m3_started = true;
+            }
         }
-		
-		States check_transitions() override {
-			bool m1_rdy = m1_at_up();
-			bool m2_rdy = status->m2->isAt(M2_POS_RIGHT);
-			bool m3_rdy = status->m3->isAt(M3_SIDE_FORWARD);
-			bool m4_rdy = m4_at_open();
-			bool m5_rdy = status->m5->isAt(M5_SIDE_DOWN);
+        
+        States check_transitions() override {
+            bool m1_rdy = m1_at_up();
+            bool m2_rdy = status->m2->isAt(M2_POS_RIGHT);
+            bool m3_rdy = status->m3->isAt(M3_SIDE_FORWARD);
+            bool m4_rdy = m4_at_open();
+            bool m5_rdy = status->m5->isAt(M5_SIDE_DOWN);
     
-			if (m1_rdy && m2_rdy && m3_rdy && m4_rdy && m5_rdy) {
-				return States::Idle;
-			}
-			return States::NO_CHANGE;
-		}
+            if (m1_rdy && m2_rdy && m3_rdy && m4_rdy && m5_rdy) {
+                // Si todos los motores están en posición, pasa a Idle.
+                return States::Idle;
+            }
+            return States::NO_CHANGE;
+        }
 };
 
 /* ============================ */
-/*		       IDLE			    */
+/*             IDLE             */
 /* ============================ */
 
 class IdleState : public StateActionBase {
-	public:
-		explicit IdleState(Status* s) : StateActionBase(s) {}
-			
-		void entry() override {
-			status->led->on();
-			status->game_running = false;
-		}
-		
-		States check_transitions() override {
-			if (status->sw6->consumeClick()) {
-				return States::Carga;
-			}
-			return States::NO_CHANGE;
-		}
-		
-		void exit() override {
-			status->score = 0;
-			status->display->setScore(status->score);
-			status->game_start_time = status->current_time;
+    public:
+        explicit IdleState(Status* s) : StateActionBase(s) {}
+            
+        void entry() override {
+            status->sw6->consumeClick(); // Limpiar cualquier click residual
+            status->led->on();
 			status->is_last_turn = false;
-			status->game_running = true;
-			status->pinsManager->reset();
-			status->led->off();
-		}
+			status->is_last_turn_executed = false;
+            status->game_running = false;
+        }
+        
+        States check_transitions() override {
+            if (status->sw6->consumeClick()) {
+                // Si se pulsa el botón de usuario inicia nueva partida, pasa a Carga.
+                return States::Carga;
+            }
+            return States::NO_CHANGE;
+        }
+        
+        void exit() override {
+            // Al salir de Idle, resetear todas las variables del juego (nueva partida).
+            status->score = 0;
+            status->display->setScore(status->score);
+            status->game_start_time = status->current_time;
+            status->is_last_turn = false;
+			status->is_last_turn_executed = false;
+            status->game_running = true;
+            status->pinsManager->reset();
+            status->led->off();
+        }
 };
 
 /* ============================ */
-/*		       CARGA			*/
+/*             CARGA            */
 /* ============================ */
 
 class CargaState : public StateActionBase {
-	private:
-		uint8_t step_m12 = 0;
-		uint8_t step_m34 = 0;
-		uint32_t timer_m1 = 0;
-	public:
-		explicit CargaState(Status* s) : StateActionBase(s) {}
+    private:
+        uint8_t step_m12 = 0;   // Paso dentro de la secuencia de M1-M2
+        uint8_t step_m34 = 0;   // Paso dentro de la secuencia de M3-M4
+        uint32_t timer_m1 = 0;
+    public:
+        explicit CargaState(Status* s) : StateActionBase(s) {}
 
-		void entry() override {
-			step_m12 = 0;
-			timer_m1 = 0;
-			
-			if (status->is_armed) {
-				step_m34 = 4;
-				status->m1->move(M1_DIR_UP, status->current_time);
-			} else {
-				step_m34 = 0;
-				status->m4->move(M4_DIR_OPEN, status->current_time);
-			}
-		}
-				
-		void run() override {
-			// ==========================================
-			// FASE 1: Secuencia de M3 y M4 (Bolos)
-			// ==========================================
-			if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
-				status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
-				step_m34 = 1;
-			}
-			else if (step_m34 == 1 && status->m3->isAt(M3_SIDE_FORWARD)) {
-				status->m4->move(M4_DIR_CLOSE, status->current_time);
-				step_m34 = 2;
-			}
-			else if (step_m34 == 2 && status->m4->isAt(M4_SIDE_CLOSE)) {
-				status->m3->move(M3_DIR_BACKWARD, status->current_time, 255);
-				step_m34 = 3;
-			}
-			else if (step_m34 == 3 && status->m3->isAt(M3_SIDE_BACKWARD)) {
-				step_m34 = 4; // Finalizada la Fase 1
-				
-				status->is_armed = true; // --- NUEVO: Guardamos que ya se han armado si veníamos de Idle
-				
-				// AHORA damos permiso a M1 para arrancar la Fase 2
-				status->m1->move(M1_DIR_UP, status->current_time);
-			}
-			
-			// ==========================================
-			// FASE 2: Secuencia de M1 y M2 (Recarga)
-			// ==========================================
-			if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
-				// Asumiendo que usas LimitSwitch3::Position::RIGHT (o tu define M2_POS_RIGHT)
-				if (status->m2->isAt(LimitSwitch3::Position::RIGHT)) { 
-					status->m1->move(M1_DIR_DOWN, status->current_time);
-					step_m12 = 1;
-				}
-				else if (!status->m2->isMoving()) {
-					status->m2->move(M2_DIR_RIGHT, LimitSwitch3::Position::RIGHT, status->current_time);
-				}
-			}
-			else if (step_m12 == 1 && status->m1->isAt(M1_SIDE_DOWN)) {
-				timer_m1 = status->current_time;
-				step_m12 = 2;
-			}
-			else if (step_m12 == 2 && (status->current_time - timer_m1) >= 1000) {
-				status->m1->move(M1_DIR_UP, status->current_time);
-				step_m12 = 3;
-			}
-			else if (step_m12 == 3 && status->m1->isAt(M1_SIDE_UP)) {
-				timer_m1 = status->current_time;
-				step_m12 = 4;
-			}
-			else if (step_m12 == 4 && (status->current_time - timer_m1) >= 1000) {
-				step_m12 = 5;
-			}
-		}
-		
-		States check_transitions() override {
-			if (step_m12 == 5 && step_m34 == 4) {
-				return States::Armado;
-			}
-			return States::NO_CHANGE;
-		}
+        void entry() override {
+            step_m12 = 0;
+            timer_m1 = 0;
+            
+            if (status->is_armed) {
+                step_m34 = 4;
+                status->m1->move(M1_DIR_UP, status->current_time);
+            } else {
+                step_m34 = 0;
+                status->m4->move(M4_DIR_OPEN, status->current_time);
+            }
+        }
+                
+        void run() override {
+            // Secuencia de M3-M4
+            if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
+                status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
+                step_m34 = 1;
+            }
+            else if (step_m34 == 1 && status->m3->isAt(M3_SIDE_FORWARD)) {
+                status->m4->move(M4_DIR_CLOSE, status->current_time);
+                step_m34 = 2;
+            }
+            else if (step_m34 == 2 && status->m4->isAt(M4_SIDE_CLOSE)) {
+                status->m3->move(M3_DIR_BACKWARD, status->current_time, 255);
+                step_m34 = 3;
+            }
+            else if (step_m34 == 3 && status->m3->isAt(M3_SIDE_BACKWARD)) {
+                step_m34 = 4;
+                status->is_armed = true;
+                status->m1->move(M1_DIR_UP, status->current_time);
+            }
+            
+            if (step_m34 == 4) {
+
+                // Secuencia de M1-M2 (en paralelo a M3-M4)
+                if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
+                    if (status->m2->isAt(M2_POS_RIGHT)) { 
+                        status->m1->move(M1_DIR_DOWN, status->current_time);
+                        step_m12 = 1;
+                    }
+                    // Rescate por si M2 no llega a la posición correcta.
+                    else if (!status->m2->isMoving()) {
+                        status->m2->move(M2_DIR_RIGHT, M2_POS_RIGHT, status->current_time);
+                    }
+                }
+                else if (step_m12 == 1 && status->m1->isAt(M1_SIDE_DOWN)) {
+                    timer_m1 = status->current_time;
+                    step_m12 = 2;
+                }
+                else if (step_m12 == 2 && (status->current_time - timer_m1) >= 1000) {
+                    status->m1->move(M1_DIR_UP, status->current_time);
+                    step_m12 = 3;
+                }
+                else if (step_m12 == 3 && status->m1->isAt(M1_SIDE_UP)) {
+                    timer_m1 = status->current_time;
+                    step_m12 = 4;
+                }
+                else if (step_m12 == 4 && (status->current_time - timer_m1) >= 1000) {
+                    step_m12 = 5;
+                }
+            }
+        }
+        
+        States check_transitions() override {
+            if (step_m12 == 5 && step_m34 == 4) {
+                // Si ambas secuencias han terminado, pasamos a Armado.
+                return States::Armado;
+            }
+            return States::NO_CHANGE;
+        }
 };
 
 /* ============================ */
-/*		      ARMADO			*/
+/*            ARMADO            */
 /* ============================ */
 
 class ArmadoState : public StateActionBase {
-	private:
-	bool going_left = true; 
-	public:
-	explicit ArmadoState(Status* s) : StateActionBase(s) {}
-	
-	void entry() override {
-		status->led->on();
-		going_left = true;
-		
-		// M2 viene del extremo DERECHO (al final de Carga). 
-		// Lo mandamos al IZQUIERDO para iniciar el barrido. 
-		// Al hacerlo, pasará por el centro ignorándolo gracias a tu clase Motor2.
-		status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
-	}
-	
-	void run() override {
-		if (!status->m2->isMoving()) {
-			
-			if (going_left) {
-				// Si íbamos a la izquierda y llegamos a la izquierda
-				if(status->m2->isAt(M2_POS_LEFT)) {
-					going_left = false; // Rebotar hacia la derecha (pero solo hasta el MEDIO)
-					status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
-				} else {
-					// Rescate por si se detiene antes de tiempo
-					status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
-				}
-			} else {
-				// Si íbamos hacia la derecha (hacia el CENTRO) y llegamos al CENTRO
-				if (status->m2->isAt(M2_POS_MIDDLE)) {
-					going_left = true; // Rebotar hacia la izquierda
-					status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
-				}
-				else {
-					// Nos aseguramos de que el destino es siempre MIDDLE, y nunca enviarlo a RIGHT
-					status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
-				}
-			}
-		}
-	}
-	
-	States check_transitions() override {
-		if (status->sw6->consumeClick()) {
-			return States::Disparo;
-		}
-		return States::NO_CHANGE;
-	}
-	
-	void exit() override {
-		status->led->off();
-		status->m2->stop(); // Congelamos el motor en la posición exacta donde disparó el jugador
-	}
+    private:
+    bool going_left = true; 
+    public:
+    explicit ArmadoState(Status* s) : StateActionBase(s) {}
+    
+    void entry() override {
+        status->led->on();
+        going_left = true;
+        
+        status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153); // 153 = 60%
+    }
+    
+    void run() override {
+        if (!status->m2->isMoving()) {
+            if (going_left) {
+                // Si íbamos a la izquierda y llegamos a la izquierda
+                if(status->m2->isAt(M2_POS_LEFT)) {
+                    going_left = false; // Rebotar hacia la derecha (hasta el MEDIO)
+                    status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
+                } else {
+                    // Rescate por si se detiene antes de tiempo
+                    status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
+                }
+            } else {
+                // Si íbamos hacia la derecha (hacia el CENTRO) y llegamos al CENTRO
+                if (status->m2->isAt(M2_POS_MIDDLE)) {
+                    going_left = true; // Rebotar hacia la izquierda
+                    status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
+                }
+                else {
+                    // Rescate por si se detiene antes de tiempo
+                    status->m2->move(M2_DIR_RIGHT, M2_POS_MIDDLE, status->current_time, 153);
+                }
+            }
+        }
+    }
+    
+    States check_transitions() override {
+        if (status->sw6->consumeClick()) {
+            // Si se pulsa el botón de usuario, pasa a Disparo.
+            return States::Disparo;
+        }
+        return States::NO_CHANGE;
+    }
+    
+    void exit() override {
+        status->led->off();
+        status->m2->stop(); // M2 se detiene en la posición actual para el disparo
+    }
 };
 
 /* ============================ */
-/*		      DISPARO			*/
+/*            DISPARO           */
 /* ============================ */
 class DisparoState : public StateActionBase {
-	private:
-	uint32_t start_time = 0;
-	bool m2_finished = false;
-	
-	public:
-	explicit DisparoState(Status* s) : StateActionBase(s) {}
+    private:
+    uint32_t start_time = 0;
+    bool m2_finished = false;
+    
+    public:
+    explicit DisparoState(Status* s) : StateActionBase(s) {}
 
-	void entry() override {
-		status->pinsManager->reset();
-
-		start_time = status->current_time;
-		m2_finished = false;
-		
-		status->is_armed = false; 
-		
-		// --- CRÍTICO: Abrimos M4 instantáneamente. 
-		// Como es el retenedor, esto es lo que dispara físicamente la bola.
-		status->m4->move(M4_DIR_OPEN, status->current_time);
-	}
-
-	void run() override {
-		// Pasados 3 segundos del disparo, mandamos M2 a su zona de aparcamiento
-		if ((status->current_time - start_time) >= 3000) {
-			if (!m2_finished) {
-				if (status->m2->isAt(M2_POS_RIGHT)) {
-					m2_finished = true;
-				}
-				else if (!status->m2->isMoving()) {
-					status->m2->startHoming(M2_DIR_RIGHT, M2_POS_RIGHT, status->current_time);
-				}
-			}
+    void entry() override {
+		if (status->is_last_turn) {
+			status->is_last_turn_executed = true;
 		}
-	}
-
-	States check_transitions() override {
-		// Salimos cuando pasen los 5 segundos totales de espera de la bola
-		// Y confirmemos que la compuerta M4 se abrió completamente (vástago liberado)
-		// Y M2 esté aparcado.
-		if ((status->current_time - start_time >= 5000) && m2_finished && status->m4->isAt(M4_SIDE_OPEN)) {
-			return States::Retorno;
-		}
-		return States::NO_CHANGE;
-	}
-	
-	void exit() override {
-		status->score += status->pinsManager->getScore();
-		status->display->setScore(status->score);
 		
-		status->pinsManager->reset();
-	}
+        status->pinsManager->reset();
+
+        start_time = status->current_time;
+        m2_finished = false;
+        
+        status->is_armed = false; 
+        
+        status->m4->move(M4_DIR_OPEN, status->current_time);
+    }
+
+    void run() override {
+        // Tras 3 segundos, M2 retorna a RIGHT
+        if ((status->current_time - start_time) >= 3000) {
+            if (!m2_finished) {
+                if (status->m2->isAt(M2_POS_RIGHT)) {
+                    m2_finished = true;
+                }
+                else if (!status->m2->isMoving()) {
+                    // Rescate por si M2 no llega a la posición correcta.
+                    status->m2->startHoming(M2_DIR_RIGHT, M2_POS_RIGHT, status->current_time);
+                }
+            }
+        }
+    }
+
+    States check_transitions() override {
+        if ((status->current_time - start_time >= 5000) && m2_finished && status->m4->isAt(M4_SIDE_OPEN)) {
+            // Si han pasado 5 segundos, M2 está en RIGHT, y M4 está abierto, pasamos a Retorno.
+            return States::Retorno;
+        }
+        return States::NO_CHANGE;
+    }
+    
+    void exit() override {
+        // Al salir de Disparo, sumar la puntuación obtenida en este turno y actualizar el display.
+        status->score += status->pinsManager->getScore();
+        status->display->setScore(status->score);
+        
+        status->pinsManager->reset();
+    }
 };
 
 /* ============================ */
-/*		      RETORNO			*/
+/*            RETORNO           */
 /* ============================ */
 
 class RetornoState : public StateActionBase {
-	private:
-		uint8_t step_m5 = 0;
-		uint8_t step_m34 = 0; // --- NUEVO: Control paralelo de M3 y M4
-		
-	public:
-		explicit RetornoState(Status* s) : StateActionBase(s) {}
+    private:
+        uint8_t step_m5 = 0;
+        uint8_t step_m34 = 0;
+        
+    public:
+        explicit RetornoState(Status* s) : StateActionBase(s) {}
 
-		void entry() override {
-			step_m5 = 0;
-			step_m34 = 0;
-			
-			// Arrancamos el movimiento nada más entrar al estado
-			status->m5->move(M5_DIR_UP, status->current_time, 255);
+        void entry() override {
+            step_m5 = 0;        // Paso dentro de la secuencia de M5 (elevador de retorno)
+            step_m34 = 0;       // Paso dentro de la secuencia de M3-M4 (armado del lanzador)
+            
+            status->m5->move(M5_DIR_UP, status->current_time, 255);
 
-			// --- NUEVO: Si no es el último turno, arrancamos la compuerta de los bolos
-			if (!status->is_last_turn) {
-				status->m4->move(M4_DIR_OPEN, status->current_time);
-			}
-		}
-				
-		void run() override {
-			// Si el tiempo NO se ha agotado (Turno Normal)
-			if (!status->is_last_turn) {
-				
-				// --- LÓGICA M5 (Pelota) ---
-				if (step_m5 == 0 && status->m5->isAt(M5_SIDE_UP)) {
-					status->m5->move(M5_DIR_DOWN, status->current_time, 255);
-					step_m5 = 1;
-				}
+            if (!status->is_last_turn_executed) {
+                // Solo armar si no es último turno.
+                status->m4->move(M4_DIR_OPEN, status->current_time);
+            }
+        }
+                
+        void run() override {
+            // Secuencia de retorno
+            
 
-				// --- NUEVO: LÓGICA PARALELA M3/M4 (Bolos) ---
-				// Paso 0: Como M4 ya viene abierto del disparo, empezamos mandando a M3 adelante.
-				if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
-					status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
-					step_m34 = 1;
-				}
-				else if (step_m34 == 1 && status->m3->isAt(M3_SIDE_FORWARD)) {
-					// Paso 1: M3 llegó adelante. Cerramos la compuerta M4.
-					status->m4->move(M4_DIR_CLOSE, status->current_time);
-					step_m34 = 2;
-				}
-				else if (step_m34 == 2 && status->m4->isAt(M4_SIDE_CLOSE)) {
-					// Paso 2: Compuerta cerrada. Retiramos a M3 hacia atrás.
-					status->m3->move(M3_DIR_BACKWARD, status->current_time, 255);
-					step_m34 = 3;
-				}
-				else if (step_m34 == 3 && status->m3->isAt(M3_SIDE_BACKWARD)) {
-					step_m34 = 4; // Secuencia completada
-					status->is_armed = true; 
-				}
+            // Secuencia de rearmado en paralelo (solo si no es último turno)
+            if (!status->is_last_turn_executed) {
+                if (step_m5 == 0 && status->m5->isAt(M5_SIDE_UP)) {
+                    status->m5->move(M5_DIR_DOWN, status->current_time, 255);
+                    step_m5 = 1;
+                }
+                if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
+                    status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
+                    step_m34 = 1;
+                }
 
-			}
-			else {
-				if (step_m5 == 0 && status->m5->isAt(M5_SIDE_UP)) {
-					status->m5->move(M5_DIR_DOWN, status->current_time, 255);
-					step_m5 = 1;
-				}
-			}
-		}
-		
-		States check_transitions() override {
-			if (!status->is_last_turn) {
-				// --- NUEVO: Transición espera a que M5 baje Y los bolos (M3/M4) hayan terminado
-				if (step_m5 == 1 && status->m5->isAt(M5_SIDE_DOWN) && step_m34 == 4) {
-					return States::Carga; 
-				}
-			} 
-			else {
-				// Transición para último turno: Esperamos a que llegue ARRIBA
-				if (step_m5 == 1 && status->m5->isAt(M5_SIDE_DOWN)) {
-					status->is_last_turn = false;
-					return States::Idle; 
-				}
-			}
-			
-			return States::NO_CHANGE;
-		}
+                else if (step_m34 == 1 && status->m3->isAt(M3_SIDE_FORWARD)) {
+                    status->m4->move(M4_DIR_CLOSE, status->current_time);
+                    step_m34 = 2;
+                }
+                else if (step_m34 == 2 && status->m4->isAt(M4_SIDE_CLOSE)) {
+                    status->m3->move(M3_DIR_BACKWARD, status->current_time, 255);
+                    step_m34 = 3;
+                }
+                else if (step_m34 == 3 && status->m3->isAt(M3_SIDE_BACKWARD)) {
+                    step_m34 = 4;
+                    status->is_armed = true; 
+                }
+
+            }
+            else {
+                // Si es último turno, solo esperar a que M5 baje, no armar.
+                if (step_m5 == 0 && status->m5->isAt(M5_SIDE_UP)) {
+                    status->m5->move(M5_DIR_DOWN, status->current_time, 255);
+                    step_m5 = 1;
+                }
+            }
+        }
+        
+        States check_transitions() override {
+            // Si no es último turno, transición a Carga.
+            if (!status->is_last_turn_executed) {
+                if (step_m5 == 1 && status->m5->isAt(M5_SIDE_DOWN) && step_m34 == 4) {
+                    return States::Carga; 
+                }
+            } 
+            // Si es último turno, transición a Idle.
+            else {
+                if (step_m5 == 1 && status->m5->isAt(M5_SIDE_DOWN)) {
+                    // status->is_last_turn = false;
+                    return States::Idle; 
+                }
+            }
+            
+            return States::NO_CHANGE;
+        }
 };

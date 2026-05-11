@@ -1,65 +1,62 @@
+/*
+ * PinsManager.h
+ * Gestiona los bolos con sistema de antirrebotes integrador y bloqueo de bolos ya ca√≠dos.
+*/
+
 #pragma once
 #include <avr/io.h>
 
 class PinsManager {
     private:
     static const uint8_t NUM_PINS = 6;
-    static const uint8_t SAMPLES  = 10;  // Muestras para confirmar caÌda
+    static const uint8_t SAMPLES  = 10;
 
-    volatile bool changed;
-
-    uint8_t counter[NUM_PINS];      // Integrador por pin
-    bool    stableState[NUM_PINS];  // ⁄ltimo estado estable confirmado
-    bool    pinMask[NUM_PINS];      // true = bolo en pie
-    uint8_t score;
+    uint8_t  counter[NUM_PINS];      // Integrador para cada pin
+    bool     stableState[NUM_PINS];  // √öltimo estado estable confirmado
+    bool     pinMask[NUM_PINS];      // true = bolo en pie
+    uint8_t  score;
     uint32_t lastSampleTime;
 
     public:
     PinsManager() {
-        changed        = false;
         score          = 0;
         lastSampleTime = 0;
         for (uint8_t i = 0; i < NUM_PINS; i++) {
-            counter[i]     = SAMPLES;   // Asumimos bolos en pie al inicio
+            counter[i]     = SAMPLES;
             stableState[i] = true;
             pinMask[i]     = true;
         }
     }
 
     void init() {
-        DDRK  &= ~0x3F;  // PK0ñPK5 como entradas
-        PORTK |=  0x3F;  // Pull-ups activados
+        DDRK  &= ~0x3F;  // PK0-PK5 como entradas
+        PORTK |=  0x3F;  // Pull-ups
 
-        PCICR  |= (1 << PCIE2);   // Habilitar grupo PCINT2 (puerto K)
-        PCMSK2 |= 0x3F;           // Habilitar PCINT16ñPCINT21
+        // PCICR  |= (1 << PCIE2);   // Habilitar PCINT2
+        // PCMSK2 |= 0x3F;           // Habilitar PCINT16-PCINT21
     }
 
-    // Llamado desde ISR ó mÌnimo trabajo
-    void onInterrupt() {
-        changed = true;
-    }
-
-    // Llamado cada ms desde update_sensors() en Status
     void update(uint32_t currentTime) {
-        if (currentTime == lastSampleTime) return;
+        /*
+         * Actualiza el estado de los bolos.
+         * Implementa un sistema de antirrebotes integrador: requiere SAMPLES lecturas consecutivas iguales para confirmar un cambio de estado.
+         * Bloquea los bolos ya ca√≠dos, solo suman una vez.
+         */
+        if (currentTime == lastSampleTime) return;  // Evitar muestrear m√°s de una vez por ms
         lastSampleTime = currentTime;
 
-        // Solo muestreamos si la ISR detectÛ actividad reciente.
-        // No bloqueamos el muestreo: seguimos integrando hasta estabilizar.
         uint8_t currentState = PINK & 0x3F;
 
         for (uint8_t i = 0; i < NUM_PINS; i++) {
-            if (!pinMask[i]) continue; // Bolo ya caÌdo, ignorar
+            if (!pinMask[i]) continue; // Bolo ya ca√≠do, ignorar
 
-            // LÛgica invertida por pull-up: 0 en el pin = pulsado = bolo caÌdo
             bool reading = !(currentState & (1 << i));
 
-            // Integrador saturante
+            // Integrador saturante (antirrebotes)
             if (reading  && counter[i] < SAMPLES) counter[i]++;
             else if (!reading && counter[i] > 0)  counter[i]--;
 
-            // Flanco descendente: bolo se levanta (no deberÌa pasar en juego,
-            // pero reseteamos para no quedarnos en estado inconsistente)
+            // Flanco descendente: bolo se levanta (resetear el estado estable)
             if (stableState[i] && counter[i] == 0) {
                 stableState[i] = false;
             }
@@ -68,18 +65,18 @@ class PinsManager {
             if (!stableState[i] && counter[i] == SAMPLES) {
                 stableState[i] = true;
                 score++;
-                pinMask[i] = false; // Bloqueamos: este bolo ya no suma m·s
+                pinMask[i] = false; // Bloquear bolo ca√≠do, no contar m√°s
             }
         }
-
-        changed = false;
     }
 
+    /*
+     * Devuelve la puntuaci√≥n actual (n√∫mero de bolos ca√≠dos).
+     */
     uint8_t getScore() { return score; }
 
     void reset() {
         score          = 0;
-        changed        = false;
         lastSampleTime = 0;
         for (uint8_t i = 0; i < NUM_PINS; i++) {
             counter[i]     = SAMPLES;

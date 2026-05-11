@@ -21,6 +21,8 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "bolera_code", "bolera_code\
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "uart_code", "uart_code\uart_code.cppproj", "{328BB6D9-136E-49ED-9E58-9B758F46AA44}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "uart_test", "uart_test\uart_test.cppproj", "{D4F6A0D3-B394-4CC7-9FE3-FAA2BD268520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -63,6 +65,10 @@ Global
 		{328BB6D9-136E-49ED-9E58-9B758F46AA44}.Debug|AVR.Build.0 = Debug|AVR
 		{328BB6D9-136E-49ED-9E58-9B758F46AA44}.Release|AVR.ActiveCfg = Release|AVR
 		{328BB6D9-136E-49ED-9E58-9B758F46AA44}.Release|AVR.Build.0 = Release|AVR
+		{D4F6A0D3-B394-4CC7-9FE3-FAA2BD268520}.Debug|AVR.ActiveCfg = Debug|AVR
+		{D4F6A0D3-B394-4CC7-9FE3-FAA2BD268520}.Debug|AVR.Build.0 = Debug|AVR
+		{D4F6A0D3-B394-4CC7-9FE3-FAA2BD268520}.Release|AVR.ActiveCfg = Release|AVR
+		{D4F6A0D3-B394-4CC7-9FE3-FAA2BD268520}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

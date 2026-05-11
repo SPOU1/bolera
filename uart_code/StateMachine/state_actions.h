@@ -97,7 +97,7 @@ class CalibrationState : public StateActionBase {
         bool m3_started = false;
 
     // Helpers de legibilidad
-		bool m1_at_up()   { return !status->m1->isMoving() && status->m1->isAt(M1_SIDE_UP); }
+		bool m1_at_up()   { return !status->m1->isMoving() && status->m1->isAt(M1_SIDE_UP);   }
 		bool m4_at_open() { return !status->m4->isMoving() && status->m4->isAt(M4_SIDE_OPEN); }
 
 	public:
@@ -168,6 +168,7 @@ class IdleState : public StateActionBase {
 		
 		void exit() override {
 			status->score = 0;
+			status->display->setScore(status->score);
 			status->game_start_time = status->current_time;
 			status->is_last_turn = false;
 			status->game_running = true;
@@ -195,8 +196,6 @@ class CargaState : public StateActionBase {
 			timer_m1 = 0;
 			status->sw6->consumeClick(); // Limpiar click de entrada
 
-			status->display->setPlayer(status->total_throws%4 + 1);
-
 			if (status->is_armed) {
 				step_m34 = 4;
 				status->m1->move(M1_DIR_UP, status->current_time);
@@ -208,7 +207,7 @@ class CargaState : public StateActionBase {
 				
 		void run() override {
 			// ==========================================
-			// FASE 1: Secuencia de M3 y M4
+			// FASE 1: Secuencia de M3 y M4 (Bolos)
 			// ==========================================
 			if (step_m34 == 0 && status->m4->isAt(M4_SIDE_OPEN)) {
 				status->m3->move(M3_DIR_FORWARD, status->current_time, 255);
@@ -233,6 +232,7 @@ class CargaState : public StateActionBase {
 			
 			// ==========================================
 			// FASE 2: Secuencia de M1 y M2 (Recarga)
+			// Solo se ejecuta si la Fase 1 ha terminado (step_m34 == 4)
 			// ==========================================
 			if (step_m34 == 4) {
 				if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
@@ -254,17 +254,13 @@ class CargaState : public StateActionBase {
 					step_m12 = 3;
 				}
 				else if (step_m12 == 3 && status->m1->isAt(M1_SIDE_UP)) {
-					timer_m1 = status->current_time;
-					step_m12 = 4;
-				}
-				else if (step_m12 == 4 && (status->current_time - timer_m1) >= 1000) {
-					step_m12 = 5;
+					step_m12 = 4; // Finalizada la Fase 2
 				}
 			}
 		}
 		
 		States check_transitions() override {
-			if (step_m12 == 5 && step_m34 == 4) {
+			if (step_m12 == 4 && step_m34 == 4) {
 				return States::Armado;
 			}
 			return States::NO_CHANGE;
@@ -380,6 +376,7 @@ class DisparoState : public StateActionBase {
 	
 	void exit() override {
 		status->score += status->pinsManager->getScore();
+		status->display->setScore(status->score);
 		status->total_throws++;
 
 		uint8_t points = status->pinsManager->getScore();
