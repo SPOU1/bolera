@@ -275,7 +275,7 @@ class ArmadoState : public StateActionBase {
 		
 		// M2 viene del extremo DERECHO (al final de Carga). 
 		// Lo mandamos al IZQUIERDO para iniciar el barrido. 
-		// Al hacerlo, pasará por el centro ignorándolo gracias a tu clase Motor2.
+		// Al hacerlo, pasará por el centro ignorándolo gracias a la clase Motor2.
 		status->m2->move(M2_DIR_LEFT, M2_POS_LEFT, status->current_time, 153);
 	}
 	
