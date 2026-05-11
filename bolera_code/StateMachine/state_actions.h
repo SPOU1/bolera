@@ -225,7 +225,7 @@ class CargaState : public StateActionBase {
 			// FASE 2: Secuencia de M1 y M2 (Recarga)
 			// ==========================================
 			if(step_m12 == 0 && status->m1->isAt(M1_SIDE_UP)) {
-				// Asumiendo que usas LimitSwitch3::Position::RIGHT (o tu define M2_POS_RIGHT)
+				// Usamos LimitSwitch3::Position::RIGHT y el define M2_POS_RIGHT
 				if (status->m2->isAt(LimitSwitch3::Position::RIGHT)) { 
 					status->m1->move(M1_DIR_DOWN, status->current_time);
 					step_m12 = 1;
